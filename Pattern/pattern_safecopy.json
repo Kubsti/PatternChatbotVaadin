@@ -1,0 +1,587 @@
+{
+	 "patterns": [
+    {
+      "Name": "Anti-Corruption Layer",
+      "Description": "Implement a façade or adapter layer between different subsystems that don't share the same semantics. This layer translates requests that one subsystem makes to the other subsystem. Use this pattern to ensure that an application's design is not limited by dependencies on outside subsystems.",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Integration",
+          "TagValue": "External Systems"
+        },
+        {
+          "TagName": "Architectural Strategy",
+          "TagValue": "Isolation"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Integration"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Coupling"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Latency"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Decoupling"
+        },
+        {
+          "TagName": "Role",
+          "TagValue": "Adaptor"
+        },
+        {
+          "TagName": "Development Paradigm",
+          "TagValue": "Domain-Driven Design (DDD)"
+        }
+      ]
+    },
+    {
+      "Name": "Choreography",
+      "Description": "Have each component of the system participate in the decision-making process about the workflow of a business transaction, instead of relying on a central point of control.",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Communication"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Coupling"
+        },
+        {
+          "TagName": "Communication Style",
+          "TagValue": "Asynchronous"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Chattiness"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Throughput"
+        },
+        {
+          "TagName": "Governance",
+          "TagValue": "Decentralized"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Scalable Communication"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Complex Communication"
+        },
+        {
+          "TagName": "Development Paradigm",
+          "TagValue": "Event-Driven Architecture"
+        }
+      ]
+    },
+    {
+      "Name": "Command-Query Responsibility Segregation",
+      "Description": "separates read and update operations for a data store. Implementing CQRS in your application can maximize its performance, scalability, and security. The flexibility created by migrating to CQRS allows a system to better evolve over time and prevents update commands from causing merge conflicts at the domain level.",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Query"
+        },
+        {
+          "TagName": "Architectural Strategy",
+          "TagValue": "Specialization"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Distributed query"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Eventual consistency"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Performance"
+        },
+        {
+          "TagName": "Communication Style",
+          "TagValue": "Asynchronous"
+        },
+        {
+          "TagName": "Testing",
+          "TagValue": "Command and Query Testing"
+        },
+        {
+          "TagName": "Scaling",
+          "TagValue": "Horizontal and Data Partitioning Scaling"
+        },
+        {
+          "TagName": "Role",
+          "TagValue": "Aggregator"
+        },
+        {
+          "TagName": "Data Ownership",
+          "TagValue": "Service-Specific Data Storage"
+        },
+        {
+          "TagName": "Development Paradigm",
+          "TagValue": "Event-Driven Architecture"
+        }
+      ]
+    },
+    {
+      "Name": "Decompose by Subdomain",
+      "Description": "Each microservice must have its own responsibilities, and a poorly-defined decomposition can cause unnecessary coupling. So, define the boundaries of your microservices using DDD's subdomain concept.",
+      "URL": "https://microservices.io/patterns/decomposition/decompose-by-subdomain.html",
+      "tags": [
+	    {
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Decomposition"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Defining Boundaries"
+        },
+        {
+          "TagName": "Architectural Strategy",
+          "TagValue": "Decomposition"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Development Paradigm",
+          "TagValue": "Domain-Driven Design (DDD)"
+        },
+        {
+          "TagName": "Testing",
+          "TagValue": "Contract Testing"
+        },
+        {
+          "TagName": "Scaling",
+          "TagValue": "Horizontal Scaling"
+        },
+        {
+          "TagName": "Data Ownership",
+          "TagValue": "Domain-Specific Data Storage"
+        }
+      ]
+    },
+    {
+      "Name": "Event Sourcing",
+      "Description": "Instead of storing just the current state of the data in a domain, use an append-only store to record the full series of actions taken on that data. The store acts as the system of record and can be used to materialize the domain objects.",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Data Management"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External and Internal"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Temporal Inconsistency"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Performance"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Consistency"
+        },
+        {
+          "TagName": "Scaling",
+          "TagValue": "Horizontal Scaling"
+        },
+        {
+          "TagName": "Testing",
+          "TagValue": "Event Replay Testing"
+        },
+        {
+          "TagName": "Consistency",
+          "TagValue": "Eventual Consistency"
+        },
+        {
+          "TagName": "Communication Style",
+          "TagValue": "Asynchronous"
+        },
+        {
+          "TagName": "Development Paradigm",
+          "TagValue": "Event-Driven Architecture"
+        }
+      ]
+    },
+    {
+      "Name": "Gatekeeper",
+      "Description": "The Gatekeeper pattern involves using an intermediary service or component to control and manage access to resources or functionality in a distributed system, enhancing security and enforcing policies.",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gatekeeper",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Security"
+        },
+        {
+          "TagName": "Governance",
+          "TagValue": "Centralized"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Scaling",
+          "TagValue": "Horizontal Scaling"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Centralized security"
+        },
+        {
+          "TagName": "Testing",
+          "TagValue": "Security Testing"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Centralized Security Management"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Potential Single Point of Failure"
+        },
+        {
+          "TagName": "Role",
+          "TagValue": "Proxy"
+        },
+        {
+          "TagName": "Architectural Strategy",
+          "TagValue": "Proxying"
+        },
+        {
+          "TagName": "Service Composition",
+          "TagValue": "Union of Services"
+        }
+      ]
+    },
+    {
+      "Name": "Gateway Aggregation",
+      "Description": "The Gateway Aggregation pattern involves consolidating multiple requests from clients into a single request to reduce network overhead and improve efficiency in a microservices architecture.",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-aggregation",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Query"
+        },
+        {
+          "TagName": "Service Composition",
+          "TagValue": "Aggregated Services"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Testing",
+          "TagValue": "End-to-End Testing"
+        },
+        {
+          "TagName": "Communication Style",
+          "TagValue": "Synchronous"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Simplified Integration and Composition"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Increased Complexity in Gateway Logic"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Distributed Query"
+        },
+        {
+          "TagName": "Role",
+          "TagValue": "Aggregator"
+        },
+        {
+          "TagName": "Architectural Strategy",
+          "TagValue": "Proxying"
+        },
+        {
+          "TagName": "Consistency",
+          "TagValue": "Strong consistency"
+        },
+        {
+          "TagName": "Scaling",
+          "TagValue": "Data Partitioning"
+        }
+      ]
+    },
+    {
+      "Name": "Gateway Routing",
+      "Description": "The Gateway Routing pattern is a design approach where a centralized gateway service directs client requests to appropriate microservices based on predefined routing rules, facilitating dynamic and efficient traffic management in a distributed system.",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-routing",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Integration"
+        },
+        {
+          "TagName": "Integration",
+          "TagValue": "External Clients"
+        },
+        {
+          "TagName": "Governance",
+          "TagValue": "Centralized"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Centralized Routing Control"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Dependency on Gateway for Routing"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Distributed Services"
+        },
+        {
+          "TagName": "Role",
+          "TagValue": "Proxy"
+        },
+        {
+          "TagName": "Architectural Strategy",
+          "TagValue": "Proxying"
+        },
+        {
+          "TagName": "Service Composition",
+          "TagValue": "Union of Services"
+        }
+      ]
+    },
+    {
+      "Name": "Messaging",
+      "Description": "The Messaging pattern involves communication between software components through messages, enhancing decoupling, scalability, and flexibility in distributed systems.",
+      "URL": "https://microservices.io/patterns/communication-style/messaging.html",
+      "tags": [
+	  	{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Communication"
+        },
+        {
+          "TagName": "Development Paradigm",
+          "TagValue": "Event-Driven Architecture"
+        },
+        {
+          "TagName": "Communication Style",
+          "TagValue": "Asynchronous"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External and Internal"
+        },
+        {
+          "TagName": "Testing",
+          "TagValue": "Message Processing Testing"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Responsiveness"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Complex Error Handling"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Coupled communication"
+        }
+      ]
+    },
+    {
+      "Name": "Queue-based Load Levelling",
+      "Description": "The Queue-based Load Levelling pattern involves using queues to distribute processing tasks evenly across multiple consumers, optimizing resource utilization and improving system stability in a distributed environment",
+      "URL": "https://learn.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Scalability"
+        },
+        {
+          "TagName": "Scaling",
+          "TagValue": "Horizontal Scaling"
+        },
+        {
+          "TagName": "Scope",
+          "TagValue": "External"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Scalable Distribution"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Latency"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Workload Distribution"
+        },
+        {
+          "TagName": "Architectural Strategy",
+          "TagValue": "Proxying"
+        },
+        {
+          "TagName": "Role",
+          "TagValue": "Proxy"
+        }
+      ]
+    },
+    {
+      "Name": "Database per Service",
+      "Description": "",
+      "URL": "https://microservices.io/patterns/data/database-per-service.html",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Data Management"
+        },
+        {
+          "TagName": "Governance",
+          "TagValue": "Decentralized"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Isolated Data Management"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Increased Complexity in Data Consistency"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Shared Data Access"
+        },
+        {
+          "TagName": "Data Ownership",
+          "TagValue": "Service-Specific Data Storage"
+        },
+        {
+          "TagName": "Scaling",
+          "TagValue": "Data Partitioning"
+        },
+        {
+          "TagName": "Development Paradigm",
+          "TagValue": "Domain-Driven Design (DDD)"
+        }
+      ]
+    },
+    {
+      "Name": "Server Side Discovery",
+      "Description": "The Server-Side Discovery pattern involves a central service registry where servers register their availability, facilitating dynamic and efficient client-server communication in a distributed system.",
+      "URL": "https://microservices.io/patterns/server-side-discovery.html",
+      "tags": [
+		{
+          "TagName": "Domain",
+          "TagValue": "Microservice"
+        },
+        {
+          "TagName": "Category",
+          "TagValue": "Integration"
+        },
+        {
+          "TagName": "Integration",
+          "TagValue": "Internal Services"
+        },
+        {
+          "TagName": "Benefit",
+          "TagValue": "Dynamic Service Configuration"
+        },
+        {
+          "TagName": "Cost",
+          "TagValue": "Dependency on Discovery Mechanism"
+        },
+        {
+          "TagName": "Problem",
+          "TagValue": "Dynamic Service Location"
+        },
+        {
+          "TagName": "Role",
+          "TagValue": "Service Locator"
+        }
+      ]
+    }
+  ]
+}
+	
+	
+	

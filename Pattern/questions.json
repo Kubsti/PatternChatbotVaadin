@@ -1,0 +1,164 @@
+{
+  "questions": [
+    {
+      "TagName": "Integration",
+      "question": "What kind of integration are you looking for? [a] Of internal services, [b] of external clients, or [c] of external systems (generic)"
+    },
+    {
+      "TagName": "Architectural Strategy",
+      "question": "Between the architectural techniques and strategies [a] isolation, [b] specialization, [c] decomposition, and [d] proxying, which is the most suitable for your needs?"
+    },
+    {
+      "TagName": "Domain",
+      "question": "What is the domain of pattern your are looking for?"
+    },
+    {
+      "TagName": "Domain",
+      "question": "What is the domain of pattern your are looking for?"
+    },
+    {
+      "TagName": "Category",
+      "question": "How would you categorize the primary function or purpose of your solution?"
+    },
+    {
+      "TagName": "Architectural Strategy",
+      "question": "What approach will you take to ensure isolation or specialization within your solution?"
+    },
+    {
+      "TagName": "Scope",
+      "question": "Is your solution primarily focused on internal processes, or does it involve external interactions?"
+    },
+    {
+      "TagName": "Problem",
+      "question": "What specific challenges or problems is your solution designed to address?"
+    },
+    {
+      "TagName": "Cost",
+      "question": "What cost factors are most critical to your solution? For example, latency, complexity, or potential points of failure?"
+    },
+    {
+      "TagName": "Benefit",
+      "question": "What outcomes are you expecting from your solution in terms of improved functionality or performance?"
+    },
+    {
+      "TagName": "Role",
+      "question": "What role or function does your solution play in the overall system architecture?"
+    },
+    {
+      "TagName": "Development Paradigm",
+      "question": "What development paradigm or approach aligns with your goals for the solution?"
+    },
+    {
+      "TagName": "Communication Style",
+      "question": "How will communication be handled within your solution? Synchronous or asynchronous?"
+    },
+    {
+      "TagName": "Governance",
+      "question": "How do you plan to manage and control aspects like security or centralization within your solution?"
+    },
+    {
+      "TagName": "Scaling",
+      "question": "Regarding scalability, what strategy will you employ for your solution? Horizontal scaling, data partitioning, or another approach?"
+    },
+    {
+      "TagName": "Data Ownership",
+      "question": "How do you envision managing data ownership within your solution? Domain-specific data storage or a decentralized approach?"
+    },
+    {
+      "TagName": "Service Composition",
+      "question": "If your solution involves the composition of multiple services, how do you plan to handle it? Aggregation or another method?"
+    },
+    {
+      "TagName": "Technology Stack",
+      "question": "What technology stack or stack of tools and frameworks are you considering for implementing your solution?"
+    },
+    {
+      "TagName": "Data Management Approach",
+      "question": "How do you plan to manage and store data within your solution?"
+    },
+    {
+      "TagName": "User Interface",
+      "question": "What are your requirements for the user interface of your solution?"
+    },
+    {
+      "TagName": "Deployment",
+      "question": "How do you intend to deploy and manage your solution?"
+    },
+    {
+      "TagName": "Testing Strategy",
+      "question": "What is your testing strategy for the solution?"
+    },
+    {
+      "TagName": "Security Measures",
+      "question": "What security measures are crucial for your solution?"
+    },
+    {
+      "TagName": "Monitoring and Logging",
+      "question": "How do you plan to monitor and log activities within your solution?"
+    },
+    {
+      "TagName": "Error Handling",
+      "question": "What is your approach to error handling and fault tolerance within your solution?"
+    },
+    {
+      "TagName": "Performance Optimization",
+      "question": "How critical is performance for your solution?"
+    },
+    {
+      "TagName": "Latency Requirements",
+      "question": "What are your latency requirements for the solution?"
+    },
+    {
+      "TagName": "Concurrency Strategy",
+      "question": "How do you plan to handle concurrency within your solution?"
+    },
+    {
+      "TagName": "Dependency Management",
+      "question": "What is your approach to managing dependencies in your solution?"
+    },
+    {
+      "TagName": "Event Handling",
+      "question": "How will your solution handle events? Are you looking for specific patterns for event-driven architecture?"
+    },
+    {
+      "TagName": "Infrastructure Dependency",
+      "question": "What dependencies does your solution have on external infrastructure?"
+    },
+    {
+      "TagName": "Code Reusability",
+      "question": "How do you envision achieving code reusability in your solution?"
+    },
+    {
+      "TagName": "Versioning Strategy",
+      "question": "What is your versioning strategy for the solution?"
+    },
+    {
+      "TagName": "User Authentication",
+      "question": "How will user authentication be handled in your solution?"
+    },
+    {
+      "TagName": "Notification System",
+      "question": "How do you plan to schedule and manage background tasks in your solution?"
+    },
+    {
+      "TagName": "Mobile Integration",
+      "question": "Does your solution require integration with mobile platforms?"
+    },
+    {
+      "TagName": "Cross-Browser Compatibility",
+      "question": "Is cross-browser compatibility important for your solution?"
+    },
+    {
+      "TagName": "User Privacy",
+      "question": "How will you address user privacy concerns in your solution?"
+    },
+    {
+      "TagName": "AI/ML Integration",
+      "question": "Do you plan to integrate artificial intelligence or machine learning components into your solution?"
+    },
+    {
+      "TagName": "Offline Functionality",
+      "question": "Does your solution require offline functionality?"
+    }
+  ]
+}
