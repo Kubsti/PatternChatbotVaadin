@@ -25,6 +25,8 @@ public class PatternChatbotController {
     PatternSearchService patternSearchService;
     @Autowired
     PatternWriterService patternWriterService;
+    @Autowired
+    KeywordExtractorServiceImpl keywordExtractorService;
 
     //Get Data for initialization.
     @GetMapping("/initialization")

@@ -12,9 +12,6 @@ import com.vaadin.flow.router.Route;
 import java.time.Instant;
 
 
-/**
- * The main view contains a button and a click listener.
- */
 @Route("view")
 public class MainView extends HorizontalLayout {
 
@@ -27,14 +24,15 @@ public class MainView extends HorizontalLayout {
         WebpageIFrame.setWidth("70%");
         //WebpageIFrame.setWidth(String.valueOf(Float.parseFloat(test)/3));
         add(WebpageIFrame);
-        MessageList messageList = new MessageList();
+
         MessageListItem message1 = new MessageListItem(
                 "Please tell me which pattern you would like to search?",
                 Instant.now(), "Patty");
-        messageList.setItems(message1);
-        messageList.setHeight(this.getMaxHeight());
-        messageList.setWidth("30%");
-        add(messageList);
+        ChatView chatView = new ChatView();
+        MessageList messageList = chatView.getMessageList();
+        chatView.setHeight(this.getMaxHeight());
+        chatView.setWidth("30%");
+        add(chatView);
 
         //IFrame testIframe = new IFrame("https://www.w3schools.com/html/html_iframe.asp");
         // Use TextField for standard text input
