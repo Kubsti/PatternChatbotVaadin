@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class PatternChatbotController {
     private DesingPatterns desingPatterns;
     private PatternQuestions patternQuestions;
     private ObjectMapper objectMapper = new ObjectMapper();
+    private String currentSearchTag = "Domain";
     @Autowired
     FileReaderService fileReaderService;
     @Autowired
@@ -25,8 +27,8 @@ public class PatternChatbotController {
     PatternSearchService patternSearchService;
     @Autowired
     PatternWriterService patternWriterService;
-    @Autowired
-    KeywordExtractorServiceImpl keywordExtractorService;
+//    @Autowired
+//    KeywordExtractorServiceImpl keywordExtractorService;
 
     //Get Data for initialization.
     @GetMapping("/initialization")
@@ -35,6 +37,7 @@ public class PatternChatbotController {
             desingPatterns = fileReaderService.getDesingPatterns("Pattern/pattern.json");
             patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
             ArrayList<String> excludedTags = new ArrayList<String>();
+            //TODO recheck next search Tag calculation, and nextQuestion calculaton
             String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
             Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
             SearchResponse currResponse = new SearchResponse(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
@@ -42,6 +45,18 @@ public class PatternChatbotController {
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
+    }
+    public void initializeApp() throws IOException{
+        desingPatterns = fileReaderService.getDesingPatterns("Pattern/pattern.json");
+        patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
+        ArrayList<String> excludedTags = new ArrayList<String>();
+        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
+        Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+        SearchResponse currResponse = new SearchResponse(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
+        VaadinSession.getCurrent().setAttribute("excludedTags",excludedTags);
+        VaadinSession.getCurrent().setAttribute("nextSearchTag",nextSearchTag);
+        VaadinSession.getCurrent().setAttribute("nextQuestion", nextQuestion);
+        VaadinSession.getCurrent().setAttribute("designPattern",desingPatterns);
     }
     @PostMapping("/searchPattern")
     public SearchResponse searchPattern(@RequestBody String currSearchTag, String searchTagValue, DesingPatterns desingPatterns, ArrayList<String> excludedTags) {
@@ -143,4 +158,10 @@ public class PatternChatbotController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+//
+//    public void searchForNextPattern(String currSearchTag, String searchTagValue, DesingPatterns desingPatterns, ArrayList<String> excludedTags){
+//        DesingPatterns filteredDesignPattern = patternSearchService.searchPatterns(currSearchTag, searchTagValue, desingPatterns.getPatterns());
+//        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
+//        Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+//    }
 }

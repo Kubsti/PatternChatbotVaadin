@@ -35,7 +35,7 @@ public class NextSearchTagCalculationServiceImpl implements NextSearchTagCalcula
         for(Pattern pattern : desingPatterns.patterns){
             for(Tag tag : pattern.tags){
                 if(!excludedTags.contains(tag.tagName)){
-                    if(listOfTags.contains(tag.tagName)){
+                    if(listOfTags.containsKey(tag.tagName)){
                         TagInfo currTag = listOfTags.get(tag.tagName);
                         currTag.setOccurenceOfTag(currTag.getOccurenceOfTag()+1);
                         currTag.getListOfPossibleTagValues().add(tag.tagValue);

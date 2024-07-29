@@ -1,5 +1,8 @@
 package unibz.it.PatternChatbot;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 
 public class SearchResponse {
@@ -8,8 +11,8 @@ public class SearchResponse {
     private ArrayList<String> excludedTags;
 
     private String nextSearchTag;
-
-    public SearchResponse(DesingPatterns desingPatterns, Question question,ArrayList<String> excludedTags,String nextSearchTag) {
+    @JsonCreator
+    public SearchResponse(@JsonProperty("desingPatterns") DesingPatterns desingPatterns, @JsonProperty("question") Question question,   @JsonProperty("excludedTags")  ArrayList<String> excludedTags, @JsonProperty("nextSearchTag") String nextSearchTag) {
         this.desingPatterns = desingPatterns;
         this.question = question;
         this.excludedTags = excludedTags;
@@ -34,5 +37,17 @@ public class SearchResponse {
 
     public ArrayList<String> getExcludedTags() {
         return excludedTags;
+    }
+
+    public void setExcludedTags(ArrayList<String> excludedTags) {
+        this.excludedTags = excludedTags;
+    }
+
+    public String getNextSearchTag() {
+        return nextSearchTag;
+    }
+
+    public void setNextSearchTag(String nextSearchTag) {
+        this.nextSearchTag = nextSearchTag;
     }
 }
