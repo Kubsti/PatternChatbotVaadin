@@ -28,7 +28,8 @@ public class MainView extends HorizontalLayout {
         //WebpageIFrame.setWidth(String.valueOf(Float.parseFloat(test)/3));
         add(WebpageIFrame);
         try{
-            URL url = URI.create("https:http://localhost:8080/initialization").toURL();
+            //TODO change to correct url or refactor to a better solution
+            URL url = URI.create("http://localhost:8080/initialization").toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -54,7 +55,6 @@ public class MainView extends HorizontalLayout {
             //TODO handle exception
             System.out.println(e.getMessage());
         }
-
         MessageListItem message1 = new MessageListItem(
                 "Please tell me which pattern you would like to search?",
                 Instant.now(), "Patty");
