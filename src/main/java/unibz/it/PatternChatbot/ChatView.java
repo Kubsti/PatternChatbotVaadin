@@ -9,12 +9,15 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
 import oshi.util.tuples.Pair;
 
+import java.io.*;
 import java.lang.reflect.Type;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +34,9 @@ public class ChatView extends VerticalLayout {
         chat = new MessageList();
         input = new MessageInput();
         add(chat, input);
+        Question question = (Question) VaadinSession.getCurrent().getAttribute("nextQuestion");
         MessageListItem firstMessage = new MessageListItem(
-                "What is the domain of pattern your are looking for?",
+                question.question,
                 Instant.now(), "PatternSearchBot");
         listOfMessages.add(firstMessage);
         chat.setItems(listOfMessages);
@@ -88,10 +92,54 @@ public class ChatView extends VerticalLayout {
                     tupleList.add(new Pair<>(first, second));
                 }
                 //search with keywords for a pattern
-                Object test = VaadinSession.getCurrent().getAttribute("nextSearchTag");
-            }
+                String nextSearchTag = (String )VaadinSession.getCurrent().getAttribute("nextSearchTag");
+                DesingPatterns desingPatterns = (DesingPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+                ArrayList<String> excludedTags;
+                excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
+                try{
 
-            //handle keywords returned
+                    URL url = URI.create("http://localhost:8080/searchPattern").toURL();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+                    conn.setRequestProperty("Content-Type", "application/json; utf-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    SearchDto searchRequest = new SearchDto(nextSearchTag,tupleList.get(0).getA(),desingPatterns,excludedTags);
+                    String reqBody = gson.toJson(searchRequest);
+                    try(DataOutputStream os = new DataOutputStream(conn.getOutputStream())){
+                        os.writeBytes(reqBody);
+                        os.flush();
+                    }
+                    int responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK){
+                        StringBuilder response = new StringBuilder();
+                        try (BufferedReader searchResponseReader = new BufferedReader( new InputStreamReader( conn.getInputStream()))) {
+                            String searchResponseline;
+                            while ((searchResponseline = searchResponseReader.readLine()) != null) {
+                                response.append(searchResponseline); // Adds every line to response till the end of file.
+                            }
+                        }
+                        SearchResponseDto searchResult= gson.fromJson(response.toString(), SearchResponseDto.class);
+                        System.out.println("test");
+                    }else{
+                        //TODO Hanlde error with state etc.
+                    }
+                    //conn.connect();
+
+                }catch(Exception e){
+                    //Todo implement error hanlding
+                }
+//                MessageListItem firstMessage = new MessageListItem(
+//                        nextSearchQuestion,
+//                        Instant.now(), "PatternSearchBot");
+//                listOfMessages.add(firstMessage);
+//                chat.setItems(listOfMessages);
+
+
+            }
+            //If something found add tag to list of excluded tags
+            //excludedTags.add(nextSearchTag);
+
         } catch (IOException | InterruptedException e) {
             //TODO better handle different exceptions
             throw new RuntimeException(e);

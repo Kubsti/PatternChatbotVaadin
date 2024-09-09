@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
-public class SearchResponse {
+public class SearchResponseDto {
     private DesingPatterns desingPatterns;
     private Question question;
     private ArrayList<String> excludedTags;
 
     private String nextSearchTag;
     @JsonCreator
-    public SearchResponse(@JsonProperty("desingPatterns") DesingPatterns desingPatterns, @JsonProperty("question") Question question,   @JsonProperty("excludedTags")  ArrayList<String> excludedTags, @JsonProperty("nextSearchTag") String nextSearchTag) {
+    public SearchResponseDto(@JsonProperty("desingPatterns") DesingPatterns desingPatterns, @JsonProperty("question") Question question,   @JsonProperty("excludedTags")  ArrayList<String> excludedTags, @JsonProperty("nextSearchTag") String nextSearchTag) {
         this.desingPatterns = desingPatterns;
         this.question = question;
         this.excludedTags = excludedTags;

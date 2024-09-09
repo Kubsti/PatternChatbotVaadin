@@ -37,10 +37,10 @@ public class PatternChatbotController {
             desingPatterns = fileReaderService.getDesingPatterns("Pattern/pattern.json");
             patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
             ArrayList<String> excludedTags = new ArrayList<String>();
-            //TODO recheck next search Tag calculation, and nextQuestion calculaton
+            //TODO recheck next search Tag calculation, and nextQuestion calculation
             String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
             Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-            SearchResponse currResponse = new SearchResponse(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
+            SearchResponseDto currResponse = new SearchResponseDto(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
             return ResponseEntity.ok().body(objectMapper.writeValueAsString(currResponse));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
@@ -52,19 +52,19 @@ public class PatternChatbotController {
         ArrayList<String> excludedTags = new ArrayList<String>();
         String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
         Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        SearchResponse currResponse = new SearchResponse(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
+        SearchResponseDto currResponse = new SearchResponseDto(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
         VaadinSession.getCurrent().setAttribute("excludedTags",excludedTags);
         VaadinSession.getCurrent().setAttribute("nextSearchTag",nextSearchTag);
         VaadinSession.getCurrent().setAttribute("nextQuestion", nextQuestion);
         VaadinSession.getCurrent().setAttribute("designPattern",desingPatterns);
     }
-    @PostMapping("/searchPattern")
-    public SearchResponse searchPattern(@RequestBody String currSearchTag, String searchTagValue, DesingPatterns desingPatterns, ArrayList<String> excludedTags) {
+    @PostMapping(path="/searchPattern", consumes="application/json", produces="application/json")
+    public SearchResponseDto searchPattern(@RequestBody SearchDto searchDto) {
         //Caculate next searchtag
-        DesingPatterns filteredDesignPattern = patternSearchService.searchPatterns(currSearchTag, searchTagValue, desingPatterns.getPatterns());
-        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
+        DesingPatterns filteredDesignPattern = patternSearchService.searchPatterns(searchDto.getCurrSearchTag(), searchDto.getSearchTagValue(), desingPatterns.getPatterns());
+        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, searchDto.getExcludedTags());
         Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        SearchResponse currResponse = new SearchResponse(filteredDesignPattern, nextQuestion, excludedTags, nextSearchTag);
+        SearchResponseDto currResponse = new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag);
         return currResponse;
     }
     //if user inserts pattern frontend should check if we have new tags,for start disallow multiple question for one tag

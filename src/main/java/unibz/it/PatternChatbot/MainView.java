@@ -41,7 +41,7 @@ public class MainView extends HorizontalLayout {
             }else{
                 ObjectMapper mapper = new ObjectMapper();
                 try (InputStream inputStream = conn.getInputStream()) {
-                    SearchResponse response = mapper.readValue(inputStream, SearchResponse.class);
+                    SearchResponseDto response = mapper.readValue(inputStream, SearchResponseDto.class);
                     VaadinSession.getCurrent().setAttribute("excludedTags",response.getExcludedTags());
                     VaadinSession.getCurrent().setAttribute("nextSearchTag",response.getNextSearchTag());
                     VaadinSession.getCurrent().setAttribute("nextQuestion", response.getQuestion());
