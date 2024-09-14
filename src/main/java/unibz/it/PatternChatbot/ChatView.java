@@ -26,6 +26,7 @@ public class ChatView extends VerticalLayout {
     private MessageList chat;
     private MessageInput input;
     private List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
+    private SearchState searchState;
     public MessageList getMessageList(){
         return chat;
     }
@@ -33,6 +34,7 @@ public class ChatView extends VerticalLayout {
     public ChatView() {
         chat = new MessageList();
         input = new MessageInput();
+        searchState = new SearchState();
         add(chat, input);
         Question question = (Question) VaadinSession.getCurrent().getAttribute("nextQuestion");
         MessageListItem firstMessage = new MessageListItem(
@@ -53,99 +55,41 @@ public class ChatView extends VerticalLayout {
     }
 
     private void onSubmit(MessageInput.SubmitEvent submitEvent) {
+        //TODO check that input is not empty
         //add message of user to chat
         MessageListItem newMessage = new MessageListItem(submitEvent.getValue());
         listOfMessages.add(newMessage);
         chat.setItems(listOfMessages);
+
+        MessageListItem botCalculating = new MessageListItem("Calculating response...", Instant.now(), "PatternSearchBot");
+        listOfMessages.add(botCalculating);
+        chat.setItems(listOfMessages);
+        //Change logic depending on state
+        String currState = (String ) VaadinSession.getCurrent().getAttribute("state");
+        if(currState.equalsIgnoreCase("searchstate")){
+            SearchResponseDto searchResult = searchState.handleSearch(submitEvent.getValue());
+            if(searchResult == null || searchResult.getDesingPatterns().getPatterns().isEmpty()){
+
+            }else{
+
+            }
+        }else if(currState.equalsIgnoreCase("errorstate")){
+
+        }
         //TODO implement communication with chatbot(create chatbot)
         File file = new File("Python/keyword_extractor.py");
         String absolutePathOfKeywordExtractor = file.getAbsolutePath();
         ProcessBuilder processBuilder = new ProcessBuilder("python", absolutePathOfKeywordExtractor,  newMessage.getText());
-        try {
-            Process pythonKeywordExtractor = processBuilder.start();
-            BufferedReader reader = new BufferedReader((new InputStreamReader(pythonKeywordExtractor.getInputStream())));
-            StringBuilder output = new StringBuilder();
-            String line;
-            while((line = reader.readLine()) != null){
-                output.append(line);
-            }
-            reader.close();
-            int exitCode = pythonKeywordExtractor.waitFor();
-            //handle exitCode
-            if(exitCode == 0){
-                Gson gson = new Gson();
-                Type listType = new TypeToken<ArrayList<ArrayList<Object>>>() {}.getType();
-                List<ArrayList<Object>> javaList = gson.fromJson(output.toString(), listType);
-                //if we did not find any pattern
-                if(javaList.isEmpty()){
-                    MessageListItem newBotMessage = new MessageListItem(
-                            "I could not understand you answer could you try again?",
-                            Instant.now(), "PatternSearchBot");
-                    listOfMessages.add(newBotMessage);
-                    chat.setItems(listOfMessages);
-                    return;
-                }
-                ArrayList<Pair<String,Double>> tupleList = new ArrayList<>();
-                for (ArrayList<Object> item : javaList) {
-                    String first = (String) item.get(0);
-                    Double second = Double.valueOf(item.get(1).toString()); // JSON numbers are parsed as Double
-                    tupleList.add(new Pair<>(first, second));
-                }
-                //search with keywords for a pattern
-                String nextSearchTag = (String )VaadinSession.getCurrent().getAttribute("nextSearchTag");
-                DesingPatterns desingPatterns = (DesingPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
-                ArrayList<String> excludedTags;
-                excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
-                try{
-
-                    URL url = URI.create("http://localhost:8080/searchPattern").toURL();
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setDoOutput(true);
-                    conn.setRequestProperty("Content-Type", "application/json; utf-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    SearchDto searchRequest = new SearchDto(nextSearchTag,tupleList.get(0).getA(),desingPatterns,excludedTags);
-                    String reqBody = gson.toJson(searchRequest);
-                    try(DataOutputStream os = new DataOutputStream(conn.getOutputStream())){
-                        os.writeBytes(reqBody);
-                        os.flush();
-                    }
-                    int responseCode = conn.getResponseCode();
-                    if (responseCode == HttpURLConnection.HTTP_OK){
-                        StringBuilder response = new StringBuilder();
-                        try (BufferedReader searchResponseReader = new BufferedReader( new InputStreamReader( conn.getInputStream()))) {
-                            String searchResponseline;
-                            while ((searchResponseline = searchResponseReader.readLine()) != null) {
-                                response.append(searchResponseline); // Adds every line to response till the end of file.
-                            }
-                        }
-                        SearchResponseDto searchResult= gson.fromJson(response.toString(), SearchResponseDto.class);
-                        System.out.println("test");
-                    }else{
-                        //TODO Hanlde error with state etc.
-                    }
-                    //conn.connect();
-
-                }catch(Exception e){
-                    //Todo implement error hanlding
-                }
 //                MessageListItem firstMessage = new MessageListItem(
 //                        nextSearchQuestion,
 //                        Instant.now(), "PatternSearchBot");
 //                listOfMessages.add(firstMessage);
 //                chat.setItems(listOfMessages);
 
-
-            }
-            //If something found add tag to list of excluded tags
-            //excludedTags.add(nextSearchTag);
-
-        } catch (IOException | InterruptedException e) {
-            //TODO better handle different exceptions
-            throw new RuntimeException(e);
-        }
     }
 
-//    private List<String> readProcessOutput(InputStream inputStream) {
-//    }
+    private void updateView(){
+
+    }
+
 }

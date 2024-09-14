@@ -9,7 +9,6 @@ public class SearchResponseDto {
     private DesingPatterns desingPatterns;
     private Question question;
     private ArrayList<String> excludedTags;
-
     private String nextSearchTag;
     @JsonCreator
     public SearchResponseDto(@JsonProperty("desingPatterns") DesingPatterns desingPatterns, @JsonProperty("question") Question question,   @JsonProperty("excludedTags")  ArrayList<String> excludedTags, @JsonProperty("nextSearchTag") String nextSearchTag) {

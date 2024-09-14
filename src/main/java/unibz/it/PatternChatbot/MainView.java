@@ -46,6 +46,7 @@ public class MainView extends HorizontalLayout {
                     VaadinSession.getCurrent().setAttribute("nextSearchTag",response.getNextSearchTag());
                     VaadinSession.getCurrent().setAttribute("nextQuestion", response.getQuestion());
                     VaadinSession.getCurrent().setAttribute("designPattern",response.getDesingPatterns());
+                    VaadinSession.getCurrent().setAttribute("state","searchstate");
                 }catch(Exception e){
                     //TODO handle exception
                     System.out.println(e.getMessage());
