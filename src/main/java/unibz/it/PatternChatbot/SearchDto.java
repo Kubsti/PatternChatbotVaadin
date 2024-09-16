@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SearchDto {
     private String currSearchTag;
     private String searchTagValue;
-    private DesingPatterns desingPatterns;
+    private DesignPatterns designPatterns;
     private ArrayList<String> excludedTags;
 
     public String getCurrSearchTag() {
@@ -24,12 +24,12 @@ public class SearchDto {
         this.searchTagValue = searchTagValue;
     }
 
-    public DesingPatterns getDesingPatterns() {
-        return desingPatterns;
+    public DesignPatterns getDesignPatterns() {
+        return designPatterns;
     }
 
-    public void setDesingPatterns(DesingPatterns desingPatterns) {
-        this.desingPatterns = desingPatterns;
+    public void setDesignPatterns(DesignPatterns designPatterns) {
+        this.designPatterns = designPatterns;
     }
 
     public ArrayList<String> getExcludedTags() {
@@ -40,10 +40,10 @@ public class SearchDto {
         this.excludedTags = excludedTags;
     }
 
-    public SearchDto(String currSearchTag, String searchTagValue, DesingPatterns desingPatterns, ArrayList<String> excludedTags) {
+    public SearchDto(String currSearchTag, String searchTagValue, DesignPatterns designPatterns, ArrayList<String> excludedTags) {
         this.currSearchTag = currSearchTag;
         this.searchTagValue = searchTagValue;
-        this.desingPatterns = desingPatterns;
+        this.designPatterns = designPatterns;
         this.excludedTags = excludedTags;
     }
 }

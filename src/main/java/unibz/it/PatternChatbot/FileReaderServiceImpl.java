@@ -11,8 +11,8 @@ import java.nio.file.Files;
 public class FileReaderServiceImpl implements FileReaderService{
     private ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    public DesingPatterns getDesingPatterns(String filePath) throws IOException {
-        DesingPatterns currPatterns = null;
+    public DesignPatterns getDesignPatterns(String filePath) throws IOException {
+        DesignPatterns currPatterns = null;
             File file = new File(filePath);
             assert file !=null;
             if(file.isDirectory()){
@@ -26,7 +26,7 @@ public class FileReaderServiceImpl implements FileReaderService{
             } else if (!file.getName().toLowerCase().endsWith(".json")) {
                 throw new IOException("The file in the given path must be a json");
             }else{
-                currPatterns = objectMapper.readValue(Files.readString(file.toPath()), DesingPatterns.class);
+                currPatterns = objectMapper.readValue(Files.readString(file.toPath()), DesignPatterns.class);
             }
         return currPatterns;
     }

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class PatternSearchServiceImpl implements PatternSearchService{
     @Override
     //TODO implement a comparison with similarity of search Tag and search Tag Value
-    public DesingPatterns searchPatterns(String searchTag,String searchTagValue,ArrayList<Pattern> listOfPattern) {
-        DesingPatterns desingPatterns = new DesingPatterns();
+    public DesignPatterns searchPatterns(String searchTag,String searchTagValue,ArrayList<Pattern> listOfPattern) {
+        DesignPatterns designPatterns = new DesignPatterns();
         ArrayList<Pattern> foundPatterns = new ArrayList<Pattern>();
         for(Pattern currPattern : listOfPattern){
             for(Tag currTag : currPattern.getTags()){
@@ -17,7 +17,7 @@ public class PatternSearchServiceImpl implements PatternSearchService{
                 }
             }
         }
-        desingPatterns.setPatterns(foundPatterns);
-        return desingPatterns;
+        designPatterns.setPatterns(foundPatterns);
+        return designPatterns;
     }
 }

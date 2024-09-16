@@ -29,10 +29,10 @@ public class NextSearchTagCalculationServiceImpl implements NextSearchTagCalcula
         }
     }
     @Override
-    public String calculateNextSearchTag(DesingPatterns desingPatterns, ArrayList<String> excludedTags) {
+    public String calculateNextSearchTag(DesignPatterns designPatterns, ArrayList<String> excludedTags) {
 
         Hashtable<String,TagInfo> listOfTags = new Hashtable<String,TagInfo>();
-        for(Pattern pattern : desingPatterns.patterns){
+        for(Pattern pattern : designPatterns.patterns){
             for(Tag tag : pattern.tags){
                 if(!excludedTags.contains(tag.tagName)){
                     if(listOfTags.containsKey(tag.tagName)){

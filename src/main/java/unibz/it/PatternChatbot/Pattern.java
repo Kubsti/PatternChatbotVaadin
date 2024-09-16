@@ -5,26 +5,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 public class Pattern{
 
-    @JsonProperty("Name")
+    @JsonProperty("name")
     public String getName() {
         return this.name; }
     public void setName(String name) {
         this.name = name; }
 
     String name;
-    @JsonProperty("Description")
+    @JsonProperty("description")
     public String getDescription() {
         return this.description; }
     public void setDescription(String description) {
         this.description = description; }
     String description;
-    @JsonProperty("URL")
+    @JsonProperty("url")
     public String getURL() {
-        return this.uRL; }
-    public void setURL(String uRL) {
-        this.uRL = uRL; }
+        return this.url; }
+    public void setURL(String url) {
+        this.url = url; }
 
-    String uRL;
+    String url;
     @JsonProperty("tags")
     public ArrayList<Tag> getTags() {
         return this.tags; }
@@ -41,7 +41,7 @@ public class Pattern{
         if(obj == null || getClass() != obj.getClass()){
             return false;
         }
-        if(this.name.equals(((Pattern) obj).name) && this.uRL.equals(((Pattern) obj).uRL) && this.description.equals(((Pattern) obj).description) && this.tags.equals(((Pattern) obj).tags)){
+        if(this.name.equals(((Pattern) obj).name) && this.url.equals(((Pattern) obj).url) && this.description.equals(((Pattern) obj).description) && this.tags.equals(((Pattern) obj).tags)){
             return true;
         }
         return false;

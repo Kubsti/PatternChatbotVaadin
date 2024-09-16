@@ -3,13 +3,13 @@ package unibz.it.PatternChatbot;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Tag{
-    @JsonProperty("TagName")
+    @JsonProperty("tagName")
     public String getTagName() {
         return this.tagName; }
     public void setTagName(String tagName) {
         this.tagName = tagName; }
     String tagName;
-    @JsonProperty("TagValue")
+    @JsonProperty("tagValue")
     public String getTagValue() {
         return this.tagValue; }
     public void setTagValue(String tagValue) {

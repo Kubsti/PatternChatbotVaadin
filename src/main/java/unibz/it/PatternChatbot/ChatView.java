@@ -1,23 +1,14 @@
 package unibz.it.PatternChatbot;
 
-import com.nimbusds.jose.shaded.gson.Gson;
-import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
+import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
-import oshi.util.tuples.Pair;
 
 import java.io.*;
-import java.lang.reflect.Type;
 
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +18,7 @@ public class ChatView extends VerticalLayout {
     private MessageInput input;
     private List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
     private SearchState searchState;
+    private IFrame webpageIFrame = new IFrame();
     public MessageList getMessageList(){
         return chat;
     }
@@ -36,9 +28,9 @@ public class ChatView extends VerticalLayout {
         input = new MessageInput();
         searchState = new SearchState();
         add(chat, input);
-        Question question = (Question) VaadinSession.getCurrent().getAttribute("nextQuestion");
+        PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         MessageListItem firstMessage = new MessageListItem(
-                question.question,
+                question.getQuestion(),
                 Instant.now(), "PatternSearchBot");
         listOfMessages.add(firstMessage);
         chat.setItems(listOfMessages);
@@ -68,28 +60,48 @@ public class ChatView extends VerticalLayout {
         String currState = (String ) VaadinSession.getCurrent().getAttribute("state");
         if(currState.equalsIgnoreCase("searchstate")){
             SearchResponseDto searchResult = searchState.handleSearch(submitEvent.getValue());
-            if(searchResult == null || searchResult.getDesingPatterns().getPatterns().isEmpty()){
-
+            if(searchResult == null || searchResult.getDesignPatterns().getPatterns().isEmpty()){
+                //TODO handle special case here or in state
             }else{
+                if(searchResult.getDesignPatterns().getPatterns().size() == 1 ){
+                    this.webpageIFrame.setSrc(searchResult.getDesignPatterns().getPatterns().get(0).url);
 
+                    //TODO switch to found state, show maybe reset button make new search etc.
+                }else{
+                    this.updateChat(searchResult);
+                }
             }
         }else if(currState.equalsIgnoreCase("errorstate")){
 
         }
-        //TODO implement communication with chatbot(create chatbot)
-        File file = new File("Python/keyword_extractor.py");
-        String absolutePathOfKeywordExtractor = file.getAbsolutePath();
-        ProcessBuilder processBuilder = new ProcessBuilder("python", absolutePathOfKeywordExtractor,  newMessage.getText());
-//                MessageListItem firstMessage = new MessageListItem(
-//                        nextSearchQuestion,
-//                        Instant.now(), "PatternSearchBot");
-//                listOfMessages.add(firstMessage);
-//                chat.setItems(listOfMessages);
 
+    }
+
+    private void updateChat(SearchResponseDto searchResult){
+        //Update session
+        VaadinSession.getCurrent().setAttribute("excludedTags",searchResult.getExcludedTags());
+        VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResult.getNextSearchTag());
+        VaadinSession.getCurrent().setAttribute("nextQuestion", searchResult.getPatternQuestion());
+        VaadinSession.getCurrent().setAttribute("designPattern",searchResult.getDesignPatterns());
+
+        PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+        MessageListItem message = new MessageListItem(
+                question.getQuestion(),
+                Instant.now(), "PatternSearchBot");
+        listOfMessages.add(message);
+        chat.setItems(listOfMessages);
     }
 
     private void updateView(){
-
+        //TODO update view to link of a currently found pattern
     }
 
+
+    public IFrame getWebpageIFrame() {
+        return webpageIFrame;
+    }
+
+    public void setWebpageIFrame(IFrame webpageIFrame) {
+        this.webpageIFrame = webpageIFrame;
+    }
 }

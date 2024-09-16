@@ -1,6 +1,7 @@
 package unibz.it.PatternChatbot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
@@ -17,16 +18,19 @@ import java.time.Instant;
 
 @Route("view")
 public class MainView extends HorizontalLayout {
+private IFrame webpageIFrame;
 
     public MainView() {
         this.setSizeFull();
         //layout.setAlignItems(FlexComponent.Alignment.CENTER);
         //VerticalLayout chatLayout  = new VerticalLayout();
-        IFrame WebpageIFrame = new IFrame("https://de.wikipedia.org/wiki/Wikipedia:Hauptseite");
-        WebpageIFrame.setHeightFull();
-        WebpageIFrame.setWidth("70%");
+        //TODO find an alternative to the IFrame or make iframe usable;
+        webpageIFrame = new IFrame("https://de.wikipedia.org/wiki/Wikipedia:Hauptseite");
+        webpageIFrame.setId("patternIFrame");
+        webpageIFrame.setHeightFull();
+        webpageIFrame.setWidth("70%");
         //WebpageIFrame.setWidth(String.valueOf(Float.parseFloat(test)/3));
-        add(WebpageIFrame);
+        add(webpageIFrame);
         try{
             //TODO change to correct url or refactor to a better solution
             URL url = URI.create("http://localhost:8080/initialization").toURL();
@@ -44,8 +48,8 @@ public class MainView extends HorizontalLayout {
                     SearchResponseDto response = mapper.readValue(inputStream, SearchResponseDto.class);
                     VaadinSession.getCurrent().setAttribute("excludedTags",response.getExcludedTags());
                     VaadinSession.getCurrent().setAttribute("nextSearchTag",response.getNextSearchTag());
-                    VaadinSession.getCurrent().setAttribute("nextQuestion", response.getQuestion());
-                    VaadinSession.getCurrent().setAttribute("designPattern",response.getDesingPatterns());
+                    VaadinSession.getCurrent().setAttribute("nextQuestion", response.getPatternQuestion());
+                    VaadinSession.getCurrent().setAttribute("designPattern",response.getDesignPatterns());
                     VaadinSession.getCurrent().setAttribute("state","searchstate");
                 }catch(Exception e){
                     //TODO handle exception
@@ -60,6 +64,7 @@ public class MainView extends HorizontalLayout {
                 "Please tell me which pattern you would like to search?",
                 Instant.now(), "Patty");
         ChatView chatView = new ChatView();
+        chatView.setWebpageIFrame(webpageIFrame);
         MessageList messageList = chatView.getMessageList();
         chatView.setHeight(this.getMaxHeight());
         chatView.setWidth("30%");

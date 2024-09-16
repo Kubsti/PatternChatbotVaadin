@@ -12,14 +12,14 @@ Root root = om.readValue(myJsonString, Root.class); */
 
 public class PatternQuestions{
     @JsonProperty("questions")
-    public ArrayList<Question> getQuestions() {
+    public ArrayList<PatternQuestion> getQuestions() {
         return this.questions; }
-    public void setQuestions(ArrayList<Question> questions) {
+    public void setQuestions(ArrayList<PatternQuestion> questions) {
         this.questions = questions; }
-    ArrayList<Question> questions;
+    ArrayList<PatternQuestion> questions;
 
     public boolean containsQuestionForTag(String searchTag){
-        for(Question currQuestion : this.getQuestions()){
+        for(PatternQuestion currQuestion : this.getQuestions()){
             if(currQuestion.getTagName().equalsIgnoreCase(searchTag)){
                 return true;
             }

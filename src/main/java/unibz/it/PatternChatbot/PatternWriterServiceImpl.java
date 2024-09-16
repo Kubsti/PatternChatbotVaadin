@@ -8,7 +8,7 @@ import java.io.File;
 public class PatternWriterServiceImpl implements PatternWriterService{
 
     @Override
-    public boolean writePattern(DesingPatterns listOfPattern) {
+    public boolean writePattern(DesignPatterns listOfPattern) {
         try{
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(new File("Pattern/pattern.json"), listOfPattern);

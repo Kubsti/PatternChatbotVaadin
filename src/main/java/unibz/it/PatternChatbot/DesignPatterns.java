@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
-public class DesingPatterns{
+public class DesignPatterns{
     @JsonProperty("patterns")
     public ArrayList<Pattern> getPatterns() {
         return this.patterns; }

@@ -1,8 +1,8 @@
 package unibz.it.PatternChatbot;
 
 import com.nimbusds.jose.shaded.gson.Gson;
+import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
-import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.server.VaadinSession;
 import oshi.util.tuples.Pair;
 
@@ -14,7 +14,6 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class SearchState {
     public SearchResponseDto handleSearch(String searchInput) {
         ArrayList<Pair<String,Double>> extractedKeywords = extractKeywords(searchInput);
         if(extractedKeywords.isEmpty()){
-
+            //TODO handle error
         }
         return searchForPattern(extractedKeywords);
         //TODO do implement search
@@ -83,21 +82,26 @@ public class SearchState {
         //search with keywords for a pattern
         SearchResponseDto searchResult = null;
         String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
-        DesingPatterns desingPatterns = (DesingPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+        DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
         ArrayList<String> excludedTags;
+        //TODO fix unchecked function error
         excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
         try{
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().create();
+            //Gson gson = new Gson();
             URL url = URI.create("http://localhost:8080/searchPattern").toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Accept", "application/json");
-            SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(0).getA(),desingPatterns,excludedTags);
+            SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(0).getA(),designPatterns,excludedTags);
             String reqBody = gson.toJson(searchRequest);
             try(DataOutputStream os = new DataOutputStream(conn.getOutputStream())){
-                os.writeBytes(reqBody);
+                byte[] input = reqBody.getBytes("utf-8");
+                os.write(input, 0, input.length);
+                //os.writeUTF(reqBody);
+                //os.writeBytes(reqBody);
                 os.flush();
             }
             int responseCode = conn.getResponseCode();
@@ -109,6 +113,7 @@ public class SearchState {
                         response.append(searchResponseline); // Adds every line to response till the end of file.
                     }
                 }
+                //TODO check why parsing does not work correctly
                 searchResult= gson.fromJson(response.toString(), SearchResponseDto.class);
 
             }else{

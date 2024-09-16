@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @RestController
 public class PatternChatbotController {
-    private DesingPatterns desingPatterns;
+    private DesignPatterns designPatterns;
     private PatternQuestions patternQuestions;
     private ObjectMapper objectMapper = new ObjectMapper();
     private String currentSearchTag = "Domain";
@@ -34,36 +34,36 @@ public class PatternChatbotController {
     @GetMapping("/initialization")
     public ResponseEntity<String> init() throws IOException {
         try{
-            desingPatterns = fileReaderService.getDesingPatterns("Pattern/pattern.json");
+            designPatterns = fileReaderService.getDesignPatterns("Pattern/pattern.json");
             patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
             ArrayList<String> excludedTags = new ArrayList<String>();
             //TODO recheck next search Tag calculation, and nextQuestion calculation
-            String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
-            Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-            SearchResponseDto currResponse = new SearchResponseDto(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
+            String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, excludedTags);
+            PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+            SearchResponseDto currResponse = new SearchResponseDto(designPatterns, nextQuestion, excludedTags, nextSearchTag);
             return ResponseEntity.ok().body(objectMapper.writeValueAsString(currResponse));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
     public void initializeApp() throws IOException{
-        desingPatterns = fileReaderService.getDesingPatterns("Pattern/pattern.json");
+        designPatterns = fileReaderService.getDesignPatterns("Pattern/pattern.json");
         patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
         ArrayList<String> excludedTags = new ArrayList<String>();
-        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
-        Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        SearchResponseDto currResponse = new SearchResponseDto(desingPatterns, nextQuestion, excludedTags, nextSearchTag);
+        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, excludedTags);
+        PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+        SearchResponseDto currResponse = new SearchResponseDto(designPatterns, nextQuestion, excludedTags, nextSearchTag);
         VaadinSession.getCurrent().setAttribute("excludedTags",excludedTags);
         VaadinSession.getCurrent().setAttribute("nextSearchTag",nextSearchTag);
         VaadinSession.getCurrent().setAttribute("nextQuestion", nextQuestion);
-        VaadinSession.getCurrent().setAttribute("designPattern",desingPatterns);
+        VaadinSession.getCurrent().setAttribute("designPattern",designPatterns);
     }
-    @PostMapping(path="/searchPattern", consumes="application/json", produces="application/json")
+    @PostMapping(path="searchPattern", consumes="application/json", produces="application/json")
     public SearchResponseDto searchPattern(@RequestBody SearchDto searchDto) {
         //Caculate next searchtag
-        DesingPatterns filteredDesignPattern = patternSearchService.searchPatterns(searchDto.getCurrSearchTag(), searchDto.getSearchTagValue(), desingPatterns.getPatterns());
-        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, searchDto.getExcludedTags());
-        Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+        DesignPatterns filteredDesignPattern = patternSearchService.searchPatterns(searchDto.getCurrSearchTag(), searchDto.getSearchTagValue(), designPatterns.getPatterns());
+        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, searchDto.getExcludedTags());
+        PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
         SearchResponseDto currResponse = new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag);
         return currResponse;
     }
@@ -77,8 +77,8 @@ public class PatternChatbotController {
         //Try insertion of pattern
         try {
             //Check if the pattern already exists
-            if (desingPatterns.getPatterns().isEmpty() == false) {
-                for (Pattern currPattern : desingPatterns.getPatterns()) {
+            if (!designPatterns.getPatterns().isEmpty()) {
+                for (Pattern currPattern : designPatterns.getPatterns()) {
                     //TODO implement a better comparison
                     if (currPattern.name.equalsIgnoreCase(pattern.name)) {
                         return new ResponseEntity<>("A pattern with the Name: " + pattern.name + " already exists.", HttpStatus.BAD_REQUEST);
@@ -101,15 +101,15 @@ public class PatternChatbotController {
             }
             //If question list is not empty check if we already have a question for a tag
             if(!questionForPatternTags.getQuestions().isEmpty()){
-                for(Question currQuestion: questionForPatternTags.getQuestions()){
-                    if(patternQuestions.containsQuestionForTag(currQuestion.tagName)){
-                        return new ResponseEntity<>("A question for the Tag :" + currQuestion.tagName + " already exists.", HttpStatus.BAD_REQUEST);
+                for(PatternQuestion currQuestion: questionForPatternTags.getQuestions()){
+                    if(patternQuestions.containsQuestionForTag(currQuestion.getTagName())){
+                        return new ResponseEntity<>("A question for the Tag :" + currQuestion.getTagName() + " already exists.", HttpStatus.BAD_REQUEST);
                     }
                 }
             }
             //Insert pattern
-            desingPatterns.getPatterns().add(pattern);
-            patternWriterService.writePattern(desingPatterns);
+            designPatterns.getPatterns().add(pattern);
+            patternWriterService.writePattern(designPatterns);
             return ResponseEntity.ok("Pattern inserted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -120,12 +120,12 @@ public class PatternChatbotController {
         //Try update of pattern
         //TODO create a generic method which checks if a pattern sent is valid and use it to handle wrong formatted input
         try {
-            if (desingPatterns.getPatterns().isEmpty() == false) {
-                for (Pattern currPattern : desingPatterns.getPatterns()) {
+            if (!designPatterns.getPatterns().isEmpty()) {
+                for (Pattern currPattern : designPatterns.getPatterns()) {
                     if (currPattern.name.equalsIgnoreCase(pattern.name)) {
-                        desingPatterns.getPatterns().remove(currPattern);
-                        desingPatterns.getPatterns().add(pattern);
-                        patternWriterService.writePattern(desingPatterns);
+                        designPatterns.getPatterns().remove(currPattern);
+                        designPatterns.getPatterns().add(pattern);
+                        patternWriterService.writePattern(designPatterns);
                         return ResponseEntity.ok("Pattern: " + pattern.name +  " successfully updated");
                     }
                 }
@@ -139,10 +139,10 @@ public class PatternChatbotController {
     public ResponseEntity<String> deletePattern(@RequestBody Pattern pattern) {
         //Try deletion of pattern
         try {
-            if (desingPatterns.getPatterns().isEmpty() == false) {
-                if(desingPatterns.getPatterns().contains(pattern)){
-                    if(desingPatterns.getPatterns().remove(pattern)){
-                        patternWriterService.writePattern(desingPatterns);
+            if (!designPatterns.getPatterns().isEmpty()) {
+                if(designPatterns.getPatterns().contains(pattern)){
+                    if(designPatterns.getPatterns().remove(pattern)){
+                        patternWriterService.writePattern(designPatterns);
                         return ResponseEntity.ok("Pattern: " + pattern.name +  " successfully deleted");
                     }else{
                         //TODO check if case can occur or if it is always caught by exception

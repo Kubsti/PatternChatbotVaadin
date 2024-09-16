@@ -7,43 +7,43 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Integration",
-          "TagValue": "External Systems"
+          "tagValue": "External Systems"
         },
         {
           "TagName": "Architectural Strategy",
-          "TagValue": "Isolation"
+          "tagValue": "Isolation"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Category",
-          "TagValue": "Integration"
+          "tagValue": "Integration"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Coupling"
+          "tagValue": "Coupling"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Latency"
+          "tagValue": "Latency"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Decoupling"
+          "tagValue": "Decoupling"
         },
         {
           "TagName": "Role",
-          "TagValue": "Adaptor"
+          "tagValue": "Adaptor"
         },
         {
           "TagName": "Development Paradigm",
-          "TagValue": "Domain-Driven Design (DDD)"
+          "tagValue": "Domain-Driven Design (DDD)"
         }
       ]
     },
@@ -54,47 +54,47 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Communication"
+          "tagValue": "Communication"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Coupling"
+          "tagValue": "Coupling"
         },
         {
           "TagName": "Communication Style",
-          "TagValue": "Asynchronous"
+          "tagValue": "Asynchronous"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Chattiness"
+          "tagValue": "Chattiness"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Throughput"
+          "tagValue": "Throughput"
         },
         {
           "TagName": "Governance",
-          "TagValue": "Decentralized"
+          "tagValue": "Decentralized"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Scalable Communication"
+          "tagValue": "Scalable Communication"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Complex Communication"
+          "tagValue": "Complex Communication"
         },
         {
           "TagName": "Development Paradigm",
-          "TagValue": "Event-Driven Architecture"
+          "tagValue": "Event-Driven Architecture"
         }
       ]
     },
@@ -105,55 +105,55 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Query"
+          "tagValue": "Query"
         },
         {
           "TagName": "Architectural Strategy",
-          "TagValue": "Specialization"
+          "tagValue": "Specialization"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Distributed query"
+          "tagValue": "Distributed query"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Eventual consistency"
+          "tagValue": "Eventual consistency"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Performance"
+          "tagValue": "Performance"
         },
         {
           "TagName": "Communication Style",
-          "TagValue": "Asynchronous"
+          "tagValue": "Asynchronous"
         },
         {
           "TagName": "Testing",
-          "TagValue": "Command and Query Testing"
+          "tagValue": "Command and Query Testing"
         },
         {
           "TagName": "Scaling",
-          "TagValue": "Horizontal and Data Partitioning Scaling"
+          "tagValue": "Horizontal and Data Partitioning Scaling"
         },
         {
           "TagName": "Role",
-          "TagValue": "Aggregator"
+          "tagValue": "Aggregator"
         },
         {
           "TagName": "Data Ownership",
-          "TagValue": "Service-Specific Data Storage"
+          "tagValue": "Service-Specific Data Storage"
         },
         {
           "TagName": "Development Paradigm",
-          "TagValue": "Event-Driven Architecture"
+          "tagValue": "Event-Driven Architecture"
         }
       ]
     },
@@ -164,39 +164,39 @@
       "tags": [
 	    {
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Decomposition"
+          "tagValue": "Decomposition"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Defining Boundaries"
+          "tagValue": "Defining Boundaries"
         },
         {
           "TagName": "Architectural Strategy",
-          "TagValue": "Decomposition"
+          "tagValue": "Decomposition"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Development Paradigm",
-          "TagValue": "Domain-Driven Design (DDD)"
+          "tagValue": "Domain-Driven Design (DDD)"
         },
         {
           "TagName": "Testing",
-          "TagValue": "Contract Testing"
+          "tagValue": "Contract Testing"
         },
         {
           "TagName": "Scaling",
-          "TagValue": "Horizontal Scaling"
+          "tagValue": "Horizontal Scaling"
         },
         {
           "TagName": "Data Ownership",
-          "TagValue": "Domain-Specific Data Storage"
+          "tagValue": "Domain-Specific Data Storage"
         }
       ]
     },
@@ -207,47 +207,47 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Data Management"
+          "tagValue": "Data Management"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External and Internal"
+          "tagValue": "External and Internal"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Temporal Inconsistency"
+          "tagValue": "Temporal Inconsistency"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Performance"
+          "tagValue": "Performance"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Consistency"
+          "tagValue": "Consistency"
         },
         {
           "TagName": "Scaling",
-          "TagValue": "Horizontal Scaling"
+          "tagValue": "Horizontal Scaling"
         },
         {
           "TagName": "Testing",
-          "TagValue": "Event Replay Testing"
+          "tagValue": "Event Replay Testing"
         },
         {
           "TagName": "Consistency",
-          "TagValue": "Eventual Consistency"
+          "tagValue": "Eventual Consistency"
         },
         {
           "TagName": "Communication Style",
-          "TagValue": "Asynchronous"
+          "tagValue": "Asynchronous"
         },
         {
           "TagName": "Development Paradigm",
-          "TagValue": "Event-Driven Architecture"
+          "tagValue": "Event-Driven Architecture"
         }
       ]
     },
@@ -258,51 +258,51 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Security"
+          "tagValue": "Security"
         },
         {
           "TagName": "Governance",
-          "TagValue": "Centralized"
+          "tagValue": "Centralized"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Scaling",
-          "TagValue": "Horizontal Scaling"
+          "tagValue": "Horizontal Scaling"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Centralized security"
+          "tagValue": "Centralized security"
         },
         {
           "TagName": "Testing",
-          "TagValue": "Security Testing"
+          "tagValue": "Security Testing"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Centralized Security Management"
+          "tagValue": "Centralized Security Management"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Potential Single Point of Failure"
+          "tagValue": "Potential Single Point of Failure"
         },
         {
           "TagName": "Role",
-          "TagValue": "Proxy"
+          "tagValue": "Proxy"
         },
         {
           "TagName": "Architectural Strategy",
-          "TagValue": "Proxying"
+          "tagValue": "Proxying"
         },
         {
           "TagName": "Service Composition",
-          "TagValue": "Union of Services"
+          "tagValue": "Union of Services"
         }
       ]
     },
@@ -313,55 +313,55 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Query"
+          "tagValue": "Query"
         },
         {
           "TagName": "Service Composition",
-          "TagValue": "Aggregated Services"
+          "tagValue": "Aggregated Services"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Testing",
-          "TagValue": "End-to-End Testing"
+          "tagValue": "End-to-End Testing"
         },
         {
           "TagName": "Communication Style",
-          "TagValue": "Synchronous"
+          "tagValue": "Synchronous"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Simplified Integration and Composition"
+          "tagValue": "Simplified Integration and Composition"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Increased Complexity in Gateway Logic"
+          "tagValue": "Increased Complexity in Gateway Logic"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Distributed Query"
+          "tagValue": "Distributed Query"
         },
         {
           "TagName": "Role",
-          "TagValue": "Aggregator"
+          "tagValue": "Aggregator"
         },
         {
           "TagName": "Architectural Strategy",
-          "TagValue": "Proxying"
+          "tagValue": "Proxying"
         },
         {
           "TagName": "Consistency",
-          "TagValue": "Strong consistency"
+          "tagValue": "Strong consistency"
         },
         {
           "TagName": "Scaling",
-          "TagValue": "Data Partitioning"
+          "tagValue": "Data Partitioning"
         }
       ]
     },
@@ -372,47 +372,47 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Integration"
+          "tagValue": "Integration"
         },
         {
           "TagName": "Integration",
-          "TagValue": "External Clients"
+          "tagValue": "External Clients"
         },
         {
           "TagName": "Governance",
-          "TagValue": "Centralized"
+          "tagValue": "Centralized"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Centralized Routing Control"
+          "tagValue": "Centralized Routing Control"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Dependency on Gateway for Routing"
+          "tagValue": "Dependency on Gateway for Routing"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Distributed Services"
+          "tagValue": "Distributed Services"
         },
         {
           "TagName": "Role",
-          "TagValue": "Proxy"
+          "tagValue": "Proxy"
         },
         {
           "TagName": "Architectural Strategy",
-          "TagValue": "Proxying"
+          "tagValue": "Proxying"
         },
         {
           "TagName": "Service Composition",
-          "TagValue": "Union of Services"
+          "tagValue": "Union of Services"
         }
       ]
     },
@@ -423,39 +423,39 @@
       "tags": [
 	  	{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Communication"
+          "tagValue": "Communication"
         },
         {
           "TagName": "Development Paradigm",
-          "TagValue": "Event-Driven Architecture"
+          "tagValue": "Event-Driven Architecture"
         },
         {
           "TagName": "Communication Style",
-          "TagValue": "Asynchronous"
+          "tagValue": "Asynchronous"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External and Internal"
+          "tagValue": "External and Internal"
         },
         {
           "TagName": "Testing",
-          "TagValue": "Message Processing Testing"
+          "tagValue": "Message Processing Testing"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Responsiveness"
+          "tagValue": "Responsiveness"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Complex Error Handling"
+          "tagValue": "Complex Error Handling"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Coupled communication"
+          "tagValue": "Coupled communication"
         }
       ]
     },
@@ -466,39 +466,39 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Scalability"
+          "tagValue": "Scalability"
         },
         {
           "TagName": "Scaling",
-          "TagValue": "Horizontal Scaling"
+          "tagValue": "Horizontal Scaling"
         },
         {
           "TagName": "Scope",
-          "TagValue": "External"
+          "tagValue": "External"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Scalable Distribution"
+          "tagValue": "Scalable Distribution"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Latency"
+          "tagValue": "Latency"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Workload Distribution"
+          "tagValue": "Workload Distribution"
         },
         {
           "TagName": "Architectural Strategy",
-          "TagValue": "Proxying"
+          "tagValue": "Proxying"
         },
         {
           "TagName": "Role",
-          "TagValue": "Proxy"
+          "tagValue": "Proxy"
         }
       ]
     },
@@ -509,39 +509,39 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Data Management"
+          "tagValue": "Data Management"
         },
         {
           "TagName": "Governance",
-          "TagValue": "Decentralized"
+          "tagValue": "Decentralized"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Isolated Data Management"
+          "tagValue": "Isolated Data Management"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Increased Complexity in Data Consistency"
+          "tagValue": "Increased Complexity in Data Consistency"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Shared Data Access"
+          "tagValue": "Shared Data Access"
         },
         {
           "TagName": "Data Ownership",
-          "TagValue": "Service-Specific Data Storage"
+          "tagValue": "Service-Specific Data Storage"
         },
         {
           "TagName": "Scaling",
-          "TagValue": "Data Partitioning"
+          "tagValue": "Data Partitioning"
         },
         {
           "TagName": "Development Paradigm",
-          "TagValue": "Domain-Driven Design (DDD)"
+          "tagValue": "Domain-Driven Design (DDD)"
         }
       ]
     },
@@ -552,31 +552,31 @@
       "tags": [
 		{
           "TagName": "Domain",
-          "TagValue": "Microservice"
+          "tagValue": "Microservice"
         },
         {
           "TagName": "Category",
-          "TagValue": "Integration"
+          "tagValue": "Integration"
         },
         {
           "TagName": "Integration",
-          "TagValue": "Internal Services"
+          "tagValue": "Internal Services"
         },
         {
           "TagName": "Benefit",
-          "TagValue": "Dynamic Service Configuration"
+          "tagValue": "Dynamic Service Configuration"
         },
         {
           "TagName": "Cost",
-          "TagValue": "Dependency on Discovery Mechanism"
+          "tagValue": "Dependency on Discovery Mechanism"
         },
         {
           "TagName": "Problem",
-          "TagValue": "Dynamic Service Location"
+          "tagValue": "Dynamic Service Location"
         },
         {
           "TagName": "Role",
-          "TagValue": "Service Locator"
+          "tagValue": "Service Locator"
         }
       ]
     }
