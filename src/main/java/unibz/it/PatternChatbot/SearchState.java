@@ -19,12 +19,27 @@ import java.util.List;
 
 public class SearchState {
     public SearchResponseDto handleSearch(String searchInput) {
+        int retries = 0;
         ArrayList<Pair<String,Double>> extractedKeywords = extractKeywords(searchInput);
         if(extractedKeywords.isEmpty()){
             //TODO handle error
+            VaadinSession.getCurrent().setAttribute("state","errorstate");
         }
-        return searchForPattern(extractedKeywords);
-        //TODO do implement search
+        SearchResponseDto searchResult = searchForPattern(extractedKeywords, 0);
+        //print message for user
+        while(searchResult.getDesignPatterns().getPatterns().isEmpty() && retries < 3){
+            if(extractedKeywords.size() > retries){
+                retries++;
+                searchResult = searchForPattern(extractedKeywords, retries);
+            }else{
+                //set retries to 3 enter error state and try to recover
+                retries = 3;
+                VaadinSession.getCurrent().setAttribute("state","errorstate");
+                VaadinSession.getCurrent().setAttribute("errorcause","searchFailedOnRetries");
+            }
+
+        }
+        return searchResult;
     }
     public void handleError(){
 
@@ -56,6 +71,7 @@ public class SearchState {
 //                    listOfMessages.add(newBotMessage);
 //                    chat.setItems(listOfMessages);
                     //TODO handle no token could be generated
+                    //
                 }else{
 
                     for (ArrayList<Object> item : javaList) {
@@ -74,7 +90,7 @@ public class SearchState {
         return tupleList;
     }
 
-    public SearchResponseDto searchForPattern(ArrayList<Pair<String,Double>> keywords){
+    public SearchResponseDto searchForPattern(ArrayList<Pair<String,Double>> keywords,int keywordToSearchWith){
         //Call controller to search for keywords
         //handle no pattern found
         //handle pattern found
@@ -95,7 +111,7 @@ public class SearchState {
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Accept", "application/json");
-            SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(0).getA(),designPatterns,excludedTags);
+            SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(keywordToSearchWith).getA(),designPatterns,excludedTags);
             String reqBody = gson.toJson(searchRequest);
             try(DataOutputStream os = new DataOutputStream(conn.getOutputStream())){
                 byte[] input = reqBody.getBytes("utf-8");
