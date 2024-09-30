@@ -17,8 +17,8 @@ public class ChatView extends VerticalLayout {
     private MessageList chat;
     private MessageInput input;
     private List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
-    private SearchState searchState;
     private IFrame webpageIFrame = new IFrame();
+    private State currentState = new IntentDiscoveryState();
     public MessageList getMessageList(){
         return chat;
     }
@@ -26,12 +26,12 @@ public class ChatView extends VerticalLayout {
     public ChatView() {
         chat = new MessageList();
         input = new MessageInput();
-        searchState = new SearchState();
         add(chat, input);
-        PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+        //PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+        String startPhrase = "Hello I'm Pattera here to help you find the right pattern for your problem. How can I help you today?";
         MessageListItem firstMessage = new MessageListItem(
-                question.getQuestion(),
-                Instant.now(), "PatternSearchBot");
+                startPhrase,
+                Instant.now(), "Pattera");
         listOfMessages.add(firstMessage);
         chat.setItems(listOfMessages);
         input.addSubmitListener(this::onSubmit);
@@ -42,38 +42,38 @@ public class ChatView extends VerticalLayout {
       this.setHeightFull(); // We maximize to window
       chat.setSizeFull(); // Chat takes most of the space
       input.setWidthFull(); // Full width only
-      //chat.setMaxWidth("800px"); // Limit the width
-      //input.setMaxWidth("800px");
     }
 
     private void onSubmit(MessageInput.SubmitEvent submitEvent) {
         //TODO check that input is not empty
         //add message of user to chat
-        MessageListItem newMessage = new MessageListItem(submitEvent.getValue());
-        listOfMessages.add(newMessage);
-        chat.setItems(listOfMessages);
 
-        MessageListItem botCalculating = new MessageListItem("Calculating response...", Instant.now(), "PatternSearchBot");
-        listOfMessages.add(botCalculating);
-        chat.setItems(listOfMessages);
-        //Change logic depending on state
-        String currState = (String ) VaadinSession.getCurrent().getAttribute("state");
-        if(currState.equalsIgnoreCase("searchstate")){
-            SearchResponseDto searchResult = searchState.handleSearch(submitEvent.getValue());
-            if(searchResult == null || searchResult.getDesignPatterns().getPatterns().isEmpty()){
-                //TODO handle special case here or in state
-            }else{
-                if(searchResult.getDesignPatterns().getPatterns().size() == 1 ){
-                    this.webpageIFrame.setSrc(searchResult.getDesignPatterns().getPatterns().get(0).url);
-
-                    //TODO switch to found state, show maybe reset button make new search etc.
-                }else{
-                    this.updateChat(searchResult);
-                }
-            }
-        }else if(currState.equalsIgnoreCase("errorstate")){
-
-        }
+        this.currentState.handleInput(submitEvent.getValue(), this.currentState);
+//        MessageListItem newMessage = new MessageListItem(submitEvent.getValue());
+//        listOfMessages.add(newMessage);
+//        chat.setItems(listOfMessages);
+//
+//        MessageListItem botCalculating = new MessageListItem("Calculating response...", Instant.now(), "PatternSearchBot");
+//        listOfMessages.add(botCalculating);
+//        chat.setItems(listOfMessages);
+//        //Change logic depending on state
+//        String currState = (String ) VaadinSession.getCurrent().getAttribute("state");
+//        if(currState.equalsIgnoreCase("searchstate")){
+//            SearchResponseDto searchResult = searchState.handleSearch(submitEvent.getValue());
+//            if(searchResult == null || searchResult.getDesignPatterns().getPatterns().isEmpty()){
+//                //TODO handle special case here or in state
+//            }else{
+//                if(searchResult.getDesignPatterns().getPatterns().size() == 1 ){
+//                    this.webpageIFrame.setSrc(searchResult.getDesignPatterns().getPatterns().get(0).url);
+//
+//                    //TODO switch to found state, show maybe reset button make new search etc.
+//                }else{
+//                    this.updateChat(searchResult);
+//                }
+//            }
+//        }else if(currState.equalsIgnoreCase("errorstate")){
+//
+//        }
 
     }
 

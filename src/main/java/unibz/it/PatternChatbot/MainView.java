@@ -33,25 +33,15 @@ private Anchor anchor = new Anchor();
 
     public MainView() {
         this.setSizeFull();
-        //layout.setAlignItems(FlexComponent.Alignment.CENTER);
-        //VerticalLayout chatLayout  = new VerticalLayout();
+
         //TODO find an alternative to the IFrame or make iframe usable;
-        //webpageIFrame = new IFrame("https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography");
         webpageIFrame = new IFrame("https://www.wikipedia.org/");
         webpageIFrame.setId("patternIFrame");
         webpageIFrame.setHeightFull();
         webpageIFrame.setWidth("70%");
         webpageIFrame.setSandbox(IFrame.SandboxType.ALLOW_SCRIPTS, IFrame.SandboxType.ALLOW_SAME_ORIGIN);
         add(webpageIFrame);
-//        anchor.setHeightFull();
-//        anchor.setWidth("70%");
-//        add(anchor);
-        //this.setPage("https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography");
-        this.setPage("https://www.wiktionary.org/");
-//        div.setHeightFull();
-//        div.setMaxHeight(this.getMaxHeight());
-//        div.setWidth("70%");
-//        div.setId("patternIFrame");
+        this.setPage("https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography");
         try {
 
 //            String externalPageContent = fetchExternalPage("https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography");
@@ -149,8 +139,6 @@ private Anchor anchor = new Anchor();
             throw new RuntimeException(e);
         }
         driver.quit();
-//        StreamResource resource = new StreamResource("output.pdf",
-//                () -> new ByteArrayInputStream(pdfBytes));
 
        this.anchor =  new Anchor(new StreamResource("output.pdf",
                 () ->  VaadinServlet.getCurrent().getServletContext()
