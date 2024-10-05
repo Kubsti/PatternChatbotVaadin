@@ -3,6 +3,8 @@ package unibz.it.PatternChatbot;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
+import com.vaadin.flow.component.html.IFrame;
+import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.server.VaadinSession;
 import oshi.util.tuples.Pair;
 
@@ -17,7 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchState {
+public class SearchState extends State {
     public SearchResponseDto handleSearch(String searchInput) {
         int retries = 0;
         ArrayList<Pair<String,Double>> extractedKeywords = extractKeywords(searchInput);
@@ -44,6 +46,23 @@ public class SearchState {
     public void handleError(){
 
     }
+
+    @Override
+    public void handleInput(String chatInput, State currState, MessageList chat, IFrame webpageIFrame) {
+
+    }
+
+    @Override
+    public void setupResponses() {
+
+    }
+
+
+    @Override
+    public void setupOptions() {
+
+    }
+
     public  ArrayList<Pair<String,Double>> extractKeywords(String searchInput){
         File file = new File("Python/keyword_extractor.py");
         String absolutePathOfKeywordExtractor = file.getAbsolutePath();

@@ -78,7 +78,6 @@ private Anchor anchor = new Anchor();
                     VaadinSession.getCurrent().setAttribute("nextSearchTag",response.getNextSearchTag());
                     VaadinSession.getCurrent().setAttribute("nextQuestion", response.getPatternQuestion());
                     VaadinSession.getCurrent().setAttribute("designPattern",response.getDesignPatterns());
-                    VaadinSession.getCurrent().setAttribute("state","searchstate");
                 }catch(Exception e){
                     //TODO handle exception
                     System.out.println(e.getMessage());
@@ -88,9 +87,9 @@ private Anchor anchor = new Anchor();
             //TODO handle exception
             System.out.println(e.getMessage());
         }
-        MessageListItem message1 = new MessageListItem(
-                "Please tell me which pattern you would like to search?",
-                Instant.now(), "Patty");
+//        MessageListItem message1 = new MessageListItem(
+//                "Please tell me which pattern you would like to search?",
+//                Instant.now(), "Patty");
         ChatView chatView = new ChatView();
         chatView.setWebpageIFrame(webpageIFrame);
         MessageList messageList = chatView.getMessageList();
@@ -140,11 +139,11 @@ private Anchor anchor = new Anchor();
         }
         driver.quit();
 
-       this.anchor =  new Anchor(new StreamResource("output.pdf",
-                () ->  VaadinServlet.getCurrent().getServletContext()
-                        .getResourceAsStream("assets/output.pdf")),
-                "A document");
-        anchor.getElement().setAttribute("router-ignore", true);
+//       this.anchor =  new Anchor(new StreamResource("output.pdf",
+//                () ->  VaadinServlet.getCurrent().getServletContext()
+//                        .getResourceAsStream("assets/output.pdf")),
+//                "A document");
+//        anchor.getElement().setAttribute("router-ignore", true);
         this.webpageIFrame.setSrc("assets/output.pdf");
     }
 
