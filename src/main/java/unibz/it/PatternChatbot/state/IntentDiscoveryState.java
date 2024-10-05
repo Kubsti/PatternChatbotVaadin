@@ -1,7 +1,8 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.state;
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
+import unibz.it.PatternChatbot.model.Response;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class IntentDiscoveryState extends State{
 
     @Override
     public void handleInput(String chatInput, State currState, MessageList chat, IFrame webpageIFrame) {
-        //TODO implement case/logic for no match
+        //TODO implement case/logic for no match or create a fallback
         for (Map.Entry<Pattern, Response> set :
                 this.Rules.entrySet()) {
             //Try to match a Rule
@@ -42,6 +43,7 @@ public class IntentDiscoveryState extends State{
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
+                //TODO check for what user wants help for
                 chat.setItems(new MessageListItem(
                         "1. Asking for help entered",
                         Instant.now(), "Pattera"));
@@ -73,7 +75,7 @@ public class IntentDiscoveryState extends State{
             @Override
             public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
                 chat.setItems(new MessageListItem(
-                        "4. General Greeting/Intro",
+                        "Hi, how can I help you?",
                         Instant.now(), "Pattera"));
             }
         });
@@ -101,10 +103,10 @@ public class IntentDiscoveryState extends State{
 
     @Override
     public void setupOptions() {
-        this.Options.add("1. Guided Search");
-        this.Options.add("2. Recommend a pattern");
-        this.Options.add("3. Explaining a problem to get a pattern");
-        this.Options.add("4. Asking what Pattera can do");
-        this.Options.add("5. Requesting a specific pattern");
+        this.Options.add("1. do a guided search to find a fitting pattern for your problem");
+        this.Options.add("2. recommend similar pattern to a given pattern(not implemented concurrently)");
+        this.Options.add("3. try to find a pattern for a problem you gave  me(not implemented concurrently");
+        this.Options.add("4. get the infos for a pattern you provided");
+        //this.Options.add("5. Requesting a specific pattern");
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.vaadin.flow.server.VaadinSession;
+import unibz.it.PatternChatbot.model.*;
+import unibz.it.PatternChatbot.service.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +75,7 @@ public class PatternChatbotController {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<String> insertPattern(@RequestBody Pattern pattern,  PatternQuestions questionForPatternTags) {
+    public ResponseEntity<String> insertPattern(@RequestBody Pattern pattern, PatternQuestions questionForPatternTags) {
         //Try insertion of pattern
         try {
             //Check if the pattern already exists

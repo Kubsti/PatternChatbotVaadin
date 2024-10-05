@@ -1,4 +1,4 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +10,7 @@ public class DesignPatterns{
         return this.patterns; }
     public void setPatterns(ArrayList<Pattern> patterns) {
         this.patterns = patterns; }
-    ArrayList<Pattern> patterns;
+    public ArrayList<Pattern> patterns;
 }
 
 

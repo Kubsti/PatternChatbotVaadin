@@ -1,4 +1,4 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 public class PatternQuestion {

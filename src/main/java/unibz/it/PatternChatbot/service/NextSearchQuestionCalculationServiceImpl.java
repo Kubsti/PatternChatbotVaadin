@@ -1,9 +1,11 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.service;
 
 import org.springframework.stereotype.Service;
+import unibz.it.PatternChatbot.model.PatternQuestion;
+import unibz.it.PatternChatbot.model.PatternQuestions;
 
 @Service
-public class NextSearchQuestionCalculationServiceImpl implements NextSearchQuestionCalculationService{
+public class NextSearchQuestionCalculationServiceImpl implements NextSearchQuestionCalculationService {
     @Override
     public PatternQuestion calculateNextSearchQuestion(String nextSearchTag, PatternQuestions patternQuestions) {
         PatternQuestion nextQuestion = new PatternQuestion("","");

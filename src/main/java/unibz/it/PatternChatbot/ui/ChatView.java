@@ -1,4 +1,4 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.ui;
 
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageInput;
@@ -6,8 +6,10 @@ import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
-
-import java.io.*;
+import unibz.it.PatternChatbot.model.PatternQuestion;
+import unibz.it.PatternChatbot.model.SearchResponseDto;
+import unibz.it.PatternChatbot.state.IntentDiscoveryState;
+import unibz.it.PatternChatbot.state.State;
 
 import java.time.Instant;
 import java.util.ArrayList;

@@ -2,6 +2,8 @@ package unibz.it.PatternChatbot;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import unibz.it.PatternChatbot.service.*;
+
 @Configuration
 public class PatternChatbotApiApplicationConfig {
     @Bean

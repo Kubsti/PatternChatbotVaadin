@@ -1,13 +1,16 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.service;
 
 import org.springframework.stereotype.Service;
+import unibz.it.PatternChatbot.model.DesignPatterns;
+import unibz.it.PatternChatbot.model.Pattern;
+import unibz.it.PatternChatbot.model.Tag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 @Service
-public class NextSearchTagCalculationServiceImpl implements NextSearchTagCalculationService{
+public class NextSearchTagCalculationServiceImpl implements NextSearchTagCalculationService {
     private class TagInfo{
         private int occurenceOfTag = 0;
         private HashSet<String> listOfPossibleTagValues = new HashSet<String>();

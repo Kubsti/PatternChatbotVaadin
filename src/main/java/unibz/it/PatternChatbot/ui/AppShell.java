@@ -1,4 +1,4 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.ui;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.PWA;

@@ -1,14 +1,16 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import unibz.it.PatternChatbot.model.DesignPatterns;
+import unibz.it.PatternChatbot.model.PatternQuestions;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
 @Service
-public class FileReaderServiceImpl implements FileReaderService{
+public class FileReaderServiceImpl implements FileReaderService {
     private ObjectMapper objectMapper = new ObjectMapper();
     @Override
     public DesignPatterns getDesignPatterns(String filePath) throws IOException {

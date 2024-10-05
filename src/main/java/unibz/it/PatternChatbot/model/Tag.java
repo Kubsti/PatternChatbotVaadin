@@ -1,4 +1,4 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,13 +8,13 @@ public class Tag{
         return this.tagName; }
     public void setTagName(String tagName) {
         this.tagName = tagName; }
-    String tagName;
+    public String tagName;
     @JsonProperty("tagValue")
     public String getTagValue() {
         return this.tagValue; }
     public void setTagValue(String tagValue) {
         this.tagValue = tagValue; }
-    String tagValue;
+    public String tagValue;
     @Override
     public boolean equals(Object obj){
         //Check if it is not null and if the class is Pattern Class

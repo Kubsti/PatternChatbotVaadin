@@ -1,4 +1,7 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.service;
+
+import unibz.it.PatternChatbot.model.DesignPatterns;
+import unibz.it.PatternChatbot.model.PatternQuestions;
 
 import java.io.IOException;
 

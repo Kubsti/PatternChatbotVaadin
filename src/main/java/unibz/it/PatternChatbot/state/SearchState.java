@@ -1,12 +1,17 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.state;
 
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
+import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.server.VaadinSession;
 import oshi.util.tuples.Pair;
+import unibz.it.PatternChatbot.model.DesignPatterns;
+import unibz.it.PatternChatbot.model.Response;
+import unibz.it.PatternChatbot.model.SearchDto;
+import unibz.it.PatternChatbot.model.SearchResponseDto;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -16,8 +21,11 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SearchState extends State {
     public SearchResponseDto handleSearch(String searchInput) {
@@ -49,18 +57,46 @@ public class SearchState extends State {
 
     @Override
     public void handleInput(String chatInput, State currState, MessageList chat, IFrame webpageIFrame) {
-
+        for (Map.Entry<Pattern, Response> set :
+                this.Rules.entrySet()) {
+            //Try to match a Rule
+            if(set.getKey().matcher(chatInput).find()) {
+                set.getValue().responseAction(chatInput,currState,chat,webpageIFrame);
+                break;
+            }
+        }
     }
 
     @Override
     public void setupResponses() {
 
+        this.Rules.put(Pattern.compile(""
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
+                currState = new SearchState();
+                chat.setItems(new MessageListItem(
+                        "",
+                        Instant.now(), "Pattera"));
+            }
+        });
+
+        this.Rules.put(Pattern.compile(""
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
+                currState = new SearchState();
+                chat.setItems(new MessageListItem(
+                        "",
+                        Instant.now(), "Pattera"));
+            }
+        });
     }
 
 
     @Override
     public void setupOptions() {
-
+        //TODO to be implemented
     }
 
     public  ArrayList<Pair<String,Double>> extractKeywords(String searchInput){

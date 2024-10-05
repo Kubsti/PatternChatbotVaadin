@@ -1,7 +1,8 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.state;
 
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
+import unibz.it.PatternChatbot.model.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
