@@ -5,7 +5,7 @@ import com.vaadin.flow.component.messages.MessageList;
 import unibz.it.PatternChatbot.state.State;
 
 public abstract class Response {
-    public abstract void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame);
+    public abstract State responseAction(String input, MessageList chat, IFrame webpageIFrame);
     //TODO check if really needed
     //public abstract void stateSwitch(State currState, );
 }

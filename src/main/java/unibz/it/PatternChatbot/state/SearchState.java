@@ -44,8 +44,9 @@ public class SearchState extends State {
             }else{
                 //set retries to 3 enter error state and try to recover
                 retries = 3;
-                VaadinSession.getCurrent().setAttribute("state","errorstate");
-                VaadinSession.getCurrent().setAttribute("errorcause","searchFailedOnRetries");
+                //TODO implement a better error handing. Maybe with a special state?
+                //VaadinSession.getCurrent().setAttribute("state","errorstate");
+                //VaadinSession.getCurrent().setAttribute("errorcause","searchFailedOnRetries");
             }
 
         }
@@ -56,15 +57,16 @@ public class SearchState extends State {
     }
 
     @Override
-    public void handleInput(String chatInput, State currState, MessageList chat, IFrame webpageIFrame) {
+    public State handleInput(String chatInput, MessageList chat, IFrame webpageIFrame) {
         for (Map.Entry<Pattern, Response> set :
                 this.Rules.entrySet()) {
             //Try to match a Rule
             if(set.getKey().matcher(chatInput).find()) {
-                set.getValue().responseAction(chatInput,currState,chat,webpageIFrame);
-                break;
+                return set.getValue().responseAction(chatInput,chat,webpageIFrame);
             }
         }
+        //TODO go into correct state
+        return new SearchState();
     }
 
     @Override
@@ -74,55 +76,71 @@ public class SearchState extends State {
         this.Rules.put(Pattern.compile("(?i)(nearest|closest|similar|related).*pattern.*(to|like).*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
                 //currState = new SearchState();
-                chat.setItems(new MessageListItem(
+                chat.getItems().add(new MessageListItem(
                         "To be implemented",
                         Instant.now(), "Pattera"));
+                //TODO go into correct state
+                return new SearchState();
             }
         });
         //2. Display Currently Found Patterns
         this.Rules.put(Pattern.compile("(?i)(show|display|list).*current.*pattern(s)?"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
                 //currState = new SearchState();
-                chat.setItems(new MessageListItem(
+                chat.getItems().add(new MessageListItem(
                         "To be implemented",
                         Instant.now(), "Pattera"));
+                //TODO go into correct state
+                return new SearchState();
             }
         });
         //3. Requesting a Specific Pattern Type (e.g., design pattern, behavior pattern)
         this.Rules.put(Pattern.compile("(?i)(design|behavior(al)?|structural|creational).*pattern(s)?"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
                 //currState = new SearchState();
-                chat.setItems(new MessageListItem(
+                chat.getItems().add(new MessageListItem(
                         "To be implemented",
                         Instant.now(), "Pattera"));
+                //TODO go into correct state
+                return new SearchState();
             }
         });
         //4. Go to IntentDiscoveryState
         this.Rules.put(Pattern.compile("(?i)(what|how).*help|(discover|guide|guess).*intent|(how|can).*start"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
                 //TODO Reset search, or mabye call intialization method again? Then go back to IntentDiscoveryState,
-                currState = new IntentDiscoveryState();
-                chat.setItems(new MessageListItem(
+                chat.getItems().add(new MessageListItem(
                         "To be implemented",
                         Instant.now(), "Pattera"));
+                //TODO go into correct state
+                return new IntentDiscoveryState();
             }
         });
         //5. Fallback (Assume Search Input for Keywords)
         this.Rules.put(Pattern.compile("(?i).*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
-                chat.setItems(new MessageListItem(
-                        "",
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+                SearchResponseDto searchResponse = handleSearch(input);
+                VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
+                VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
+                VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
+                VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
+                List<MessageListItem> messages = new ArrayList<MessageListItem>();
+                messages.addAll(chat.getItems());
+                messages.add(new MessageListItem(
+                        searchResponse.getPatternQuestion().getQuestion(),
                         Instant.now(), "Pattera"));
+                chat.setItems(messages);
+                return new SearchState();
             }
         });
     }

@@ -20,7 +20,7 @@ public class ChatView extends VerticalLayout {
     private MessageInput input;
     private List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
     private IFrame webpageIFrame = new IFrame();
-    private State currentState = new IntentDiscoveryState();
+    public State currentState = new IntentDiscoveryState();
     public MessageList getMessageList(){
         return chat;
     }
@@ -50,7 +50,7 @@ public class ChatView extends VerticalLayout {
         //TODO check that input is not empty
         //add message of user to chat
 
-        this.currentState.handleInput(submitEvent.getValue(), this.currentState, this.chat,this.webpageIFrame);
+       this.currentState =  this.currentState.handleInput(submitEvent.getValue(), this.chat,this.webpageIFrame);
 //        MessageListItem newMessage = new MessageListItem(submitEvent.getValue());
 //        listOfMessages.add(newMessage);
 //        chat.setItems(listOfMessages);
