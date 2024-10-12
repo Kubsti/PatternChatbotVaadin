@@ -47,6 +47,8 @@ public class IntentDiscoveryState extends State{
                 chat.setItems(new MessageListItem(
                         "1. Asking for help entered",
                         Instant.now(), "Pattera"));
+
+                currState= new IntentDiscoveryState();
             }
         });
         //2. Asking for patterns

@@ -3,6 +3,8 @@ package unibz.it.PatternChatbot.state;
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
+import com.vaadin.flow.server.VaadinSession;
+import unibz.it.PatternChatbot.model.PatternQuestion;
 import unibz.it.PatternChatbot.model.Response;
 
 import java.time.Instant;
@@ -44,9 +46,12 @@ public class IntentDiscoverAskingForHelpState extends State{
             @Override
             public void responseAction(String input, State currState, MessageList chat, IFrame webpageIFrame) {
                 currState = new SearchState();
+                PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+                VaadinSession.getCurrent().getAttribute("nextQuestion");
                 chat.setItems(new MessageListItem(
-                        "1. Request for a Guided Search",
+                        question.getQuestion(),
                         Instant.now(), "Pattera"));
+                currState = new SearchState();
             }
         });
         //2. Request for the Nearest Pattern to a Given Pattern
