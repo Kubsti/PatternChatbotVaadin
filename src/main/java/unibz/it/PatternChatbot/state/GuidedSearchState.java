@@ -22,12 +22,19 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
-public class SearchState extends State {
+public class GuidedSearchState extends State {
+
+    public GuidedSearchState(){
+        this.Rules = new LinkedHashMap<Pattern, Response>();
+        this.Options = new ArrayList<String>();
+        this.InitializationMessage ="Search State entered";
+        this.setupResponses();
+        this.setupOptions();
+
+    }
     public SearchResponseDto handleSearch(String searchInput) {
         int retries = 0;
         ArrayList<Pair<String,Double>> extractedKeywords = extractKeywords(searchInput);
@@ -57,16 +64,16 @@ public class SearchState extends State {
     }
 
     @Override
-    public State handleInput(String chatInput, MessageList chat, IFrame webpageIFrame) {
+    public Optional<State> handleInput(String chatInput, MessageList chat, IFrame webpageIFrame) {
         for (Map.Entry<Pattern, Response> set :
                 this.Rules.entrySet()) {
             //Try to match a Rule
             if(set.getKey().matcher(chatInput).find()) {
-                return set.getValue().responseAction(chatInput,chat,webpageIFrame);
+                return Optional.ofNullable(set.getValue().responseAction(chatInput, chat, webpageIFrame));
             }
         }
         //TODO go into correct state
-        return new SearchState();
+        return Optional.of(new GuidedSearchState());
     }
 
     @Override
@@ -82,7 +89,7 @@ public class SearchState extends State {
                         "To be implemented",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new SearchState();
+                return new GuidedSearchState();
             }
         });
         //2. Display Currently Found Patterns
@@ -95,7 +102,7 @@ public class SearchState extends State {
                         "To be implemented",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new SearchState();
+                return null;
             }
         });
         //3. Requesting a Specific Pattern Type (e.g., design pattern, behavior pattern)
@@ -108,7 +115,7 @@ public class SearchState extends State {
                         "To be implemented",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new SearchState();
+                return new GuidedSearchState();
             }
         });
         //4. Go to IntentDiscoveryState
@@ -140,7 +147,7 @@ public class SearchState extends State {
                         searchResponse.getPatternQuestion().getQuestion(),
                         Instant.now(), "Pattera"));
                 chat.setItems(messages);
-                return new SearchState();
+                return new GuidedSearchState();
             }
         });
     }

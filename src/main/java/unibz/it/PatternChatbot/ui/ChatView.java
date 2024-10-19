@@ -14,6 +14,7 @@ import unibz.it.PatternChatbot.state.State;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ChatView extends VerticalLayout {
     private MessageList chat;
@@ -30,12 +31,7 @@ public class ChatView extends VerticalLayout {
         input = new MessageInput();
         add(chat, input);
         //PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
-        String startPhrase = "Hello I'm Pattera here to help you find the right pattern for your problem. How can I help you today?";
-        MessageListItem firstMessage = new MessageListItem(
-                startPhrase,
-                Instant.now(), "Pattera");
-        listOfMessages.add(firstMessage);
-        chat.setItems(listOfMessages);
+        this.outputStateInitMessage();
         input.addSubmitListener(this::onSubmit);
 
       this.setHorizontalComponentAlignment(Alignment.CENTER,
@@ -49,8 +45,11 @@ public class ChatView extends VerticalLayout {
     private void onSubmit(MessageInput.SubmitEvent submitEvent) {
         //TODO check that input is not empty
         //add message of user to chat
-
-       this.currentState =  this.currentState.handleInput(submitEvent.getValue(), this.chat,this.webpageIFrame);
+        Optional<State> newState = this.currentState.handleInput(submitEvent.getValue(), this.chat,this.webpageIFrame);
+        if(newState.isPresent()){
+            this.currentState =  newState.get();
+            this.outputStateInitMessage();
+        }
 //        MessageListItem newMessage = new MessageListItem(submitEvent.getValue());
 //        listOfMessages.add(newMessage);
 //        chat.setItems(listOfMessages);
@@ -79,6 +78,24 @@ public class ChatView extends VerticalLayout {
 
     }
 
+    public void createChatMessage(String chatMessage){
+        MessageListItem firstMessage = new MessageListItem(
+                chatMessage,
+                Instant.now(), "Pattera");
+        listOfMessages.add(firstMessage);
+        chat.setItems(listOfMessages);
+    }
+
+    public void createSearchStateChatMessage(){
+        PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+        List<MessageListItem> messages = new ArrayList<MessageListItem>();
+        messages.addAll(chat.getItems());
+        messages.add(new MessageListItem(
+                question.getQuestion(),
+                Instant.now(), "Pattera"));
+        chat.setItems(messages);
+    }
+
     public void updateChat(SearchResponseDto searchResult){
         //Update session
         VaadinSession.getCurrent().setAttribute("excludedTags",searchResult.getExcludedTags());
@@ -98,6 +115,18 @@ public class ChatView extends VerticalLayout {
         //TODO update view to link of a currently found pattern
     }
 
+    private void outputStateInitMessage(){
+        StringBuilder startPhrase = new StringBuilder(this.currentState.InitializationMessage);
+        startPhrase.append("\nOptions:");
+        for(String option : this.currentState.Options) {
+            startPhrase.append("\n").append(option);
+        }
+        MessageListItem firstMessage = new MessageListItem(
+                startPhrase.toString(),
+                Instant.now(), "Pattera");
+        listOfMessages.add(firstMessage);
+        chat.setItems(listOfMessages);
+    }
 
     public IFrame getWebpageIFrame() {
         return webpageIFrame;
