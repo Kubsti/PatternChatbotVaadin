@@ -3,6 +3,8 @@ import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import unibz.it.PatternChatbot.model.Response;
+import unibz.it.PatternChatbot.service.ChatHelperService;
+
 
 import java.time.Instant;
 import java.util.*;
@@ -10,12 +12,12 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 public class IntentDiscoveryState extends State{
 
-    public IntentDiscoveryState(){
-        this.Rules = new LinkedHashMap<Pattern, Response>();
-        this.Options = new ArrayList<String>();
+    public IntentDiscoveryState(ChatHelperService chatHelper){
+        super(chatHelper);
+        createInitMessage();
         this.InitializationMessage ="Hello I'm Pattera here to help you find the right pattern for your problem. How can I help you today?";
-        this.setupResponses();
-        this.setupOptions();
+//        this.setupResponses();
+//        this.setupOptions();
     }
     @Override
     public void handleError() {
@@ -55,7 +57,7 @@ public class IntentDiscoveryState extends State{
 //                        "1. Asking for help entered",
 //                        Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new IntentDiscoverAskingForHelpState();
+                return new IntentDiscoverAskingForHelpState(chatHelper);
             }
         });
         //2. List all available patterns
@@ -74,7 +76,7 @@ public class IntentDiscoveryState extends State{
 //                        "2. Asking for patterns",
 //                        Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new IntentDiscoveryState();
+                return new IntentDiscoveryState(chatHelper);
             }
         });
         //3. Asking what Pattera can do
@@ -87,7 +89,7 @@ public class IntentDiscoveryState extends State{
                         "5. Asking what Pattera can do",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new IntentDiscoveryState();
+                return new IntentDiscoveryState(chatHelper);
             }
         });
         //4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)
@@ -101,7 +103,7 @@ public class IntentDiscoveryState extends State{
                         "6. Requesting specific pattern type (e.g., design pattern, behavior pattern)",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new IntentDiscoveryState();
+                return new IntentDiscoveryState(chatHelper);
             }
         });
         //7. Fallback
@@ -113,7 +115,7 @@ public class IntentDiscoveryState extends State{
             public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
                 //Todo implement fallback
                 //TODO go into correct state
-                return new IntentDiscoveryState();
+                return new IntentDiscoveryState(chatHelper);
             }
         });
         //        //3. Explaining a problem
@@ -162,5 +164,15 @@ public class IntentDiscoveryState extends State{
         this.Options.add("3. Asking what Pattera can do");
         this.Options.add("4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)");
         //this.Options.add("5. Requesting a specific pattern");
+    }
+
+    @Override
+    public void createInitMessage() {
+        StringBuilder startPhrase = new StringBuilder(InitializationMessage);
+        startPhrase.append("\nOptions:");
+        for(String option : this.Options) {
+            startPhrase.append("\n").append(option);
+        }
+        chatHelper.createChatMessage(startPhrase.toString());
     }
 }

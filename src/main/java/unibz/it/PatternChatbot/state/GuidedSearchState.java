@@ -8,10 +8,8 @@ import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.server.VaadinSession;
 import oshi.util.tuples.Pair;
-import unibz.it.PatternChatbot.model.DesignPatterns;
-import unibz.it.PatternChatbot.model.Response;
-import unibz.it.PatternChatbot.model.SearchDto;
-import unibz.it.PatternChatbot.model.SearchResponseDto;
+import unibz.it.PatternChatbot.model.*;
+import unibz.it.PatternChatbot.service.ChatHelperService;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -27,12 +25,9 @@ import java.util.regex.Pattern;
 
 public class GuidedSearchState extends State {
 
-    public GuidedSearchState(){
-        this.Rules = new LinkedHashMap<Pattern, Response>();
-        this.Options = new ArrayList<String>();
-        this.InitializationMessage ="Search State entered";
-        this.setupResponses();
-        this.setupOptions();
+    public GuidedSearchState(ChatHelperService chatHelper){
+        super(chatHelper);
+        this.InitializationMessage ="Search State entered. To stop search write 'Stop Search'";
 
     }
     public SearchResponseDto handleSearch(String searchInput) {
@@ -73,66 +68,56 @@ public class GuidedSearchState extends State {
             }
         }
         //TODO go into correct state
-        return Optional.of(new GuidedSearchState());
+        return Optional.of(new GuidedSearchState(chatHelper));
     }
 
     @Override
     public void setupResponses() {
 
-        //1. Ask for Nearest Pattern to a Given Pattern
+        //1. Stop search
+        this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)?\\b.*\\b(search)?\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+                //currState = new SearchState();
+                chat.getItems().add(new MessageListItem(
+                        "To be implemented",
+                        Instant.now(), "Pattera"));
+                //TODO go into correct state
+                return new GuidedSearchState(chatHelper);
+            }
+        });
+
+        //2. Restart search
+        this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)?\\b.*\\b(search)?\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|2.*|2\\..*"
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+                //currState = new SearchState();
+                chat.getItems().add(new MessageListItem(
+                        "To be implemented",
+                        Instant.now(), "Pattera"));
+                //TODO go into correct state
+                return new GuidedSearchState(chatHelper);
+            }
+        });
+
+        //3. Print all found pattern
+        this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)?\\b.*\\b(all|found)?\\b.*\\b(patterns|pattern)?\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|3.*|3\\..*"
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+                //currState = new SearchState();
+                chat.getItems().add(new MessageListItem(
+                        "To be implemented",
+                        Instant.now(), "Pattera"));
+                //TODO go into correct state
+                return new GuidedSearchState(chatHelper);
+            }
+        });
+
+        //4. Fallback (Assume Search Input for Keywords)
         this.Rules.put(Pattern.compile("(?i)(nearest|closest|similar|related).*pattern.*(to|like).*"
-                , Pattern.CASE_INSENSITIVE), new Response() {
-            @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-                //currState = new SearchState();
-                chat.getItems().add(new MessageListItem(
-                        "To be implemented",
-                        Instant.now(), "Pattera"));
-                //TODO go into correct state
-                return new GuidedSearchState();
-            }
-        });
-        //2. Display Currently Found Patterns
-        this.Rules.put(Pattern.compile("(?i)(show|display|list).*current.*pattern(s)?"
-                , Pattern.CASE_INSENSITIVE), new Response() {
-            @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-                //currState = new SearchState();
-                chat.getItems().add(new MessageListItem(
-                        "To be implemented",
-                        Instant.now(), "Pattera"));
-                //TODO go into correct state
-                return null;
-            }
-        });
-        //3. Requesting a Specific Pattern Type (e.g., design pattern, behavior pattern)
-        this.Rules.put(Pattern.compile("(?i)(design|behavior(al)?|structural|creational).*pattern(s)?"
-                , Pattern.CASE_INSENSITIVE), new Response() {
-            @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-                //currState = new SearchState();
-                chat.getItems().add(new MessageListItem(
-                        "To be implemented",
-                        Instant.now(), "Pattera"));
-                //TODO go into correct state
-                return new GuidedSearchState();
-            }
-        });
-        //4. Go to IntentDiscoveryState
-        this.Rules.put(Pattern.compile("(?i)(what|how).*help|(discover|guide|guess).*intent|(how|can).*start"
-                , Pattern.CASE_INSENSITIVE), new Response() {
-            @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-                //TODO Reset search, or mabye call intialization method again? Then go back to IntentDiscoveryState,
-                chat.getItems().add(new MessageListItem(
-                        "To be implemented",
-                        Instant.now(), "Pattera"));
-                //TODO go into correct state
-                return new IntentDiscoveryState();
-            }
-        });
-        //5. Fallback (Assume Search Input for Keywords)
-        this.Rules.put(Pattern.compile("(?i).*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
@@ -141,21 +126,102 @@ public class GuidedSearchState extends State {
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
                 VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
-                List<MessageListItem> messages = new ArrayList<MessageListItem>();
-                messages.addAll(chat.getItems());
-                messages.add(new MessageListItem(
-                        searchResponse.getPatternQuestion().getQuestion(),
-                        Instant.now(), "Pattera"));
-                chat.setItems(messages);
-                return new GuidedSearchState();
+                chatHelper.createChatMessage(searchResponse.getPatternQuestion().getQuestion());
+                return new GuidedSearchState(chatHelper);
             }
         });
+//        //1. Ask for Nearest Pattern to a Given Pattern
+//        this.Rules.put(Pattern.compile("(?i)(nearest|closest|similar|related).*pattern.*(to|like).*"
+//                , Pattern.CASE_INSENSITIVE), new Response() {
+//            @Override
+//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+//                //currState = new SearchState();
+//                chat.getItems().add(new MessageListItem(
+//                        "To be implemented",
+//                        Instant.now(), "Pattera"));
+//                //TODO go into correct state
+//                return new GuidedSearchState();
+//            }
+//        });
+//        //2. Display Currently Found Patterns
+//        this.Rules.put(Pattern.compile("(?i)(show|display|list).*current.*pattern(s)?"
+//                , Pattern.CASE_INSENSITIVE), new Response() {
+//            @Override
+//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+//                //currState = new SearchState();
+//                chat.getItems().add(new MessageListItem(
+//                        "To be implemented",
+//                        Instant.now(), "Pattera"));
+//                //TODO go into correct state
+//                return null;
+//            }
+//        });
+//        //3. Requesting a Specific Pattern Type (e.g., design pattern, behavior pattern)
+//        this.Rules.put(Pattern.compile("(?i)(design|behavior(al)?|structural|creational).*pattern(s)?"
+//                , Pattern.CASE_INSENSITIVE), new Response() {
+//            @Override
+//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+//                //currState = new SearchState();
+//                chat.getItems().add(new MessageListItem(
+//                        "To be implemented",
+//                        Instant.now(), "Pattera"));
+//                //TODO go into correct state
+//                return new GuidedSearchState();
+//            }
+//        });
+//        //4. Go to IntentDiscoveryState
+//        this.Rules.put(Pattern.compile("(?i)(what|how).*help|(discover|guide|guess).*intent|(how|can).*start"
+//                , Pattern.CASE_INSENSITIVE), new Response() {
+//            @Override
+//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+//                //TODO Reset search, or mabye call intialization method again? Then go back to IntentDiscoveryState,
+//                chat.getItems().add(new MessageListItem(
+//                        "To be implemented",
+//                        Instant.now(), "Pattera"));
+//                //TODO go into correct state
+//                return new IntentDiscoveryState();
+//            }
+//        });
+//        //5. Fallback (Assume Search Input for Keywords)
+//        this.Rules.put(Pattern.compile("(?i).*"
+//                , Pattern.CASE_INSENSITIVE), new Response() {
+//            @Override
+//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+//                SearchResponseDto searchResponse = handleSearch(input);
+//                VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
+//                VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
+//                VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
+//                VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
+//                List<MessageListItem> messages = new ArrayList<MessageListItem>();
+//                messages.addAll(chat.getItems());
+//                messages.add(new MessageListItem(
+//                        searchResponse.getPatternQuestion().getQuestion(),
+//                        Instant.now(), "Pattera"));
+//                chat.setItems(messages);
+//                return new GuidedSearchState();
+//            }
+//        });
     }
 
 
     @Override
     public void setupOptions() {
-        //TODO to be implemented
+        this.Options.add("1. Stop search");
+        this.Options.add("2. Restart search");
+        this.Options.add("3. Print all found pattern");
+        this.Options.add("4. Search (continue to answer the questions given by Pattera");
+    }
+
+    @Override
+    public void createInitMessage() {
+        StringBuilder startPhrase = new StringBuilder(InitializationMessage);
+        startPhrase.append("\nOptions:");
+        for(String option : this.Options) {
+            startPhrase.append("\n").append(option);
+        }
+        PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+        startPhrase.append("\n").append(question.getQuestion());
+        chatHelper.createChatMessage(startPhrase.toString());
     }
 
     public  ArrayList<Pair<String,Double>> extractKeywords(String searchInput){

@@ -10,6 +10,8 @@ import com.vaadin.flow.server.VaadinSession;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import unibz.it.PatternChatbot.model.SearchResponseDto;
+import unibz.it.PatternChatbot.service.ChatHelperService;
+import unibz.it.PatternChatbot.service.ChatHelperServiceImpl;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -86,7 +88,7 @@ private Anchor anchor = new Anchor();
 //                Instant.now(), "Patty");
         ChatView chatView = new ChatView();
         chatView.setWebpageIFrame(webpageIFrame);
-        MessageList messageList = chatView.getMessageList();
+        MessageList messageList = chatView.chat;
         chatView.setHeight(this.getMaxHeight());
         chatView.setWidth("30%");
         add(chatView);

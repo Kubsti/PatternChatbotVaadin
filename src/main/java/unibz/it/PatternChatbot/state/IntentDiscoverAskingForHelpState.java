@@ -6,6 +6,7 @@ import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.server.VaadinSession;
 import unibz.it.PatternChatbot.model.PatternQuestion;
 import unibz.it.PatternChatbot.model.Response;
+import unibz.it.PatternChatbot.service.ChatHelperService;
 
 import java.time.Instant;
 import java.util.*;
@@ -13,12 +14,9 @@ import java.util.regex.Pattern;
 
 public class IntentDiscoverAskingForHelpState extends State{
 
-    public IntentDiscoverAskingForHelpState(){
-        this.Rules = new LinkedHashMap<Pattern, Response>();
-        this.Options = new ArrayList<String>();
+    public IntentDiscoverAskingForHelpState(ChatHelperService chatHelper){
+        super(chatHelper);
         this.InitializationMessage ="How can I help you?";
-        this.setupResponses();
-        this.setupOptions();
     }
     @Override
     public void handleError() {
@@ -53,7 +51,7 @@ public class IntentDiscoverAskingForHelpState extends State{
 //                        question.getQuestion(),
 //                        Instant.now(), "Pattera"));
 //                chat.setItems(messages);
-                return new GuidedSearchState();
+                return new GuidedSearchState(chatHelper);
             }
         });
         //2. Request for the Nearest Pattern to a Given Pattern
@@ -67,7 +65,7 @@ public class IntentDiscoverAskingForHelpState extends State{
                         "2. Request for the Nearest Pattern to a Given Pattern",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new GuidedSearchState();
+                return new GuidedSearchState(chatHelper);
             }
         });
         //3. Request for a List of all available Pattern
@@ -81,7 +79,7 @@ public class IntentDiscoverAskingForHelpState extends State{
                         "3. Request for a List of All Patterns",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new GuidedSearchState();
+                return new GuidedSearchState(chatHelper);
             }
         });
         //4. Request for Information on a Specific Pattern
@@ -95,7 +93,7 @@ public class IntentDiscoverAskingForHelpState extends State{
                         "4. Request for Information on a Specific Pattern",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new GuidedSearchState();
+                return new GuidedSearchState(chatHelper);
             }
         });
         //Fallback
@@ -108,13 +106,26 @@ public class IntentDiscoverAskingForHelpState extends State{
                         "5. Request for Help Without Specific Intent (Fallback to General Help)",
                         Instant.now(), "Pattera"));
                 //TODO go into correct state
-                return new GuidedSearchState();
+                return new GuidedSearchState(chatHelper);
             }
         });
     }
 
     @Override
     public void setupOptions() {
-    //TODO to  be implemented
+        this.Options.add("1. Request for a Guided Search");
+        this.Options.add("2. Request for the Nearest Pattern to a Given Pattern");
+        this.Options.add("3. Request for a List of all available Pattern");
+        this.Options.add("4. Request for Information on a Specific Pattern");
+    }
+
+    @Override
+    public void createInitMessage() {
+        StringBuilder startPhrase = new StringBuilder(InitializationMessage);
+        startPhrase.append("\nOptions:");
+        for(String option : this.Options) {
+            startPhrase.append("\n").append(option);
+        }
+        chatHelper.createChatMessage(startPhrase.toString());
     }
 }

@@ -6,8 +6,12 @@ import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import unibz.it.PatternChatbot.model.PatternQuestion;
 import unibz.it.PatternChatbot.model.SearchResponseDto;
+import unibz.it.PatternChatbot.service.ChatHelperService;
+import unibz.it.PatternChatbot.service.ChatHelperServiceImpl;
 import unibz.it.PatternChatbot.state.IntentDiscoveryState;
 import unibz.it.PatternChatbot.state.State;
 
@@ -15,13 +19,15 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 public class ChatView extends VerticalLayout {
-    private MessageList chat;
+    public MessageList chat;
     private MessageInput input;
-    private List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
-    private IFrame webpageIFrame = new IFrame();
-    public State currentState = new IntentDiscoveryState();
+    public List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
+    public IFrame webpageIFrame = new IFrame();
+    @Autowired
+    private final ChatHelperService chatHelper;
+    public State currentState;
+
     public MessageList getMessageList(){
         return chat;
     }
@@ -33,6 +39,8 @@ public class ChatView extends VerticalLayout {
         //PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         this.outputStateInitMessage();
         input.addSubmitListener(this::onSubmit);
+        chatHelper = new ChatHelperServiceImpl(this);
+        currentState = new IntentDiscoveryState(this.chatHelper);
 
       this.setHorizontalComponentAlignment(Alignment.CENTER,
                 chat, input);
@@ -116,16 +124,16 @@ public class ChatView extends VerticalLayout {
     }
 
     private void outputStateInitMessage(){
-        StringBuilder startPhrase = new StringBuilder(this.currentState.InitializationMessage);
-        startPhrase.append("\nOptions:");
-        for(String option : this.currentState.Options) {
-            startPhrase.append("\n").append(option);
-        }
-        MessageListItem firstMessage = new MessageListItem(
-                startPhrase.toString(),
-                Instant.now(), "Pattera");
-        listOfMessages.add(firstMessage);
-        chat.setItems(listOfMessages);
+//        StringBuilder startPhrase = new StringBuilder(this.currentState.InitializationMessage);
+//        startPhrase.append("\nOptions:");
+//        for(String option : this.currentState.Options) {
+//            startPhrase.append("\n").append(option);
+//        }
+//        MessageListItem firstMessage = new MessageListItem(
+//                startPhrase.toString(),
+//                Instant.now(), "Pattera");
+//        listOfMessages.add(firstMessage);
+//        chat.setItems(listOfMessages);
     }
 
     public IFrame getWebpageIFrame() {
