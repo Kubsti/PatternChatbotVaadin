@@ -3,19 +3,18 @@ import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import unibz.it.PatternChatbot.model.Response;
-import unibz.it.PatternChatbot.service.ChatHelperService;
+import unibz.it.PatternChatbot.utility.ChatHelperUtility;
 
 
 import java.time.Instant;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.regex.Pattern;
 public class IntentDiscoveryState extends State{
 
-    public IntentDiscoveryState(ChatHelperService chatHelper){
+    public IntentDiscoveryState(ChatHelperUtility chatHelper){
         super(chatHelper);
-        createInitMessage();
         this.InitializationMessage ="Hello I'm Pattera here to help you find the right pattern for your problem. How can I help you today?";
+        createInitMessage();
 //        this.setupResponses();
 //        this.setupOptions();
     }
@@ -81,7 +80,7 @@ public class IntentDiscoveryState extends State{
         });
         //3. Asking what Pattera can do
         //old regex (?i)(what\scan\syou\sdo|how\scan\syou\shelp|what\sdo\syou\soffer|what\sservices)
-        this.Rules.put(Pattern.compile("(?i)\\b(3|what)?\\b.*\\b(can)?\\b.*\\b(pattera)\\b.*\\b(do)?\\b|(?i)\\b(what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|3.*|3\\..*"
+        this.Rules.put(Pattern.compile("(?i)\\b(3|what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|(?i)\\b(what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input,  MessageList chat, IFrame webpageIFrame) {
@@ -94,7 +93,7 @@ public class IntentDiscoveryState extends State{
         });
         //4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)
         //old regex "(?i)(design\\s(pattern|solution)|behavioral\\s(pattern|solution)|structural\\s(pattern|solution)|creational\\s(pattern|solution))"
-        this.Rules.put(Pattern.compile("(?i)\b(4|request|ask|need|info|information|details|about)?\b.*\b(design|behavior|creational|structural|behavioral)?\b.*\b(pattern)\b" +
+        this.Rules.put(Pattern.compile("(?i)\b(4|request|ask|need|info|information|details|about)\b.*\b(design|behavior|creational|structural|behavioral)?\b.*\b(pattern)\b" +
                         "|(?i)\\b(request|ask|need|tell me|give me|show)\\b.*\\b(info|information|details|about)\\b.*\\b(design|behavior|creational|structural|behavioral)?\\b.*\\b(pattern)\\b\n|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
@@ -168,7 +167,7 @@ public class IntentDiscoveryState extends State{
 
     @Override
     public void createInitMessage() {
-        StringBuilder startPhrase = new StringBuilder(InitializationMessage);
+        StringBuilder startPhrase = new StringBuilder(this.InitializationMessage);
         startPhrase.append("\nOptions:");
         for(String option : this.Options) {
             startPhrase.append("\n").append(option);

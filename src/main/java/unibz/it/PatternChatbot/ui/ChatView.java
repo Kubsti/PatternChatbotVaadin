@@ -7,11 +7,11 @@ import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import unibz.it.PatternChatbot.model.PatternQuestion;
 import unibz.it.PatternChatbot.model.SearchResponseDto;
-import unibz.it.PatternChatbot.service.ChatHelperService;
-import unibz.it.PatternChatbot.service.ChatHelperServiceImpl;
+import unibz.it.PatternChatbot.utility.ChatHelperUtility;
+import unibz.it.PatternChatbot.utility.ChatHelperUtilityImpl;
 import unibz.it.PatternChatbot.state.IntentDiscoveryState;
 import unibz.it.PatternChatbot.state.State;
 
@@ -19,13 +19,14 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 public class ChatView extends VerticalLayout {
     public MessageList chat;
     private MessageInput input;
     public List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
     public IFrame webpageIFrame = new IFrame();
     @Autowired
-    private final ChatHelperService chatHelper;
+    private final ChatHelperUtility chatHelper;
     public State currentState;
 
     public MessageList getMessageList(){
@@ -39,7 +40,7 @@ public class ChatView extends VerticalLayout {
         //PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         this.outputStateInitMessage();
         input.addSubmitListener(this::onSubmit);
-        chatHelper = new ChatHelperServiceImpl(this);
+        chatHelper = new ChatHelperUtilityImpl(this);
         currentState = new IntentDiscoveryState(this.chatHelper);
 
       this.setHorizontalComponentAlignment(Alignment.CENTER,
@@ -53,6 +54,7 @@ public class ChatView extends VerticalLayout {
     private void onSubmit(MessageInput.SubmitEvent submitEvent) {
         //TODO check that input is not empty
         //add message of user to chat
+        chatHelper.createChatMessage(submitEvent.getValue());
         Optional<State> newState = this.currentState.handleInput(submitEvent.getValue(), this.chat,this.webpageIFrame);
         if(newState.isPresent()){
             this.currentState =  newState.get();
