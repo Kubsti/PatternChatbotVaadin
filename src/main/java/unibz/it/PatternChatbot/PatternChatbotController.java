@@ -64,10 +64,20 @@ public class PatternChatbotController {
     public SearchResponseDto searchPattern(@RequestBody SearchDto searchDto) {
         //Caculate next searchtag
         DesignPatterns filteredDesignPattern = patternSearchService.searchPatterns(searchDto.getCurrSearchTag(), searchDto.getSearchTagValue(), designPatterns.getPatterns());
+        //Check if we found something
+        if(!filteredDesignPattern.getPatterns().isEmpty()){
+            return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), searchDto.getCurrSearchTag());
+        }
         String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, searchDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        SearchResponseDto currResponse = new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag);
-        return currResponse;
+        return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag);
+    }
+
+    @PostMapping(path="/getNewSearchQuestion", consumes="application/json", produces="application/json")
+    public NewQuestionResponseDto getNewSearchQuestion(@RequestBody NewQuestionDto newQuestionDto) {
+        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, newQuestionDto.getExcludedTags());
+        PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+        return new NewQuestionResponseDto( nextQuestion, newQuestionDto.getExcludedTags(), nextSearchTag);
     }
     //if user inserts pattern frontend should check if we have new tags,for start disallow multiple question for one tag
     @PostMapping(

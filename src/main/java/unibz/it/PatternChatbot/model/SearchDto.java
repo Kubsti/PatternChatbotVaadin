@@ -8,6 +8,13 @@ public class SearchDto {
     private DesignPatterns designPatterns;
     private ArrayList<String> excludedTags;
 
+    public SearchDto(String currSearchTag, String searchTagValue, DesignPatterns designPatterns, ArrayList<String> excludedTags) {
+        this.currSearchTag = currSearchTag;
+        this.searchTagValue = searchTagValue;
+        this.designPatterns = designPatterns;
+        this.excludedTags = excludedTags;
+    }
+
     public String getCurrSearchTag() {
         return currSearchTag;
     }
@@ -40,10 +47,4 @@ public class SearchDto {
         this.excludedTags = excludedTags;
     }
 
-    public SearchDto(String currSearchTag, String searchTagValue, DesignPatterns designPatterns, ArrayList<String> excludedTags) {
-        this.currSearchTag = currSearchTag;
-        this.searchTagValue = searchTagValue;
-        this.designPatterns = designPatterns;
-        this.excludedTags = excludedTags;
-    }
 }

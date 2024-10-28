@@ -37,7 +37,6 @@ public class ChatView extends VerticalLayout {
         chat = new MessageList();
         input = new MessageInput();
         add(chat, input);
-        //PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         this.outputStateInitMessage();
         input.addSubmitListener(this::onSubmit);
         chatHelper = new ChatHelperUtilityImpl(this);

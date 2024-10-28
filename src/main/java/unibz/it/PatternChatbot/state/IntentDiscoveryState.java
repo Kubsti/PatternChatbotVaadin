@@ -107,13 +107,14 @@ public class IntentDiscoveryState extends State{
         });
         //7. Fallback
         //old regex (?i)(design\s(pattern|solution)|behavioral\s(pattern|solution)|structural\s(pattern|solution)|creational\s(pattern|solution))
-        //TODO redo fallback
+        //TODO redo fallback or make it better if needed
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
                 //Todo implement fallback
                 //TODO go into correct state
+                chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
                 return new IntentDiscoveryState(chatHelper);
             }
         });

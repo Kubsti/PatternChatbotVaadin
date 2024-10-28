@@ -19,7 +19,6 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.time.Instant;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -29,7 +28,6 @@ public class GuidedSearchState extends State {
         super(chatHelper);
         this.InitializationMessage ="Search State entered. To stop search write 'Stop Search'";
         this.createInitMessage();
-
     }
     public SearchResponseDto handleSearch(String searchInput) {
         int retries = 0;
@@ -45,11 +43,11 @@ public class GuidedSearchState extends State {
                 retries++;
                 searchResult = searchForPattern(extractedKeywords, retries);
             }else{
-                //set retries to 3 enter error state and try to recover
                 retries = 3;
                 //TODO implement a better error handing. Maybe with a special state?
-                //VaadinSession.getCurrent().setAttribute("state","errorstate");
-                //VaadinSession.getCurrent().setAttribute("errorcause","searchFailedOnRetries");
+                if(searchResult.getDesignPatterns().getPatterns().size() == 0){
+                    chatHelper.createPatteraChatMessage("Sorry i could not find a pattern with");
+                }
             }
 
         }
@@ -80,7 +78,7 @@ public class GuidedSearchState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-                chatHelper.createPatteraChatMessage("To be implemented");chatHelper.createPatteraChatMessage("To be implemented");
+                chatHelper.createPatteraChatMessage("Sorry ");
                 //TODO go into correct state
                 return new GuidedSearchState(chatHelper);
             }

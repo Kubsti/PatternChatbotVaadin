@@ -31,7 +31,6 @@ public class IntentDiscoverAskingForHelpState extends State{
                 return Optional.ofNullable(set.getValue().responseAction(chatInput, chat, webpageIFrame));
             }
         }
-        //Todo catch error and return correct state
         return null;
     }
 
@@ -84,7 +83,7 @@ public class IntentDiscoverAskingForHelpState extends State{
         });
         //Fallback
         //TODO redo fallback
-        this.Rules.put(Pattern.compile("(?i)(help|assist|support).*"
+        this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
