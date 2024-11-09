@@ -2,11 +2,9 @@ package unibz.it.PatternChatbot.state;
 
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
-import com.vaadin.flow.component.html.IFrame;
-import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.server.VaadinSession;
 import unibz.it.PatternChatbot.model.*;
-import unibz.it.PatternChatbot.utility.ChatHelperUtility;
+import unibz.it.PatternChatbot.utility.UiHelperUtility;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -20,26 +18,8 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class GuidedSearchErrorState extends State {
-    public GuidedSearchErrorState(ChatHelperUtility chatHelper) {
-        super(chatHelper);
-        this.InitializationMessage ="Sorry I could not find any pattern with your response. What would you like to do?";
-        this.createInitMessage();
-    }
-
-    public void handleError(){
-
-    }
-
-    @Override
-    public Optional<State> handleInput(String chatInput, MessageList chat, IFrame webpageIFrame) {
-        for (Map.Entry<Pattern, Response> set :
-                this.Rules.entrySet()) {
-            //Try to match a Rule
-            if(set.getKey().matcher(chatInput).find()) {
-                return Optional.ofNullable(set.getValue().responseAction(chatInput, chat, webpageIFrame));
-            }
-        }
-        return Optional.empty();
+    public GuidedSearchErrorState(UiHelperUtility chatHelper, boolean showInitMesssge) {
+        super(chatHelper,"Sorry I could not find any pattern with your response. What would you like to do?", showInitMesssge);
     }
 
     @Override
@@ -48,10 +28,10 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("Search stoppend");
                 //TODO go into correct state
-                return new IntentDiscoveryState(chatHelper);
+                return new IntentDiscoveryState(chatHelper,true);
             }
         });
 
@@ -59,10 +39,10 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
                 //TODO reset and start new search
-                return new GuidedSearchState(chatHelper);
+                return new GuidedSearchState(chatHelper, true);
             }
         });
 
@@ -70,10 +50,10 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
                 //TODO go into correct state
-                return new GuidedSearchState(chatHelper);
+                return new GuidedSearchState(chatHelper, false);
             }
         });
 
@@ -81,23 +61,38 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(get|fetch|retrieve)\\b.*\\b(another|next|new)\\b.*\\b(question)\\b|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
                 if(getNewQuestion()){
-                    return new GuidedSearchState(chatHelper);
+                    return new GuidedSearchState(chatHelper, false);
                 }
                 //TODO go into correct state
-                return new GuidedSearchErrorState(chatHelper);
+                return new GuidedSearchErrorState(chatHelper, false);
             }
         });
+
+        //5. Retry to answer last question
+        this.Rules.put(Pattern.compile("(?i)\\b(5|retry|try again|redo)?\\b.*\\b(answer)?\\b.*\\b(last|previous)?\\b.*\\b(question)?\\b\n"
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public State responseAction(String input) {
+                chatHelper.createPatteraChatMessage("To be implemented");
+                if(getNewQuestion()){
+                    return new GuidedSearchState(chatHelper, false);
+                }
+                //TODO go into correct state
+                return new GuidedSearchErrorState(chatHelper, false);
+            }
+        });
+
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 //Todo implement fallback
                 //TODO go into correct state
                 chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
-                return new GuidedSearchErrorState(chatHelper);
+                return new GuidedSearchErrorState(chatHelper, false);
             }
         });
     }
@@ -118,7 +113,12 @@ public class GuidedSearchErrorState extends State {
         for(String option : this.Options) {
             startPhrase.append("\n").append(option);
         }
-        chatHelper.createChatMessage(startPhrase.toString());
+        chatHelper.createPatteraChatMessage(startPhrase.toString());
+    }
+
+    @Override
+    public void setupExceptions() {
+
     }
 
     public boolean getNewQuestion(){

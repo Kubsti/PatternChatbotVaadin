@@ -1,40 +1,18 @@
 package unibz.it.PatternChatbot.state;
-import com.vaadin.flow.component.html.IFrame;
-import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import unibz.it.PatternChatbot.model.Response;
-import unibz.it.PatternChatbot.utility.ChatHelperUtility;
+import unibz.it.PatternChatbot.model.State;
+import unibz.it.PatternChatbot.model.StateException;
+import unibz.it.PatternChatbot.ui.ErrorDialog;
+import unibz.it.PatternChatbot.utility.UiHelperUtility;
 
 
-import java.time.Instant;
 import java.util.*;
 import java.util.regex.Pattern;
-public class IntentDiscoveryState extends State{
+public class IntentDiscoveryState extends State {
 
-    public IntentDiscoveryState(ChatHelperUtility chatHelper){
-        super(chatHelper);
-        this.InitializationMessage ="Hello I'm Pattera here to help you find the right pattern for your problem. How can I help you today?";
-        createInitMessage();
-//        this.setupResponses();
-//        this.setupOptions();
-    }
-    @Override
-    public void handleError() {
-
-    }
-
-    @Override
-    public Optional<State> handleInput(String chatInput, MessageList chat, IFrame webpageIFrame) {
-        //TODO implement case/logic for no match or create a fallback
-        for (Map.Entry<Pattern, Response> set :
-                this.Rules.entrySet()) {
-            //Try to match a Rule
-            if(set.getKey().matcher(chatInput).find()) {
-                return Optional.ofNullable(set.getValue().responseAction(chatInput, chat, webpageIFrame));
-            }
-        }
-        //Todo catch error and return correct state
-        return null;
+    public IntentDiscoveryState(UiHelperUtility chatHelper, boolean showInitMesssge){
+        super(chatHelper,"Hello I'm Pattera here to help you find the right pattern for your problem. How can I help you today?",showInitMesssge);
     }
 
     @Override
@@ -44,19 +22,13 @@ public class IntentDiscoveryState extends State{
         this.Rules.put(Pattern.compile("(?i)(1 help to find a pattern|Help to find a pattern|help me find a pattern|1. aHelp to find a pattern)|(?i)\\b(help|assist|find|search)\\b.*\\b(pattern|model|structure)\\b|1.*|1\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 //TODO check for what user wants help for
                 List<MessageListItem> messages = new ArrayList<MessageListItem>();
-                messages.addAll(chat.getItems());
-                messages.add(new MessageListItem(
-                        "1. Asking for help entered",
-                        Instant.now(), "Pattera"));
-                chat.setItems(messages);
-//                chat.getItems().add(new MessageListItem(
-//                        "1. Asking for help entered",
-//                        Instant.now(), "Pattera"));
+                chatHelper.createPatteraChatMessage("1. Asking for help entered");
                 //TODO go into correct state
-                return new IntentDiscoverAskingForHelpState(chatHelper);
+                throw new StateException("")
+                return new IntentDiscoverAskingForHelpState(chatHelper, false);
             }
         });
         //2. List all available patterns
@@ -64,18 +36,11 @@ public class IntentDiscoveryState extends State{
         this.Rules.put(Pattern.compile("(?i)\\b(2|list|show|display)?\\b.*\\b(all|available|every)?\\b.*\\b(patterns|pattern)?\\b|(?i)\\b(list|show|display)\\b.*\\b(all|available|every)\\b.*\\b(patterns|pattern)\\b|2.*|2\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 List<MessageListItem> messages = new ArrayList<MessageListItem>();
-                messages.addAll(chat.getItems());
-                messages.add(new MessageListItem(
-                        "2. Asking for patterns",
-                        Instant.now(), "Pattera"));
-                chat.setItems(messages);
-//                chat.getItems().add(new MessageListItem(
-//                        "2. Asking for patterns",
-//                        Instant.now(), "Pattera"));
+                chatHelper.createPatteraChatMessage("2. Asking for patterns");
                 //TODO go into correct state
-                return new IntentDiscoveryState(chatHelper);
+                return new IntentDiscoveryState(chatHelper, false);
             }
         });
         //3. Asking what Pattera can do
@@ -83,12 +48,10 @@ public class IntentDiscoveryState extends State{
         this.Rules.put(Pattern.compile("(?i)\\b(3|what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|(?i)\\b(what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input,  MessageList chat, IFrame webpageIFrame) {
-                chat.getItems().add(new MessageListItem(
-                        "5. Asking what Pattera can do",
-                        Instant.now(), "Pattera"));
+            public State responseAction(String input) {
+                chatHelper.createPatteraChatMessage("5. Asking what Pattera can do");
                 //TODO go into correct state
-                return new IntentDiscoveryState(chatHelper);
+                return new IntentDiscoveryState(chatHelper,false);
             }
         });
         //4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)
@@ -97,12 +60,10 @@ public class IntentDiscoveryState extends State{
                         "|(?i)\\b(request|ask|need|tell me|give me|show)\\b.*\\b(info|information|details|about)\\b.*\\b(design|behavior|creational|structural|behavioral)?\\b.*\\b(pattern)\\b\n|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-                chat.getItems().add(new MessageListItem(
-                        "6. Requesting specific pattern type (e.g., design pattern, behavior pattern)",
-                        Instant.now(), "Pattera"));
+            public State responseAction(String input) {
+                chatHelper.createPatteraChatMessage("6. Requesting specific pattern type (e.g., design pattern, behavior pattern)");
                 //TODO go into correct state
-                return new IntentDiscoveryState(chatHelper);
+                return new IntentDiscoveryState(chatHelper, false);
             }
         });
         //7. Fallback
@@ -111,11 +72,11 @@ public class IntentDiscoveryState extends State{
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 //Todo implement fallback
                 //TODO go into correct state
                 chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
-                return new IntentDiscoveryState(chatHelper);
+                return new IntentDiscoveryState(chatHelper, false);
             }
         });
         //        //3. Explaining a problem
@@ -174,5 +135,19 @@ public class IntentDiscoveryState extends State{
             startPhrase.append("\n").append(option);
         }
         chatHelper.createChatMessage(startPhrase.toString());
+    }
+
+    @Override
+    public void setupExceptions() {
+        //TODO setup exceptions for state
+        this.Exceptions.put("TestException",
+           new StateException("TestException","Error"){
+            @Override
+            public State handleException(String input){
+                ErrorDialog.showError("An error occurred");
+                return new IntentDiscoveryState(chatHelper, false);
+            }
+           }
+        );
     }
 }

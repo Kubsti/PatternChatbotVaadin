@@ -3,13 +3,10 @@ package unibz.it.PatternChatbot.state;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
-import com.vaadin.flow.component.html.IFrame;
-import com.vaadin.flow.component.messages.MessageList;
-import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.server.VaadinSession;
 import oshi.util.tuples.Pair;
 import unibz.it.PatternChatbot.model.*;
-import unibz.it.PatternChatbot.utility.ChatHelperUtility;
+import unibz.it.PatternChatbot.utility.UiHelperUtility;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -24,17 +21,17 @@ import java.util.regex.Pattern;
 
 public class GuidedSearchState extends State {
 
-    public GuidedSearchState(ChatHelperUtility chatHelper){
-        super(chatHelper);
-        this.InitializationMessage ="Search State entered. To stop search write 'Stop Search'";
-        this.createInitMessage();
+    public GuidedSearchState(UiHelperUtility chatHelper, boolean showInitMesssge){
+        super(chatHelper,"Search State entered. To stop search write 'Stop Search'", showInitMesssge);
     }
     public SearchResponseDto handleSearch(String searchInput) {
         int retries = 0;
         ArrayList<Pair<String,Double>> extractedKeywords = extractKeywords(searchInput);
         if(extractedKeywords.isEmpty()){
             //TODO handle error
-            VaadinSession.getCurrent().setAttribute("state","errorstate");
+            //throw ();
+            chatHelper.createPatteraChatMessage("Sorry i have difficulties extracting keywords from your input, please contact my creator.");
+            //VaadinSession.getCurrent().setAttribute("state","errorstate");
         }
         SearchResponseDto searchResult = searchForPattern(extractedKeywords, 0);
         //print message for user
@@ -53,22 +50,6 @@ public class GuidedSearchState extends State {
         }
         return searchResult;
     }
-    public void handleError(){
-
-    }
-
-    @Override
-    public Optional<State> handleInput(String chatInput, MessageList chat, IFrame webpageIFrame) {
-        for (Map.Entry<Pattern, Response> set :
-                this.Rules.entrySet()) {
-            //Try to match a Rule
-            if(set.getKey().matcher(chatInput).find()) {
-                return Optional.ofNullable(set.getValue().responseAction(chatInput, chat, webpageIFrame));
-            }
-        }
-        //TODO go into correct state
-        return Optional.of(new GuidedSearchState(chatHelper));
-    }
 
     @Override
     public void setupResponses() {
@@ -77,10 +58,10 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("Sorry ");
                 //TODO go into correct state
-                return new GuidedSearchState(chatHelper);
+                return new GuidedSearchState(chatHelper, false);
             }
         });
 
@@ -88,10 +69,10 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
                 //TODO go into correct state
-                return new GuidedSearchState(chatHelper);
+                return new GuidedSearchState(chatHelper, true);
             }
         });
 
@@ -99,10 +80,10 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
                 //TODO go into correct state
-                return new GuidedSearchState(chatHelper);
+                return new GuidedSearchState(chatHelper, false);
             }
         });
 
@@ -110,7 +91,7 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
+            public State responseAction(String input) {
                 SearchResponseDto searchResponse = handleSearch(input);
                 VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
@@ -120,6 +101,10 @@ public class GuidedSearchState extends State {
                     //TODO change to pattern found state
                     chatHelper.createChatMessage("Found the following pattern: " + searchResponse.getDesignPatterns().getPatterns().get(0).name);
                     chatHelper.updateIFrame(searchResponse.getDesignPatterns().getPatterns().get(0).url);
+                    VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
+                    VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
+                    VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
+                    VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
                 }else{
                     chatHelper.createChatMessage(searchResponse.getPatternQuestion().getQuestion());
                 }
@@ -217,7 +202,12 @@ public class GuidedSearchState extends State {
         }
         PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         startPhrase.append("\n").append(question.getQuestion());
-        chatHelper.createChatMessage(startPhrase.toString());
+        chatHelper.createPatteraChatMessage(startPhrase.toString());
+    }
+
+    @Override
+    public void setupExceptions() {
+
     }
 
     public  ArrayList<Pair<String,Double>> extractKeywords(String searchInput){

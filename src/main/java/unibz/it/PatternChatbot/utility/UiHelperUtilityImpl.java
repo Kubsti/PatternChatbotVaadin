@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 
-public class ChatHelperUtilityImpl implements ChatHelperUtility {
+public class UiHelperUtilityImpl implements UiHelperUtility {
     private final ChatView currentChatView;
 
-    public ChatHelperUtilityImpl(ChatView currentChatView) {
+    public UiHelperUtilityImpl(ChatView currentChatView) {
         this.currentChatView = currentChatView;
     }
 
@@ -78,6 +78,11 @@ public class ChatHelperUtilityImpl implements ChatHelperUtility {
 //        anchor.getElement().setAttribute("router-ignore", true);
         this.currentChatView.webpageIFrame.setSrc("assets/output.pdf");
         this.currentChatView.webpageIFrame.reload();
+    }
+
+    @Override
+    public void showError(String error) {
+
     }
 
 }
