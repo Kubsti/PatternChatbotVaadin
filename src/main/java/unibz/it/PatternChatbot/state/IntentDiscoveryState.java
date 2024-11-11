@@ -22,13 +22,12 @@ public class IntentDiscoveryState extends State {
         this.Rules.put(Pattern.compile("(?i)(1 help to find a pattern|Help to find a pattern|help me find a pattern|1. aHelp to find a pattern)|(?i)\\b(help|assist|find|search)\\b.*\\b(pattern|model|structure)\\b|1.*|1\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input) throws StateException {
                 //TODO check for what user wants help for
                 List<MessageListItem> messages = new ArrayList<MessageListItem>();
                 chatHelper.createPatteraChatMessage("1. Asking for help entered");
                 //TODO go into correct state
-                throw new StateException("")
-                return new IntentDiscoverAskingForHelpState(chatHelper, false);
+                return new IntentDiscoverAskingForHelpState(chatHelper, true);
             }
         });
         //2. List all available patterns
@@ -140,14 +139,12 @@ public class IntentDiscoveryState extends State {
     @Override
     public void setupExceptions() {
         //TODO setup exceptions for state
-        this.Exceptions.put("TestException",
-           new StateException("TestException","Error"){
-            @Override
-            public State handleException(String input){
-                ErrorDialog.showError("An error occurred");
-                return new IntentDiscoveryState(chatHelper, false);
-            }
-           }
-        );
+//        this.Exceptions.put("TestException",
+//                (String input) -> {
+//            chatHelper.createPatteraChatMessage("Error occurred");
+//            ErrorDialog.showError("Error occurred");
+//            return null;
+//        }
+//        );
     }
 }

@@ -79,10 +79,4 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         this.currentChatView.webpageIFrame.setSrc("assets/output.pdf");
         this.currentChatView.webpageIFrame.reload();
     }
-
-    @Override
-    public void showError(String error) {
-
-    }
-
 }

@@ -23,9 +23,4 @@ public class StateException extends Exception{
                 ", message='" + getMessage() + '\'' +
                 '}';
     }
-
-    public State handleException(String input){
-        ErrorDialog.showError("An error occurred");
-        return null;
-    }
 }

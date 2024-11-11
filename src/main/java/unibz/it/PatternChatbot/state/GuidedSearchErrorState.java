@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class GuidedSearchErrorState extends State {
             @Override
             public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("Search stoppend");
-                //TODO go into correct state
+                httpHelper.intializeChatbot();
                 return new IntentDiscoveryState(chatHelper,true);
             }
         });
@@ -41,7 +42,7 @@ public class GuidedSearchErrorState extends State {
             @Override
             public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
-                //TODO reset and start new search
+                httpHelper.intializeChatbot();
                 return new GuidedSearchState(chatHelper, true);
             }
         });
@@ -63,7 +64,7 @@ public class GuidedSearchErrorState extends State {
             @Override
             public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
-                if(getNewQuestion()){
+                if(getNewQuestion(input)){
                     return new GuidedSearchState(chatHelper, false);
                 }
                 //TODO go into correct state
@@ -77,9 +78,10 @@ public class GuidedSearchErrorState extends State {
             @Override
             public State responseAction(String input) {
                 chatHelper.createPatteraChatMessage("To be implemented");
-                if(getNewQuestion()){
-                    return new GuidedSearchState(chatHelper, false);
-                }
+                //
+//                if(getNewQuestion(input)){
+//                    return new GuidedSearchState(chatHelper, false);
+//                }
                 //TODO go into correct state
                 return new GuidedSearchErrorState(chatHelper, false);
             }
@@ -118,45 +120,14 @@ public class GuidedSearchErrorState extends State {
 
     @Override
     public void setupExceptions() {
-
-    }
-
-    public boolean getNewQuestion(){
-        NewQuestionResponseDto questionResult = null;
-        String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
-        ArrayList<String> excludedTags;
-        //TODO fix unchecked function error
-        excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
-        excludedTags.add(nextSearchTag);
-        try{
-            Gson gson = new GsonBuilder().create();
-            URL url = URI.create("http://localhost:8080/getNewSearchQuestion").toURL();
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            NewQuestionDto newQuestionDto = new NewQuestionDto(excludedTags);
-            String reqBody = gson.toJson(newQuestionDto);
-            try(DataOutputStream os = new DataOutputStream(conn.getOutputStream())){
-                byte[] input = reqBody.getBytes("utf-8");
-                os.write(input, 0, input.length);
-                //os.writeUTF(reqBody);
-                //os.writeBytes(reqBody);
-                os.flush();
-            }
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK){
-                StringBuilder response = new StringBuilder();
-                try (BufferedReader searchResponseReader = new BufferedReader( new InputStreamReader( conn.getInputStream()))) {
-                    String newQuestionResponseline;
-                    while ((newQuestionResponseline = searchResponseReader.readLine()) != null) {
-                        response.append(newQuestionResponseline); // Adds every line to response till the end of file.
-                    }
+        this.Exceptions.put("NoKeywordsFound",
+                (String input) -> {
+                    chatHelper.createPatteraChatMessage("I could not extract any keywords from your response, could you give me your answer again?");
+                    return null;
                 }
-                //TODO check why parsing does not work correctly
-                questionResult= gson.fromJson(response.toString(), NewQuestionResponseDto.class);
-                if(questionResult.getNextSearchTag().equalsIgnoreCase("No more Tags available")){
+        );
+        this.Exceptions.put("NoMoreQuestionsAvailable",
+                (String input) -> {;
                     StringBuilder startPhrase = new StringBuilder("Sorry there are no more questions available. What would you like to do?");
                     startPhrase.append("\nOptions:");
                     for(String option : this.Options) {
@@ -165,12 +136,29 @@ public class GuidedSearchErrorState extends State {
                         }
                     }
                     chatHelper.createPatteraChatMessage(startPhrase.toString());
+                    return new GuidedSearchErrorState(chatHelper, true);
+                }
+        );
+    }
+
+    public boolean getNewQuestion(String chatInput){
+        NewQuestionResponseDto questionResult = null;
+        try{
+            HttpResponse<String> response = httpHelper.getAnotherQuestion();
+
+            if (response != null){
+                Gson gson = new GsonBuilder().create();
+                questionResult= gson.fromJson(response.body(), NewQuestionResponseDto.class);
+                if(questionResult.getNextSearchTag().equalsIgnoreCase("No more Tags available")){
+                    throw new StateException("NoMoreQuestionsAvailable",chatInput);
                 }
             }else{
+                //TODO recheck if better exception handing is needed
                 chatHelper.createPatteraChatMessage("Sorry a error occurred please try again");
                 return false;
             }
         }catch(Exception e){
+            //TODO recheck if better exception handing is needed
             chatHelper.createPatteraChatMessage("Sorry a error occurred please try again");
             return false;
         }
