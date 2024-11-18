@@ -63,27 +63,21 @@ public class GuidedSearchErrorState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input) {
-                chatHelper.createPatteraChatMessage("To be implemented");
                 if(getNewQuestion(input)){
                     return new GuidedSearchState(chatHelper, false);
                 }
-                //TODO go into correct state
                 return new GuidedSearchErrorState(chatHelper, false);
             }
         });
 
         //5. Retry to answer last question
-        this.Rules.put(Pattern.compile("(?i)\\b(5|retry|try again|redo)?\\b.*\\b(answer)?\\b.*\\b(last|previous)?\\b.*\\b(question)?\\b\n"
+        this.Rules.put(Pattern.compile("(?i)\\b(5|retry|try again|redo)?\\b.*\\b(answer)?\\b.*\\b(last|previous)?\\b.*\\b(question)?\\b|5.*|5\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input) {
-                chatHelper.createPatteraChatMessage("To be implemented");
-                //
-//                if(getNewQuestion(input)){
-//                    return new GuidedSearchState(chatHelper, false);
-//                }
-                //TODO go into correct state
-                return new GuidedSearchErrorState(chatHelper, false);
+                PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+                chatHelper.createPatteraChatMessage(question.getQuestion());
+                return new GuidedSearchState(chatHelper, false);
             }
         });
 
@@ -152,6 +146,10 @@ public class GuidedSearchErrorState extends State {
                 if(questionResult.getNextSearchTag().equalsIgnoreCase("No more Tags available")){
                     throw new StateException("NoMoreQuestionsAvailable",chatInput);
                 }
+                VaadinSession.getCurrent().setAttribute("excludedTags",questionResult.getExcludedTags());
+                VaadinSession.getCurrent().setAttribute("nextSearchTag",questionResult.getNextSearchTag());
+                VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
+                chatHelper.createChatMessage(questionResult.getPatternQuestion().getQuestion());
             }else{
                 //TODO recheck if better exception handing is needed
                 chatHelper.createPatteraChatMessage("Sorry a error occurred please try again");
@@ -159,6 +157,7 @@ public class GuidedSearchErrorState extends State {
             }
         }catch(Exception e){
             //TODO recheck if better exception handing is needed
+            e.printStackTrace();
             chatHelper.createPatteraChatMessage("Sorry a error occurred please try again");
             return false;
         }

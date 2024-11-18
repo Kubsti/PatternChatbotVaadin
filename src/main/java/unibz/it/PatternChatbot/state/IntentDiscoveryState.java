@@ -1,12 +1,13 @@
 package unibz.it.PatternChatbot.state;
+import com.nimbusds.jose.shaded.gson.Gson;
+import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.vaadin.flow.component.messages.MessageListItem;
-import unibz.it.PatternChatbot.model.Response;
-import unibz.it.PatternChatbot.model.State;
-import unibz.it.PatternChatbot.model.StateException;
+import unibz.it.PatternChatbot.model.*;
 import unibz.it.PatternChatbot.ui.ErrorDialog;
 import unibz.it.PatternChatbot.utility.UiHelperUtility;
 
 
+import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.regex.Pattern;
 public class IntentDiscoveryState extends State {
@@ -26,7 +27,6 @@ public class IntentDiscoveryState extends State {
                 //TODO check for what user wants help for
                 List<MessageListItem> messages = new ArrayList<MessageListItem>();
                 chatHelper.createPatteraChatMessage("1. Asking for help entered");
-                //TODO go into correct state
                 return new IntentDiscoverAskingForHelpState(chatHelper, true);
             }
         });
@@ -36,9 +36,19 @@ public class IntentDiscoveryState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input) {
-                List<MessageListItem> messages = new ArrayList<MessageListItem>();
-                chatHelper.createPatteraChatMessage("2. Asking for patterns");
-                //TODO go into correct state
+                HttpResponse<String> response = httpHelper.getAllPattern();
+                if (response != null) {
+                    Gson gson = new GsonBuilder().create();
+                    DesignPatterns designPatterns = gson.fromJson(response.body(), DesignPatterns.class);
+                    if(!designPatterns.getPatterns().isEmpty()){
+                        StringBuilder startPhrase = new StringBuilder();
+                        startPhrase.append("Pattern:");
+                        designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                        chatHelper.createPatteraChatMessage(startPhrase.toString());
+                    }else{
+                        chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
+                    }
+                }
                 return new IntentDiscoveryState(chatHelper, false);
             }
         });

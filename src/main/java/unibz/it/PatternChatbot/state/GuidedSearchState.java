@@ -27,7 +27,8 @@ public class GuidedSearchState extends State {
         super(chatHelper,"Search State entered. To stop search write 'Stop Search'", showInitMesssge);
     }
     public SearchResponseDto handleSearch(String searchInput) throws StateException {
-        int retries = 0;
+        //Is one as the first try is accounted for
+        int retries = 1;
         ArrayList<Pair<String,Double>> extractedKeywords = extractKeywords(searchInput);
         if(extractedKeywords.isEmpty()){
             //TODO handle error
@@ -37,6 +38,7 @@ public class GuidedSearchState extends State {
         }
         SearchResponseDto searchResult = searchForPattern(extractedKeywords, 0);
         //print message for user
+        //TODO rework does not work correctly
         while(searchResult.getDesignPatterns().getPatterns().isEmpty() && retries < 3){
             if(extractedKeywords.size() > retries){
                 retries++;
@@ -45,7 +47,6 @@ public class GuidedSearchState extends State {
                 retries = 3;
                 if(searchResult.getDesignPatterns().getPatterns().isEmpty()){
                     throw  new StateException("NoPatternFound", searchInput);
-                    //chatHelper.createPatteraChatMessage("Sorry i could not find a pattern with");
                 }
             }
 
@@ -81,8 +82,15 @@ public class GuidedSearchState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input) {
-                chatHelper.createPatteraChatMessage("To be implemented");
-                //TODO go into correct state
+                DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+                if(designPatterns.getPatterns().isEmpty()){
+                    chatHelper.createPatteraChatMessage("I found no pattern. Maybe the last search for a question did not return anything.");
+                }else{
+                    StringBuilder startPhrase = new StringBuilder();
+                    startPhrase.append("Pattern:");
+                    designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                    chatHelper.createPatteraChatMessage(startPhrase.toString());
+                }
                 return new GuidedSearchState(chatHelper, false);
             }
         });
@@ -95,7 +103,6 @@ public class GuidedSearchState extends State {
                 if(getNewQuestion(input)){
                     return new GuidedSearchState(chatHelper, false);
                 }
-                //TODO go into correct state
                 return new GuidedSearchErrorState(chatHelper, false);
             }
         });
@@ -124,77 +131,6 @@ public class GuidedSearchState extends State {
                 return null;
             }
         });
-//        //1. Ask for Nearest Pattern to a Given Pattern
-//        this.Rules.put(Pattern.compile("(?i)(nearest|closest|similar|related).*pattern.*(to|like).*"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-//                //currState = new SearchState();
-//                chat.getItems().add(new MessageListItem(
-//                        "To be implemented",
-//                        Instant.now(), "Pattera"));
-//                //TODO go into correct state
-//                return new GuidedSearchState();
-//            }
-//        });
-//        //2. Display Currently Found Patterns
-//        this.Rules.put(Pattern.compile("(?i)(show|display|list).*current.*pattern(s)?"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-//                //currState = new SearchState();
-//                chat.getItems().add(new MessageListItem(
-//                        "To be implemented",
-//                        Instant.now(), "Pattera"));
-//                //TODO go into correct state
-//                return null;
-//            }
-//        });
-//        //3. Requesting a Specific Pattern Type (e.g., design pattern, behavior pattern)
-//        this.Rules.put(Pattern.compile("(?i)(design|behavior(al)?|structural|creational).*pattern(s)?"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-//                //currState = new SearchState();
-//                chat.getItems().add(new MessageListItem(
-//                        "To be implemented",
-//                        Instant.now(), "Pattera"));
-//                //TODO go into correct state
-//                return new GuidedSearchState();
-//            }
-//        });
-//        //4. Go to IntentDiscoveryState
-//        this.Rules.put(Pattern.compile("(?i)(what|how).*help|(discover|guide|guess).*intent|(how|can).*start"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-//                //TODO Reset search, or mabye call intialization method again? Then go back to IntentDiscoveryState,
-//                chat.getItems().add(new MessageListItem(
-//                        "To be implemented",
-//                        Instant.now(), "Pattera"));
-//                //TODO go into correct state
-//                return new IntentDiscoveryState();
-//            }
-//        });
-//        //5. Fallback (Assume Search Input for Keywords)
-//        this.Rules.put(Pattern.compile("(?i).*"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, MessageList chat, IFrame webpageIFrame) {
-//                SearchResponseDto searchResponse = handleSearch(input);
-//                VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
-//                VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
-//                VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
-//                VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
-//                List<MessageListItem> messages = new ArrayList<MessageListItem>();
-//                messages.addAll(chat.getItems());
-//                messages.add(new MessageListItem(
-//                        searchResponse.getPatternQuestion().getQuestion(),
-//                        Instant.now(), "Pattera"));
-//                chat.setItems(messages);
-//                return new GuidedSearchState();
-//            }
-//        });
     }
 
 
@@ -291,7 +227,7 @@ public class GuidedSearchState extends State {
         }
         return tupleList;
     }
-
+    //TODO rework must be done
     public SearchResponseDto searchForPattern(ArrayList<Pair<String,Double>> keywords,int keywordToSearchWith){
         //Call controller to search for keywords
         //handle no pattern found
@@ -356,6 +292,10 @@ public class GuidedSearchState extends State {
                 if(questionResult.getNextSearchTag().equalsIgnoreCase("No more Tags available")){
                     throw new StateException("NoMoreQuestionsAvailable",chatInput);
                 }
+                VaadinSession.getCurrent().setAttribute("excludedTags",questionResult.getExcludedTags());
+                VaadinSession.getCurrent().setAttribute("nextSearchTag",questionResult.getNextSearchTag());
+                VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
+                chatHelper.createChatMessage(questionResult.getPatternQuestion().getQuestion());
             }else{
                 //TODO recheck if better exception handing is needed
                 chatHelper.createPatteraChatMessage("Sorry a error occurred please try again");
@@ -363,6 +303,7 @@ public class GuidedSearchState extends State {
             }
         }catch(Exception e){
             //TODO recheck if better exception handing is needed
+            e.printStackTrace();
             chatHelper.createPatteraChatMessage("Sorry a error occurred please try again");
             return false;
         }

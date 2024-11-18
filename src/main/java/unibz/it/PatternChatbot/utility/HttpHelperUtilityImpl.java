@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.vaadin.flow.server.VaadinSession;
+import unibz.it.PatternChatbot.model.DesignPatterns;
 import unibz.it.PatternChatbot.model.NewQuestionDto;
 import unibz.it.PatternChatbot.model.NewQuestionResponseDto;
 import unibz.it.PatternChatbot.model.SearchResponseDto;
@@ -62,14 +63,14 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
         String nextSearchTag = (String) VaadinSession.getCurrent().getAttribute("nextSearchTag");
         //TODO fix unchecked function error
         ArrayList<String> excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
-        excludedTags.add(nextSearchTag);
+        //excludedTags.add(nextSearchTag);
         try{
             Gson gson = new GsonBuilder().create();
             HttpClient client = HttpClient.newHttpClient();
             NewQuestionDto newQuestionDto = new NewQuestionDto(excludedTags);
             String reqBody = gson.toJson(newQuestionDto);
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(this.server + "/initialization"))
+                    .uri(URI.create(this.server + "/getNewSearchQuestion"))
                     .header("Content-Type", "application/json")
                     .header("Accept", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(reqBody))
@@ -81,7 +82,29 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
             }
 
         }catch(Exception e){
+            e.printStackTrace();
             ErrorDialog.showError("An error occurred trying to get another question");
+        }
+        return null;
+    }
+
+    @Override
+    public HttpResponse<String> getAllPattern() {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(this.server + "/getAllPattern"))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
+            if (responseCode == HttpURLConnection.HTTP_OK){
+                return  response;
+            }
+        } catch (IOException | InterruptedException e) {
+            ErrorDialog.showError("Error could not get all pattern");
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return null;

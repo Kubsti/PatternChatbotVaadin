@@ -45,8 +45,6 @@ public class ChatView extends VerticalLayout {
     }
 
     private void onSubmit(MessageInput.SubmitEvent submitEvent) {
-        //TODO check that input is not empty
-        //add message of user to chat
         chatHelper.createChatMessage(submitEvent.getValue());
         Optional<State> newState = this.currentState.handleInput(submitEvent.getValue());
         newState.ifPresent(state -> this.currentState = state);
