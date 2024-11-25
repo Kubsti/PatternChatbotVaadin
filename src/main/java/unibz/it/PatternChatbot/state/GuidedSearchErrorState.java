@@ -29,7 +29,7 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("Search stoppend");
                 httpHelper.intializeChatbot();
                 return new IntentDiscoveryState(chatHelper,true);
@@ -40,7 +40,7 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input,ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("To be implemented");
                 httpHelper.intializeChatbot();
                 return new GuidedSearchState(chatHelper, true);
@@ -51,7 +51,7 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("To be implemented");
                 //TODO go into correct state
                 return new GuidedSearchState(chatHelper, false);
@@ -62,7 +62,7 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(get|fetch|retrieve)\\b.*\\b(another|next|new)\\b.*\\b(question)\\b|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 if(getNewQuestion(input)){
                     return new GuidedSearchState(chatHelper, false);
                 }
@@ -74,7 +74,7 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(5|retry|try again|redo)?\\b.*\\b(answer)?\\b.*\\b(last|previous)?\\b.*\\b(question)?\\b|5.*|5\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
                 chatHelper.createPatteraChatMessage(question.getQuestion());
                 return new GuidedSearchState(chatHelper, false);
@@ -84,7 +84,7 @@ public class GuidedSearchErrorState extends State {
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 //Todo implement fallback
                 //TODO go into correct state
                 chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");

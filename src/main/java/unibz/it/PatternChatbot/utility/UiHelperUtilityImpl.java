@@ -2,14 +2,13 @@ package unibz.it.PatternChatbot.utility;
 
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.server.VaadinSession;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import unibz.it.PatternChatbot.model.PatternQuestion;
 import unibz.it.PatternChatbot.ui.ChatView;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 
@@ -24,6 +23,29 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
     public void createPatteraChatMessage(String chatMessage) {
         List<MessageListItem> messages = new ArrayList<MessageListItem>();
         messages.addAll(currentChatView.chat.getItems());
+        messages.add(new MessageListItem(
+                chatMessage,
+                Instant.now(), "Pattera"));
+        currentChatView.chat.setItems(messages);
+    }
+
+    @Override
+    public void createPatteraSearchAnswer(String chatMessage, ArrayList<String> options, HashSet<String> possibleAnswers) {
+        List<MessageListItem> messages = new ArrayList<MessageListItem>();
+        messages.addAll(currentChatView.chat.getItems());
+
+        StringBuilder finalMessage = new StringBuilder();
+        finalMessage.append(chatMessage);
+        finalMessage.append("Options:");
+        for(String option : options) {
+            finalMessage.append("\n").append(option);
+        }
+        PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
+        finalMessage.append("\n").append(question.getQuestion());
+        finalMessage.append("\n").append("Possible answers are:");
+        for(String possibleAnswer : possibleAnswers){
+            finalMessage.append("\n").append(possibleAnswer);
+        }
         messages.add(new MessageListItem(
                 chatMessage,
                 Instant.now(), "Pattera"));
@@ -111,13 +133,6 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         pdfResource.setContentType("application/pdf");
 
         driver.quit();
-
-//       this.anchor =  new Anchor(new StreamResource("output.pdf",
-//                () ->  VaadinServlet.getCurrent().getServletContext()
-//                        .getResourceAsStream("assets/output.pdf")),
-//                "A document");
-//        anchor.getElement().setAttribute("router-ignore", true);
         this.currentChatView.pdfViewer.setSrc(pdfResource);
-        //this.currentChatView.pdfViewer.
     }
 }

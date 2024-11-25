@@ -36,13 +36,13 @@ public class GuidedSearchState extends State {
             //chatHelper.createPatteraChatMessage("Sorry i have difficulties extracting keywords from your input, please contact my creator.");
             //VaadinSession.getCurrent().setAttribute("state","errorstate");
         }
-        SearchResponseDto searchResult = searchForPattern(extractedKeywords, 0);
+        SearchResponseDto searchResult = this.httpHelper.searchForPattern(extractedKeywords, 0);
         //print message for user
-        //TODO rework does not work correctly
+        //TODO rework does not work correctly, prob not needed if user can only input given answers
         while(searchResult.getDesignPatterns().getPatterns().isEmpty() && retries < 3){
             if(extractedKeywords.size() > retries){
                 retries++;
-                searchResult = searchForPattern(extractedKeywords, retries);
+                searchResult = this.httpHelper.searchForPattern(extractedKeywords, retries);
             }else{
                 retries = 3;
                 if(searchResult.getDesignPatterns().getPatterns().isEmpty()){
@@ -61,7 +61,7 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 httpHelper.intializeChatbot();
                 return new IntentDiscoveryState(chatHelper,true);
             }
@@ -71,7 +71,7 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 httpHelper.intializeChatbot();
                 return new GuidedSearchState(chatHelper, true);
             }
@@ -81,7 +81,7 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
                 if(designPatterns.getPatterns().isEmpty()){
                     chatHelper.createPatteraChatMessage("I found no pattern. Maybe the last search for a question did not return anything.");
@@ -99,7 +99,7 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(get|fetch|retrieve)\\b.*\\b(another|next|new)\\b.*\\b(question)\\b|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 if(getNewQuestion(input)){
                     return new GuidedSearchState(chatHelper, false);
                 }
@@ -111,23 +111,20 @@ public class GuidedSearchState extends State {
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) throws StateException {
+            public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
                 SearchResponseDto searchResponse = handleSearch(input);
                 VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
                 VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
+                VaadinSession.getCurrent().setAttribute("possibleAnswers",searchResponse.getCurrPossibleAnswersToQuestion());
                 if(searchResponse.getDesignPatterns().getPatterns().size() == 1){
                     //TODO change to pattern found state
                     chatHelper.createChatMessage("Found the following pattern: " + searchResponse.getDesignPatterns().getPatterns().get(0).name);
                     chatHelper.updatePdfViewer(searchResponse.getDesignPatterns().getPatterns().get(0).url);
-                    //chatHelper.updateIFrame(searchResponse.getDesignPatterns().getPatterns().get(0).url);
-                    VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
-                    VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
-                    VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
-                    VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
                 }else{
-                    chatHelper.createChatMessage(searchResponse.getPatternQuestion().getQuestion());
+                    chatHelper.createPatteraSearchAnswer("Found " + searchResponse.getDesignPatterns().getPatterns().size() +" Pattern",stateOptions,
+                            searchResponse.getCurrPossibleAnswersToQuestion());
                 }
                 return null;
             }
@@ -229,58 +226,58 @@ public class GuidedSearchState extends State {
         return tupleList;
     }
     //TODO rework must be done
-    public SearchResponseDto searchForPattern(ArrayList<Pair<String,Double>> keywords,int keywordToSearchWith){
-        //Call controller to search for keywords
-        //handle no pattern found
-        //handle pattern found
-        //handle error
-        //search with keywords for a pattern
-        SearchResponseDto searchResult = null;
-        String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
-        DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
-        ArrayList<String> excludedTags;
-        //TODO fix unchecked function error
-        excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
-        try{
-            Gson gson = new GsonBuilder().create();
-            //Gson gson = new Gson();
-            URL url = URI.create("http://localhost:8080/searchPattern").toURL();
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(keywordToSearchWith).getA(),designPatterns,excludedTags);
-            String reqBody = gson.toJson(searchRequest);
-            try(DataOutputStream os = new DataOutputStream(conn.getOutputStream())){
-                byte[] input = reqBody.getBytes("utf-8");
-                os.write(input, 0, input.length);
-                //os.writeUTF(reqBody);
-                //os.writeBytes(reqBody);
-                os.flush();
-            }
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK){
-                StringBuilder response = new StringBuilder();
-                try (BufferedReader searchResponseReader = new BufferedReader( new InputStreamReader( conn.getInputStream()))) {
-                    String searchResponseline;
-                    while ((searchResponseline = searchResponseReader.readLine()) != null) {
-                        response.append(searchResponseline); // Adds every line to response till the end of file.
-                    }
-                }
-                //TODO check why parsing does not work correctly
-                searchResult= gson.fromJson(response.toString(), SearchResponseDto.class);
-
-            }else{
-                //TODO Hanlde error with state etc.
-            }
-            //conn.connect();
-
-        }catch(Exception e){
-            //Todo implement error hanlding
-        }
-        return searchResult;
-    }
+//    public SearchResponseDto searchForPattern(ArrayList<Pair<String,Double>> keywords,int keywordToSearchWith){
+//        //Call controller to search for keywords
+//        //handle no pattern found
+//        //handle pattern found
+//        //handle error
+//        //search with keywords for a pattern
+//        SearchResponseDto searchResult = null;
+//        String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
+//        DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+//        ArrayList<String> excludedTags;
+//        //TODO fix unchecked function error
+//        excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
+//        try{
+//            Gson gson = new GsonBuilder().create();
+//            //Gson gson = new Gson();
+//            URL url = URI.create("http://localhost:8080/searchPattern").toURL();
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setRequestMethod("POST");
+//            conn.setDoOutput(true);
+//            conn.setRequestProperty("Content-Type", "application/json");
+//            conn.setRequestProperty("Accept", "application/json");
+//            SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(keywordToSearchWith).getA(),designPatterns,excludedTags);
+//            String reqBody = gson.toJson(searchRequest);
+//            try(DataOutputStream os = new DataOutputStream(conn.getOutputStream())){
+//                byte[] input = reqBody.getBytes("utf-8");
+//                os.write(input, 0, input.length);
+//                //os.writeUTF(reqBody);
+//                //os.writeBytes(reqBody);
+//                os.flush();
+//            }
+//            int responseCode = conn.getResponseCode();
+//            if (responseCode == HttpURLConnection.HTTP_OK){
+//                StringBuilder response = new StringBuilder();
+//                try (BufferedReader searchResponseReader = new BufferedReader( new InputStreamReader( conn.getInputStream()))) {
+//                    String searchResponseline;
+//                    while ((searchResponseline = searchResponseReader.readLine()) != null) {
+//                        response.append(searchResponseline); // Adds every line to response till the end of file.
+//                    }
+//                }
+//                //TODO check why parsing does not work correctly
+//                searchResult= gson.fromJson(response.toString(), SearchResponseDto.class);
+//
+//            }else{
+//                //TODO Hanlde error with state etc.
+//            }
+//            //conn.connect();
+//
+//        }catch(Exception e){
+//            //Todo implement error hanlding
+//        }
+//        return searchResult;
+//    }
 
     public boolean getNewQuestion(String chatInput){
         NewQuestionResponseDto questionResult = null;
@@ -296,7 +293,7 @@ public class GuidedSearchState extends State {
                 VaadinSession.getCurrent().setAttribute("excludedTags",questionResult.getExcludedTags());
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",questionResult.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
-                VaadinSession.getCurrent().setAttribute("designPattern", questionResult.getPossibleAnswers());
+                VaadinSession.getCurrent().setAttribute("possibleAnswers", questionResult.getPossibleAnswers());
                 chatHelper.createChatMessage(questionResult.getPatternQuestion().getQuestion());
             }else{
                 //TODO recheck if better exception handing is needed

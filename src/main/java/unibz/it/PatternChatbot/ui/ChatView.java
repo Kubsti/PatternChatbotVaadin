@@ -48,7 +48,7 @@ public class ChatView extends VerticalLayout {
 
     private void onSubmit(MessageInput.SubmitEvent submitEvent) {
         chatHelper.createChatMessage(submitEvent.getValue());
-        Optional<State> newState = this.currentState.handleInput(submitEvent.getValue());
+        Optional<State> newState = this.currentState.handleInput(submitEvent.getValue(), this.currentState.Options);
         newState.ifPresent(state -> this.currentState = state);
     }
 }

@@ -20,7 +20,7 @@ public class IntentDiscoverAskingForHelpState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(1|request|need|want|ask|help)\\b.*\\b(guide|guided|assisted)?\\b.*\\b(search)\\b|(?i)\\b(request|need|want|ask|help)\\b.*\\b(guide|guided|assisted)\\b.*\\b(search)\\b|1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 return new GuidedSearchState(chatHelper, true);
             }
         });
@@ -30,7 +30,7 @@ public class IntentDiscoverAskingForHelpState extends State {
                         "(?i)\\b(request|find|need|want|ask)\\b.*\\b(nearest|closest|similar)\\b.*\\b(pattern)\\b.*\\b(to)\\b.*\\b(given|specific|mentioned)\\b.*\\b(pattern)\\b|2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input,ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("2. Request for the Nearest Pattern to a Given Pattern");
                 //TODO go into correct state
                 return new GuidedSearchState(chatHelper, false);
@@ -42,7 +42,7 @@ public class IntentDiscoverAskingForHelpState extends State {
                         "(?i)\\b(request|need|want|ask|show|give)\\b.*\\b(list)\\b.*\\b(all|available)\\b.*\\b(patterns)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input,ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("3. Request for a List of All Patterns");
                 //TODO go into correct state
                 return new GuidedSearchState(chatHelper, false);
@@ -54,7 +54,7 @@ public class IntentDiscoverAskingForHelpState extends State {
                         "(?i)\\b(request|need|want|ask|show|give)\\b.*\\b(info|information)\\b.*\\b(on|about)\\b.*\\b(specific|particular)\\b.*\\b(pattern)\\b|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input ,ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("4. Request for Information on a Specific Pattern");
                 //TODO go into correct state
                 return new GuidedSearchState(chatHelper, false);
@@ -65,7 +65,7 @@ public class IntentDiscoverAskingForHelpState extends State {
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("5. Request for Help Without Specific Intent (Fallback to General Help)");
                 //TODO go into correct state
                 return new GuidedSearchState(chatHelper, false);

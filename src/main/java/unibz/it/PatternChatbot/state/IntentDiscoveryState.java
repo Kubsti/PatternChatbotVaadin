@@ -23,7 +23,7 @@ public class IntentDiscoveryState extends State {
         this.Rules.put(Pattern.compile("(?i)(1 help to find a pattern|Help to find a pattern|help me find a pattern|1. aHelp to find a pattern)|(?i)\\b(help|assist|find|search)\\b.*\\b(pattern|model|structure)\\b|1.*|1\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) throws StateException {
+            public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
                 //TODO check for what user wants help for
                 List<MessageListItem> messages = new ArrayList<MessageListItem>();
                 //chatHelper.createPatteraChatMessage("1. Asking for help entered");
@@ -35,15 +35,13 @@ public class IntentDiscoveryState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(2|list|show|display)?\\b.*\\b(all|available|every)?\\b.*\\b(patterns|pattern)?\\b|(?i)\\b(list|show|display)\\b.*\\b(all|available|every)\\b.*\\b(patterns|pattern)\\b|2.*|2\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
-                HttpResponse<String> response = httpHelper.getAllPattern();
+            public State responseAction(String input, ArrayList<String> stateOptions) {
+                DesignPatterns response = httpHelper.getAllPattern();
                 if (response != null) {
-                    Gson gson = new GsonBuilder().create();
-                    DesignPatterns designPatterns = gson.fromJson(response.body(), DesignPatterns.class);
-                    if(!designPatterns.getPatterns().isEmpty()){
+                    if(!response.getPatterns().isEmpty()){
                         StringBuilder startPhrase = new StringBuilder();
                         startPhrase.append("Pattern:");
-                        designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
                         chatHelper.createPatteraChatMessage(startPhrase.toString());
                     }else{
                         chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
@@ -57,7 +55,7 @@ public class IntentDiscoveryState extends State {
         this.Rules.put(Pattern.compile("(?i)\\b(3|what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|(?i)\\b(what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("5. Asking what Pattera can do");
                 //TODO go into correct state
                 return new IntentDiscoveryState(chatHelper,false);
@@ -69,7 +67,7 @@ public class IntentDiscoveryState extends State {
                         "|(?i)\\b(request|ask|need|tell me|give me|show)\\b.*\\b(info|information|details|about)\\b.*\\b(design|behavior|creational|structural|behavioral)?\\b.*\\b(pattern)\\b\n|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("6. Requesting specific pattern type (e.g., design pattern, behavior pattern)");
                 //TODO go into correct state
                 return new IntentDiscoveryState(chatHelper, false);
@@ -81,7 +79,7 @@ public class IntentDiscoveryState extends State {
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
-            public State responseAction(String input) {
+            public State responseAction(String input, ArrayList<String> stateOptions) {
                 //Todo implement fallback
                 //TODO go into correct state
                 chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");

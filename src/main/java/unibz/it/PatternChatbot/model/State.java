@@ -45,13 +45,13 @@ public abstract class State {
         }
         return null;
     };
-    public Optional<State> handleInput(String chatInput){
+    public Optional<State> handleInput(String chatInput, ArrayList<String> stateOptions){
         for (Map.Entry<Pattern, Response> set :
                 this.Rules.entrySet()) {
             //Try to match a Rule
             if(set.getKey().matcher(chatInput).find()) {
                 try{
-                    return Optional.of(set.getValue().responseAction(chatInput));
+                    return Optional.of(set.getValue().responseAction(chatInput,stateOptions));
                 }catch (Exception e){
                     if (e instanceof StateException) {
                         StateException stateException = (StateException) e;

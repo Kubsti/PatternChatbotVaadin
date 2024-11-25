@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.vaadin.flow.server.VaadinSession;
-import unibz.it.PatternChatbot.model.DesignPatterns;
-import unibz.it.PatternChatbot.model.NewQuestionDto;
-import unibz.it.PatternChatbot.model.NewQuestionResponseDto;
-import unibz.it.PatternChatbot.model.SearchResponseDto;
+import oshi.util.tuples.Pair;
+import unibz.it.PatternChatbot.model.*;
 import unibz.it.PatternChatbot.ui.ErrorDialog;
 
 import java.io.*;
@@ -90,7 +88,7 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
     }
 
     @Override
-    public HttpResponse<String> getAllPattern() {
+    public DesignPatterns getAllPattern() {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(this.server + "/getAllPattern"))
@@ -101,9 +99,44 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
 
             int responseCode = response.statusCode();
             if (responseCode == HttpURLConnection.HTTP_OK){
-                return  response;
+                Gson gson = new GsonBuilder().create();
+                return gson.fromJson(response.body(), DesignPatterns.class);
             }
         } catch (IOException | InterruptedException e) {
+            ErrorDialog.showError("Error could not get all pattern");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public SearchResponseDto searchForPattern(ArrayList<Pair<String, Double>> keywords, int keywordToSearchWith) {
+        String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
+        DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+        ArrayList<String> excludedTags;
+        //TODO fix unchecked function error
+        excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
+
+        try{
+            Gson gson = new GsonBuilder().create();
+            HttpClient client = HttpClient.newHttpClient();
+            SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(keywordToSearchWith).getA(),designPatterns,excludedTags);
+            String reqBody = gson.toJson(searchRequest);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(this.server + "/searchPattern"))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(reqBody))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == HttpURLConnection.HTTP_OK){
+                return  gson.fromJson(response.body(), SearchResponseDto.class);
+            }else{
+                //TODO implement better logging of errors
+                ErrorDialog.showError("Error in the rest request for search pattern");
+            }
+        }catch (Exception e){
             ErrorDialog.showError("Error could not get all pattern");
             System.out.println(e.getMessage());
             e.printStackTrace();
