@@ -26,7 +26,7 @@ public class IntentDiscoveryState extends State {
             public State responseAction(String input) throws StateException {
                 //TODO check for what user wants help for
                 List<MessageListItem> messages = new ArrayList<MessageListItem>();
-                chatHelper.createPatteraChatMessage("1. Asking for help entered");
+                //chatHelper.createPatteraChatMessage("1. Asking for help entered");
                 return new IntentDiscoverAskingForHelpState(chatHelper, true);
             }
         });

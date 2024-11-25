@@ -1,5 +1,6 @@
 package unibz.it.PatternChatbot.ui;
 
+import com.vaadin.componentfactory.pdfviewer.PdfViewer;
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
@@ -19,7 +20,8 @@ public class ChatView extends VerticalLayout {
     public MessageList chat;
     private MessageInput input;
     public List<MessageListItem> listOfMessages = new ArrayList<MessageListItem>();
-    public IFrame webpageIFrame;
+    //public IFrame webpageIFrame;
+    public PdfViewer pdfViewer;
     @Autowired
     private final UiHelperUtility chatHelper;
     public State currentState;

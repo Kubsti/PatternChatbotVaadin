@@ -45,6 +45,7 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
                     VaadinSession.getCurrent().setAttribute("nextSearchTag", initResponse.getNextSearchTag());
                     VaadinSession.getCurrent().setAttribute("nextQuestion", initResponse.getPatternQuestion());
                     VaadinSession.getCurrent().setAttribute("designPattern", initResponse.getDesignPatterns());
+                    VaadinSession.getCurrent().setAttribute("possibleAnswers", initResponse.getCurrPossibleAnswersToQuestion());
                 }catch (Exception e) {
                     ErrorDialog.showError("Error occurred when trying to read response from backend ");
                     System.out.println(e.getMessage());

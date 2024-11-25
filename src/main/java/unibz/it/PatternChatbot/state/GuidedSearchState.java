@@ -120,7 +120,8 @@ public class GuidedSearchState extends State {
                 if(searchResponse.getDesignPatterns().getPatterns().size() == 1){
                     //TODO change to pattern found state
                     chatHelper.createChatMessage("Found the following pattern: " + searchResponse.getDesignPatterns().getPatterns().get(0).name);
-                    chatHelper.updateIFrame(searchResponse.getDesignPatterns().getPatterns().get(0).url);
+                    chatHelper.updatePdfViewer(searchResponse.getDesignPatterns().getPatterns().get(0).url);
+                    //chatHelper.updateIFrame(searchResponse.getDesignPatterns().getPatterns().get(0).url);
                     VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
                     VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
                     VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
@@ -295,6 +296,7 @@ public class GuidedSearchState extends State {
                 VaadinSession.getCurrent().setAttribute("excludedTags",questionResult.getExcludedTags());
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",questionResult.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
+                VaadinSession.getCurrent().setAttribute("designPattern", questionResult.getPossibleAnswers());
                 chatHelper.createChatMessage(questionResult.getPatternQuestion().getQuestion());
             }else{
                 //TODO recheck if better exception handing is needed

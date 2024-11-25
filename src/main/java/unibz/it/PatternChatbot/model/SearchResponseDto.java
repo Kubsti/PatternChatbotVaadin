@@ -4,18 +4,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class SearchResponseDto {
     private DesignPatterns designPatterns;
     private PatternQuestion patternQuestion;
     private ArrayList<String> excludedTags;
+    private HashSet<String> currPossibleAnswersToQuestion;
     private String nextSearchTag;
+
     @JsonCreator
-    public SearchResponseDto(@JsonProperty("designPatterns") DesignPatterns designPatterns, @JsonProperty("patternQuestion") PatternQuestion patternQuestion, @JsonProperty("excludedTags")  ArrayList<String> excludedTags, @JsonProperty("nextSearchTag") String nextSearchTag) {
+    public SearchResponseDto(@JsonProperty("designPatterns") DesignPatterns designPatterns, @JsonProperty("patternQuestion") PatternQuestion patternQuestion, @JsonProperty("excludedTags") ArrayList<String> excludedTags, @JsonProperty("nextSearchTag") String nextSearchTag,
+                             @JsonProperty("currPossibleAnswersToQuestion") HashSet <String>currPossibleAnswersToQuestion) {
         this.designPatterns = designPatterns;
         this.patternQuestion = patternQuestion;
         this.excludedTags = excludedTags;
         this.nextSearchTag = nextSearchTag;
+        this.currPossibleAnswersToQuestion = currPossibleAnswersToQuestion;
     }
 
     public DesignPatterns getDesignPatterns() {
@@ -48,5 +53,13 @@ public class SearchResponseDto {
 
     public void setNextSearchTag(String nextSearchTag) {
         this.nextSearchTag = nextSearchTag;
+    }
+
+    public HashSet<String> getCurrPossibleAnswersToQuestion() {
+        return currPossibleAnswersToQuestion;
+    }
+
+    public void setCurrPossibleAnswersToQuestion(HashSet<String> currPossibleAnswersToQuestion) {
+        this.currPossibleAnswersToQuestion = currPossibleAnswersToQuestion;
     }
 }
