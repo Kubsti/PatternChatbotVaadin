@@ -11,5 +11,6 @@ public interface HttpHelperUtility {
     public void intializeChatbot();
     public HttpResponse<String> getAnotherQuestion();
     public DesignPatterns  getAllPattern();
-    public SearchResponseDto searchForPattern(ArrayList<Pair<String,Double>> keywords, int keywordToSearchWith);
+    public SearchResponseDto searchForPatternWithKeywords(ArrayList<Pair<String,Double>> keywords, int keywordToSearchWith);
+    public SearchResponseDto searchForPattern(String tagValue);
 }

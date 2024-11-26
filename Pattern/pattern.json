@@ -583,7 +583,7 @@
     {
       "name": "Sidecar",
       "description": "The Sidecar pattern involves deploying a helper service alongside a microservice to provide features such as monitoring, logging, or security. The sidecar abstracts functionality that would otherwise be duplicated across services.",
-      "url": "https://microservices.io/patterns/deployment/sidecar.html",
+      "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sidecar",
       "tags": [
         {
           "tagName": "Domain",
@@ -722,7 +722,7 @@
     {
       "name": "Sharding",
       "description": "The Sharding pattern splits a database into smaller, faster, and more easily managed parts called shards to enhance scalability.",
-      "url": "https://microservices.io/patterns/data/sharding.html",
+      "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding",
       "tags": [
         {
           "tagName": "Domain",
@@ -774,7 +774,7 @@
       ]
     },
     {
-      "name": "Shared Kernel",
+      "name": "https://deviq.com/domain-driven-design/shared-kernel",
       "description": "A Shared Kernel involves sharing a core set of functionality between multiple domains while maintaining their independence.",
       "url": "https://domainlanguage.com/ddd/reference/",
       "tags": [
@@ -911,7 +911,7 @@
     {
       "name": "Aggregator",
       "description": "Gathers data from multiple services or sources into a single interface or API.",
-      "url": "https://microservices.io/patterns/data/aggregator.html",
+      "url": "https://akfpartners.com/growth-blog/microservice-aggregator-pattern",
       "tags": [
         {
           "tagName": "Domain",
@@ -938,7 +938,7 @@
     {
       "name": "Fan-out/Fan-in",
       "description": "Distributes work across multiple components (fan-out) and aggregates the results (fan-in) to handle parallel processing.",
-      "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/fan-out-fan-in",
+      "url": "https://java-design-patterns.com/patterns/fanout-fanin/#programmatic-example-of-fan-out-fan-in-pattern-in-java",
       "tags": [
         {
           "tagName": "Domain",

@@ -1,5 +1,6 @@
 package unibz.it.PatternChatbot.state;
 
+import unibz.it.PatternChatbot.model.DesignPatterns;
 import unibz.it.PatternChatbot.model.Response;
 import unibz.it.PatternChatbot.model.State;
 import unibz.it.PatternChatbot.utility.UiHelperUtility;
@@ -43,23 +44,32 @@ public class IntentDiscoverAskingForHelpState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input,ArrayList<String> stateOptions) {
-                chatHelper.createPatteraChatMessage("3. Request for a List of All Patterns");
-                //TODO go into correct state
-                return new GuidedSearchState(chatHelper, false);
+                DesignPatterns response = httpHelper.getAllPattern();
+                if (response != null) {
+                    if(!response.getPatterns().isEmpty()){
+                        StringBuilder startPhrase = new StringBuilder();
+                        startPhrase.append("Pattern:");
+                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                        chatHelper.createPatteraChatMessage(startPhrase.toString());
+                    }else{
+                        chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
+                    }
+                }
+                return new IntentDiscoveryState(chatHelper, false);
             }
         });
-        //4. Request for Information on a Specific Pattern
-        //old regex (?i)(info|information|details|describe|tell\\sme).*pattern.*(\\b[A-Za-z]+\\b)
-        this.Rules.put(Pattern.compile("(?i)\\b(4|request|need|want|ask|show|give)\\b.*\\b(info|information)?\\b.*\\b(on|about)?\\b.*\\b(specific|particular)?\\b.*\\b(pattern)\\b|" +
-                        "(?i)\\b(request|need|want|ask|show|give)\\b.*\\b(info|information)\\b.*\\b(on|about)\\b.*\\b(specific|particular)\\b.*\\b(pattern)\\b|4.*|4\\..*"
-                , Pattern.CASE_INSENSITIVE), new Response() {
-            @Override
-            public State responseAction(String input ,ArrayList<String> stateOptions) {
-                chatHelper.createPatteraChatMessage("4. Request for Information on a Specific Pattern");
-                //TODO go into correct state
-                return new GuidedSearchState(chatHelper, false);
-            }
-        });
+//        //4. Request for Information on a Specific Pattern
+//        //old regex (?i)(info|information|details|describe|tell\\sme).*pattern.*(\\b[A-Za-z]+\\b)
+//        this.Rules.put(Pattern.compile("(?i)\\b(4|request|need|want|ask|show|give)\\b.*\\b(info|information)?\\b.*\\b(on|about)?\\b.*\\b(specific|particular)?\\b.*\\b(pattern)\\b|" +
+//                        "(?i)\\b(request|need|want|ask|show|give)\\b.*\\b(info|information)\\b.*\\b(on|about)\\b.*\\b(specific|particular)\\b.*\\b(pattern)\\b|4.*|4\\..*"
+//                , Pattern.CASE_INSENSITIVE), new Response() {
+//            @Override
+//            public State responseAction(String input ,ArrayList<String> stateOptions) {
+//                chatHelper.createPatteraChatMessage("4. Request for Information on a Specific Pattern");
+//                //TODO go into correct state
+//                return new GuidedSearchState(chatHelper, false);
+//            }
+//        });
         //Fallback
         //TODO redo fallback
         this.Rules.put(Pattern.compile(".*"
@@ -78,7 +88,7 @@ public class IntentDiscoverAskingForHelpState extends State {
         this.Options.add("1. Request for a Guided Search");
         this.Options.add("2. Request for the Nearest Pattern to a Given Pattern");
         this.Options.add("3. Request for a List of all available Pattern");
-        this.Options.add("4. Request for Information on a Specific Pattern");
+//        this.Options.add("4. Request for Information on a Specific Pattern");
     }
 
     @Override

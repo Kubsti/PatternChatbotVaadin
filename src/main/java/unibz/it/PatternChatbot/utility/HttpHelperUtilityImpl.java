@@ -111,7 +111,7 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
     }
 
     @Override
-    public SearchResponseDto searchForPattern(ArrayList<Pair<String, Double>> keywords, int keywordToSearchWith) {
+    public SearchResponseDto searchForPatternWithKeywords(ArrayList<Pair<String, Double>> keywords, int keywordToSearchWith) {
         String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
         DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
         ArrayList<String> excludedTags;
@@ -122,6 +122,40 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
             Gson gson = new GsonBuilder().create();
             HttpClient client = HttpClient.newHttpClient();
             SearchDto searchRequest = new SearchDto(nextSearchTag,keywords.get(keywordToSearchWith).getA(),designPatterns,excludedTags);
+            String reqBody = gson.toJson(searchRequest);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(this.server + "/searchPattern"))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(reqBody))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == HttpURLConnection.HTTP_OK){
+                return  gson.fromJson(response.body(), SearchResponseDto.class);
+            }else{
+                //TODO implement better logging of errors
+                ErrorDialog.showError("Error in the rest request for search pattern");
+            }
+        }catch (Exception e){
+            ErrorDialog.showError("Error could not get all pattern");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public SearchResponseDto searchForPattern(String tagValue) {
+        String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
+        DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+        ArrayList<String> excludedTags;
+        //TODO fix unchecked function error
+        excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
+
+        try{
+            Gson gson = new GsonBuilder().create();
+            HttpClient client = HttpClient.newHttpClient();
+            SearchDto searchRequest = new SearchDto(nextSearchTag,tagValue,designPatterns,excludedTags);
             String reqBody = gson.toJson(searchRequest);
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(this.server + "/searchPattern"))

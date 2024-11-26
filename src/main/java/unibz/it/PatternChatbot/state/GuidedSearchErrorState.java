@@ -25,41 +25,47 @@ public class GuidedSearchErrorState extends State {
 
     @Override
     public void setupResponses() {
-        //1. Stop search
-        this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
-                , Pattern.CASE_INSENSITIVE), new Response() {
-            @Override
-            public State responseAction(String input, ArrayList<String> stateOptions) {
-                chatHelper.createPatteraChatMessage("Search stoppend");
-                httpHelper.intializeChatbot();
-                return new IntentDiscoveryState(chatHelper,true);
-            }
-        });
+//        //1. Stop search
+//        this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
+//                , Pattern.CASE_INSENSITIVE), new Response() {
+//            @Override
+//            public State responseAction(String input, ArrayList<String> stateOptions) {
+//                httpHelper.intializeChatbot();
+//                return new IntentDiscoveryState(chatHelper,true);
+//            }
+//        });
 
-        //2. Restart search
-        this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|2.*|2\\..*"
+        //1. Restart search
+        //TODO must be tested
+        this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input,ArrayList<String> stateOptions) {
-                chatHelper.createPatteraChatMessage("To be implemented");
                 httpHelper.intializeChatbot();
                 return new GuidedSearchState(chatHelper, true);
             }
         });
 
-        //3. Print currently filtered pattern
-        this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|3.*|3\\..*"
+        //2. Print currently filtered pattern
+        this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                chatHelper.createPatteraChatMessage("To be implemented");
-                //TODO go into correct state
-                return new GuidedSearchState(chatHelper, false);
+                DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+                if(designPatterns.getPatterns().isEmpty()){
+                    chatHelper.createPatteraChatMessage("I found no pattern. Maybe the last search for a question did not return anything.");
+                }else{
+                    StringBuilder startPhrase = new StringBuilder();
+                    startPhrase.append("Pattern:");
+                    designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                    chatHelper.createPatteraChatMessage(startPhrase.toString());
+                }
+                return new GuidedSearchErrorState(chatHelper, false);
             }
         });
 
-        //4. Get another question
-        this.Rules.put(Pattern.compile("(?i)\\b(get|fetch|retrieve)\\b.*\\b(another|next|new)\\b.*\\b(question)\\b|4.*|4\\..*"
+        //3. Get another question
+        this.Rules.put(Pattern.compile("(?i)\\b(get|fetch|retrieve)\\b.*\\b(another|next|new)\\b.*\\b(question)\\b|3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -70,8 +76,8 @@ public class GuidedSearchErrorState extends State {
             }
         });
 
-        //5. Retry to answer last question
-        this.Rules.put(Pattern.compile("(?i)\\b(5|retry|try again|redo)?\\b.*\\b(answer)?\\b.*\\b(last|previous)?\\b.*\\b(question)?\\b|5.*|5\\..*"
+        //4. Retry to answer last question
+        this.Rules.put(Pattern.compile("(?i)\\b(5|retry|try again|redo)?\\b.*\\b(answer)?\\b.*\\b(last|previous)?\\b.*\\b(question)?\\b|4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -85,8 +91,6 @@ public class GuidedSearchErrorState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                //Todo implement fallback
-                //TODO go into correct state
                 chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
                 return new GuidedSearchErrorState(chatHelper, false);
             }
@@ -95,11 +99,11 @@ public class GuidedSearchErrorState extends State {
 
     @Override
     public void setupOptions() {
-        this.Options.add("1. Stop search");
-        this.Options.add("2. Restart search");
-        this.Options.add("3. Print currently filtered pattern");
-        this.Options.add("4. Get another question");
-        this.Options.add("5. Retry to answer last question");
+        //this.Options.add("1. Stop search");
+        this.Options.add("1. Restart search");
+        this.Options.add("2. Print currently filtered pattern");
+        this.Options.add("3. Get another question");
+        this.Options.add("4. Retry to answer last question");
     }
 
     @Override
