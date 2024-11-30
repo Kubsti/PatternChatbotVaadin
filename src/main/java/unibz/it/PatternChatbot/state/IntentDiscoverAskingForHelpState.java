@@ -18,7 +18,7 @@ public class IntentDiscoverAskingForHelpState extends State {
     public void setupResponses() {
         //1. Request for a Guided Search
         //old regex "(?i)(guide|assist|help).*search|(find|discover).*pattern"
-        this.Rules.put(Pattern.compile("(?i)\\b(1|request|need|want|ask|help)\\b.*\\b(guide|guided|assisted)?\\b.*\\b(search)\\b|(?i)\\b(request|need|want|ask|help)\\b.*\\b(guide|guided|assisted)\\b.*\\b(search)\\b|1.*|1\\..*"
+        this.Rules.put(Pattern.compile("1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -27,8 +27,7 @@ public class IntentDiscoverAskingForHelpState extends State {
         });
         //2. Request for the Nearest Pattern to a Given Pattern
         //old regex (?i)(nearest|closest|similar|related).*pattern.*(to|like).*
-        this.Rules.put(Pattern.compile("(?i)\\b(2|request|find|need|want|ask)\\b.*\\b(nearest|closest|similar)\\b.*\\b(pattern)\\b.*\\b(to)?\\b.*\\b(given|specific|mentioned)?\\b.*\\b(pattern)\\b|" +
-                        "(?i)\\b(request|find|need|want|ask)\\b.*\\b(nearest|closest|similar)\\b.*\\b(pattern)\\b.*\\b(to)\\b.*\\b(given|specific|mentioned)\\b.*\\b(pattern)\\b|2.*|2\\..*"
+        this.Rules.put(Pattern.compile("2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input,ArrayList<String> stateOptions) {
@@ -39,8 +38,7 @@ public class IntentDiscoverAskingForHelpState extends State {
         });
         //3. Request for a List of all available Pattern
         //old regex (?i)(list|show|display|all).*pattern(s)?
-        this.Rules.put(Pattern.compile("(?i)\\b(3|request|need|want|ask|show|give)?\\b.*\\b(list)?\\b.*\\b(all|available)?\\b.*\\b(patterns|pattern)\\b|" +
-                        "(?i)\\b(request|need|want|ask|show|give)\\b.*\\b(list)\\b.*\\b(all|available)\\b.*\\b(patterns)\\b|3.*|3\\..*"
+        this.Rules.put(Pattern.compile("3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input,ArrayList<String> stateOptions) {
@@ -76,9 +74,8 @@ public class IntentDiscoverAskingForHelpState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                chatHelper.createPatteraChatMessage("5. Request for Help Without Specific Intent (Fallback to General Help)");
-                //TODO go into correct state
-                return new GuidedSearchState(chatHelper, false);
+                chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
+                return new IntentDiscoverAskingForHelpState(chatHelper, false);
             }
         });
     }

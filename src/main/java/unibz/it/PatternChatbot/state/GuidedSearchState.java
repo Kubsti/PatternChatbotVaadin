@@ -2,21 +2,9 @@ package unibz.it.PatternChatbot.state;
 
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
-import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
 import com.vaadin.flow.server.VaadinSession;
-import oshi.util.tuples.Pair;
 import unibz.it.PatternChatbot.model.*;
-import unibz.it.PatternChatbot.ui.ErrorDialog;
 import unibz.it.PatternChatbot.utility.UiHelperUtility;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -56,14 +44,16 @@ public class GuidedSearchState extends State {
 
     public SearchResponseDto handleSearch(String searchInput) throws StateException {
 
-        ArrayList<String> possibleAnswers = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
+        HashSet<String> possibleAnswers = (HashSet<String> ) VaadinSession.getCurrent().getAttribute("possibleAnswers");
         boolean isPossibleAnswer = false;
-        if(possibleAnswers.size() == 0){
+        if(possibleAnswers.isEmpty()){
             throw  new StateException("PossibleSearchAnswersEmpty", "The in the session stored search Answers List is empty.");
         }
+
         for(String possibleAnswer : possibleAnswers){
-            if(possibleAnswer.equalsIgnoreCase(searchInput)){
+            if (possibleAnswer.equalsIgnoreCase(searchInput)) {
                 isPossibleAnswer = true;
+                break;
             }
         }
 
@@ -88,7 +78,7 @@ public class GuidedSearchState extends State {
 //        });
 
         //1. Restart search
-        this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|1.*|1\\..*"
+        this.Rules.put(Pattern.compile("1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -98,7 +88,7 @@ public class GuidedSearchState extends State {
         });
 
         //2. Print all found pattern
-        this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|2.*|2\\..*"
+        this.Rules.put(Pattern.compile("2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -116,7 +106,7 @@ public class GuidedSearchState extends State {
         });
 
         //3. Get another question
-        this.Rules.put(Pattern.compile("(?i)\\b(get|fetch|retrieve)\\b.*\\b(another|next|new)\\b.*\\b(question)\\b|3.*|3\\..*"
+        this.Rules.put(Pattern.compile("3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
@@ -139,9 +129,9 @@ public class GuidedSearchState extends State {
                 VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
                 VaadinSession.getCurrent().setAttribute("possibleAnswers",searchResponse.getCurrPossibleAnswersToQuestion());
                 if(searchResponse.getDesignPatterns().getPatterns().size() == 1){
-                    chatHelper.createChatMessage("Found the following pattern: " + searchResponse.getDesignPatterns().getPatterns().get(0).name);
+                    chatHelper.createChatMessage("Found the following pattern: " + searchResponse.getDesignPatterns().getPatterns().get(0).name +"\n Website of pattern is: " + searchResponse.getDesignPatterns().getPatterns().get(0).url);
                     chatHelper.updatePdfViewer(searchResponse.getDesignPatterns().getPatterns().get(0).url);
-                    return new FoundPatternState(chatHelper, false);
+                    return new FoundPatternState(chatHelper, true);
                 }else{
                     chatHelper.createPatteraSearchAnswer("Found " + searchResponse.getDesignPatterns().getPatterns().size() +" Pattern",stateOptions,
                             searchResponse.getCurrPossibleAnswersToQuestion());
@@ -170,6 +160,11 @@ public class GuidedSearchState extends State {
         }
         PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         startPhrase.append("\n").append(question.getQuestion());
+        HashSet<String>  possibleAnswers = (HashSet<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
+        startPhrase.append("\n").append("Possible answers are:\n");
+        for(String possibleAnswer: possibleAnswers){
+            startPhrase.append("\"").append(possibleAnswer).append("\",");
+        }
         chatHelper.createPatteraChatMessage(startPhrase.toString());
     }
 
@@ -252,7 +247,12 @@ public class GuidedSearchState extends State {
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",questionResult.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
                 VaadinSession.getCurrent().setAttribute("possibleAnswers", questionResult.getPossibleAnswers());
-                chatHelper.createChatMessage(questionResult.getPatternQuestion().getQuestion());
+                StringBuilder startPhrase = new StringBuilder(questionResult.getPatternQuestion().getQuestion());
+                startPhrase.append("\n").append("Possible answers are:\n");
+                for(String possibleAnswer: questionResult.getPossibleAnswers()){
+                    startPhrase.append("\"").append(possibleAnswer).append("\",");
+                }
+                chatHelper.createChatMessage(startPhrase.toString());
             }else{
                 throw new StateException("NoQuestionResult", "An error occurred when in the getAnotherQuestion rest request");
             }

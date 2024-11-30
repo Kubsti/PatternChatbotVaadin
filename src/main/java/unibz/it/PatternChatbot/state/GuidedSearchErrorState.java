@@ -37,7 +37,7 @@ public class GuidedSearchErrorState extends State {
 
         //1. Restart search
         //TODO must be tested
-        this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|1.*|1\\..*"
+        this.Rules.put(Pattern.compile("1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input,ArrayList<String> stateOptions) {
@@ -47,7 +47,7 @@ public class GuidedSearchErrorState extends State {
         });
 
         //2. Print currently filtered pattern
-        this.Rules.put(Pattern.compile("(?i)\\b(3|print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns|pattern)\\b|(?i)\\b(print|show|display|list)\\b.*\\b(all|found)\\b.*\\b(patterns)\\b|2.*|2\\..*"
+        this.Rules.put(Pattern.compile("2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -65,7 +65,7 @@ public class GuidedSearchErrorState extends State {
         });
 
         //3. Get another question
-        this.Rules.put(Pattern.compile("(?i)\\b(get|fetch|retrieve)\\b.*\\b(another|next|new)\\b.*\\b(question)\\b|3.*|3\\..*"
+        this.Rules.put(Pattern.compile("3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -77,7 +77,7 @@ public class GuidedSearchErrorState extends State {
         });
 
         //4. Retry to answer last question
-        this.Rules.put(Pattern.compile("(?i)\\b(5|retry|try again|redo)?\\b.*\\b(answer)?\\b.*\\b(last|previous)?\\b.*\\b(question)?\\b|4.*|4\\..*"
+        this.Rules.put(Pattern.compile("4.*|4\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -153,7 +153,12 @@ public class GuidedSearchErrorState extends State {
                 VaadinSession.getCurrent().setAttribute("excludedTags",questionResult.getExcludedTags());
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",questionResult.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
-                chatHelper.createChatMessage(questionResult.getPatternQuestion().getQuestion());
+                StringBuilder startPhrase = new StringBuilder(questionResult.getPatternQuestion().getQuestion());
+                startPhrase.append("\n").append("Possible answers are:\n");
+                for(String possibleAnswer: questionResult.getPossibleAnswers()){
+                    startPhrase.append("\"").append(possibleAnswer).append("\",");
+                }
+                chatHelper.createChatMessage(startPhrase.toString());
             }else{
                 //TODO recheck if better exception handing is needed
                 chatHelper.createPatteraChatMessage("Sorry a error occurred please try again");

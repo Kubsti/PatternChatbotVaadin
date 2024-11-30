@@ -42,12 +42,13 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         }
         PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         finalMessage.append("\n").append(question.getQuestion());
-        finalMessage.append("\n").append("Possible answers are:");
+        finalMessage.append("\n");
+        finalMessage.append("\n").append("Possible answers are:\n");
         for(String possibleAnswer : possibleAnswers){
-            finalMessage.append("\n").append(possibleAnswer);
+            finalMessage.append("\"").append(possibleAnswer).append("\",");
         }
         messages.add(new MessageListItem(
-                chatMessage,
+                finalMessage.toString(),
                 Instant.now(), "Pattera"));
         currentChatView.chat.setItems(messages);
     }
@@ -110,7 +111,10 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         https://stackoverflow.com/questions/79004567/selenium-headless-broke-after-chrome-update
         //the new headless mode has of this comment 28.09.24 a bug why it does not work. So there are two options to resolve this. Option 1 is below.
         options.addArguments("--headless=new");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
         options.addArguments("--window-position=-2400,-2400");
+        options.addArguments("--no-sandbox");
         //Second option
         //options.addArguments("--headless=old");
         ChromeDriver driver = new ChromeDriver(options);

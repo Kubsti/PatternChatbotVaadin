@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class HttpHelperUtilityImpl implements HttpHelperUtility {
-    private final String server = "http://localhost:8080" ;
+    private final String server = "http://127.0.0.1:8080" ;
 
     @Override
     public void intializeChatbot() {

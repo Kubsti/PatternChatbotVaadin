@@ -20,7 +20,7 @@ public class IntentDiscoveryState extends State {
     public void setupResponses() {
         //1. Asking for help
         //Old regex "(?i)(help|assist|support|need.*help|find.*solution)"
-        this.Rules.put(Pattern.compile("(?i)(1 help to find a pattern|Help to find a pattern|help me find a pattern|1. aHelp to find a pattern)|(?i)\\b(help|assist|find|search)\\b.*\\b(pattern|model|structure)\\b|1.*|1\\."
+        this.Rules.put(Pattern.compile("1.*|1\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
@@ -32,7 +32,7 @@ public class IntentDiscoveryState extends State {
         });
         //2. List all available patterns
         //old regex "(?i)(suggest.*pattern|recommend.*pattern|find.*pattern|pattern.*(help|needed|solution))"
-        this.Rules.put(Pattern.compile("(?i)\\b(2|list|show|display)?\\b.*\\b(all|available|every)?\\b.*\\b(patterns|pattern)?\\b|(?i)\\b(list|show|display)\\b.*\\b(all|available|every)\\b.*\\b(patterns|pattern)\\b|2.*|2\\."
+        this.Rules.put(Pattern.compile("2.*|2\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -80,8 +80,6 @@ public class IntentDiscoveryState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                //Todo implement fallback
-                //TODO go into correct state
                 chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
                 return new IntentDiscoveryState(chatHelper, false);
             }
@@ -129,8 +127,8 @@ public class IntentDiscoveryState extends State {
         this.Options.add("1. Help to find a pattern");
         this.Options.add("2. List all available patterns");
         //this.Options.add("3. Explaining a problem");
-        this.Options.add("3. Asking what Pattera can do");
-        this.Options.add("4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)");
+        //this.Options.add("3. Asking what Pattera can do");
+        //this.Options.add("4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)");
         //this.Options.add("5. Requesting a specific pattern");
     }
 

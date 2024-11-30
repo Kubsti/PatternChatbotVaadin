@@ -16,7 +16,7 @@ public class FoundPatternState extends State {
     @Override
     public void setupResponses() {
         //1. Restart search
-        this.Rules.put(Pattern.compile("(?i)\\b(2|restart|redo|start over|begin again)\\b.*\\b(search)\\b|(?i)\\b(restart|redo|start over|begin again)\\b.*\\b(search)\\b|1.*|1\\..*"
+        this.Rules.put(Pattern.compile("1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -25,7 +25,7 @@ public class FoundPatternState extends State {
             }
         });
         //2. List all available patterns
-        this.Rules.put(Pattern.compile("(?i)\\b(2|list|show|display)?\\b.*\\b(all|available|every)?\\b.*\\b(patterns|pattern)?\\b|(?i)\\b(list|show|display)\\b.*\\b(all|available|every)\\b.*\\b(patterns|pattern)\\b|2.*|2\\."
+        this.Rules.put(Pattern.compile("2.*|2\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
@@ -41,6 +41,16 @@ public class FoundPatternState extends State {
                     }
                 }
                 return new IntentDiscoveryState(chatHelper, false);
+            }
+        });
+
+        //Fallback
+        this.Rules.put(Pattern.compile(".*"
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public State responseAction(String input, ArrayList<String> stateOptions) {
+                chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
+                return new FoundPatternState(chatHelper, false);
             }
         });
     }

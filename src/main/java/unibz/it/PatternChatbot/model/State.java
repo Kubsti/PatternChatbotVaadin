@@ -58,6 +58,7 @@ public abstract class State {
                         return Optional.ofNullable(handleError(stateException, chatInput));
                     } else {
                         //TODO handle other exceptions
+                        e.printStackTrace();
                         System.out.println("Caught a different type of exception: " + e.getClass().getSimpleName());
                     }
                 }

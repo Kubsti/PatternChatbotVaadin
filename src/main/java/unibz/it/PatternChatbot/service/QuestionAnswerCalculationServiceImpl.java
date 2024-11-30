@@ -13,7 +13,7 @@ public class QuestionAnswerCalculationServiceImpl implements QuestionAnswerClacu
         designPatterns.getPatterns().stream().forEach(pattern -> {
             pattern.getTags().stream().forEach(tag -> {
                 if(tag.tagName.equalsIgnoreCase(tagName)){
-                    possibleAnswers.add(tag.tagName);
+                    possibleAnswers.add(tag.tagValue);
                 }
             });
         });
