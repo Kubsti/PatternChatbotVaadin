@@ -11,12 +11,10 @@ import unibz.it.PatternChatbot.ui.ErrorDialog;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class HttpHelperUtilityImpl implements HttpHelperUtility {
     private final String server = "http://127.0.0.1:8080" ;
@@ -177,4 +175,34 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
         }
         return null;
     }
+
+    @Override
+    public NearestPatternWeightedResponseDto getNearestPatternWeigthed(Pattern searchPattern, double similarityThreshold) {
+        try{
+            Gson gson = new GsonBuilder().create();
+            HttpClient client = HttpClient.newHttpClient();
+            NearestPatternWeightedDto nearestPatternDto = new NearestPatternWeightedDto(searchPattern,similarityThreshold);
+            String reqBody = gson.toJson(nearestPatternDto);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(this.server + "/getNearestPatternWeighted"))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(reqBody))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == HttpURLConnection.HTTP_OK){
+                return  gson.fromJson(response.body(), NearestPatternWeightedResponseDto.class);
+            }else{
+                //TODO implement better logging of errors
+                ErrorDialog.showError("Error in the rest request to get the nearest Pattern weighted");
+            }
+        }catch (Exception e){
+            ErrorDialog.showError("Error could not get nearest pattern");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

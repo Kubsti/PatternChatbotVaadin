@@ -17,7 +17,6 @@ public class IntentDiscoverAskingForHelpState extends State {
     @Override
     public void setupResponses() {
         //1. Request for a Guided Search
-        //old regex "(?i)(guide|assist|help).*search|(find|discover).*pattern"
         this.Rules.put(Pattern.compile("1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
@@ -26,18 +25,14 @@ public class IntentDiscoverAskingForHelpState extends State {
             }
         });
         //2. Request for the Nearest Pattern to a Given Pattern
-        //old regex (?i)(nearest|closest|similar|related).*pattern.*(to|like).*
         this.Rules.put(Pattern.compile("2.*|2\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input,ArrayList<String> stateOptions) {
-                chatHelper.createPatteraChatMessage("2. Request for the Nearest Pattern to a Given Pattern");
-                //TODO go into correct state
-                return new GuidedSearchState(chatHelper, false);
+                return new NearestPatternState(chatHelper, true);
             }
         });
         //3. Request for a List of all available Pattern
-        //old regex (?i)(list|show|display|all).*pattern(s)?
         this.Rules.put(Pattern.compile("3.*|3\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
@@ -69,7 +64,6 @@ public class IntentDiscoverAskingForHelpState extends State {
 //            }
 //        });
         //Fallback
-        //TODO redo fallback
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override

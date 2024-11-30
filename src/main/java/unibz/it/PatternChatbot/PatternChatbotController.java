@@ -32,7 +32,8 @@ public class PatternChatbotController {
     PatternWriterService patternWriterService;
     @Autowired
     QuestionAnswerCalculationServiceImpl questionAnswerCalculationService;
-
+    @Autowired
+    PatternSimilarityCalculationServiceImpl patternSimilarityCalculationService;
     //Get Data for initialization.
     @GetMapping("/initialization")
     public ResponseEntity<String> init() throws IOException {
@@ -75,6 +76,15 @@ public class PatternChatbotController {
     @GetMapping(path="/getAllPattern")
     public DesignPatterns  getAllPattern(){
         return this.designPatterns;
+    }
+    @PostMapping(path="/getNearestPatternWeighted", consumes="application/json", produces="application/json")
+    public NearestPatternWeightedResponseDto getNearestPatternWeigthed(@RequestBody NearestPatternWeightedDto nearestPatternDto) {
+        Pattern nearestfoundPattern = patternSimilarityCalculationService.findNearestPatternWeighted(nearestPatternDto.getSearchPattern(),this.designPatterns.getPatterns());
+        ArrayList<Pattern> nearestPattern = new ArrayList<Pattern>();
+        if(null != nearestfoundPattern){
+            nearestPattern.add(nearestfoundPattern);
+        }
+        return new NearestPatternWeightedResponseDto(nearestPattern);
     }
     //if user inserts pattern frontend should check if we have new tags,for start disallow multiple question for one tag
     @PostMapping(

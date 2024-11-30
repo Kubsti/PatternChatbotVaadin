@@ -29,18 +29,18 @@ public class FoundPatternState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                DesignPatterns response = httpHelper.getAllPattern();
-                if (response != null) {
-                    if(!response.getPatterns().isEmpty()){
-                        StringBuilder startPhrase = new StringBuilder();
-                        startPhrase.append("Pattern:");
-                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
-                        chatHelper.createPatteraChatMessage(startPhrase.toString());
-                    }else{
-                        chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
-                    }
-                }
-                return new IntentDiscoveryState(chatHelper, false);
+//                DesignPatterns response = httpHelper.getAllPattern();
+//                if (response != null) {
+//                    if(!response.getPatterns().isEmpty()){
+//                        StringBuilder startPhrase = new StringBuilder();
+//                        startPhrase.append("Pattern:");
+//                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+//                        chatHelper.createPatteraChatMessage(startPhrase.toString());
+//                    }else{
+//                        chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
+//                    }
+//                }
+                return new ListAllPatternState(chatHelper, true);
             }
         });
 

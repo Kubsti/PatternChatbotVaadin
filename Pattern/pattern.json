@@ -774,7 +774,7 @@
       ]
     },
     {
-      "name": "https://deviq.com/domain-driven-design/shared-kernel",
+      "name": "Shared Kernel",
       "description": "A Shared Kernel involves sharing a core set of functionality between multiple domains while maintaining their independence.",
       "url": "https://domainlanguage.com/ddd/reference/",
       "tags": [

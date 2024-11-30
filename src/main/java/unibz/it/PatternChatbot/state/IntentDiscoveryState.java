@@ -19,7 +19,6 @@ public class IntentDiscoveryState extends State {
     @Override
     public void setupResponses() {
         //1. Asking for help
-        //Old regex "(?i)(help|assist|support|need.*help|find.*solution)"
         this.Rules.put(Pattern.compile("1.*|1\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
@@ -31,23 +30,30 @@ public class IntentDiscoveryState extends State {
             }
         });
         //2. List all available patterns
-        //old regex "(?i)(suggest.*pattern|recommend.*pattern|find.*pattern|pattern.*(help|needed|solution))"
         this.Rules.put(Pattern.compile("2.*|2\\."
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                DesignPatterns response = httpHelper.getAllPattern();
-                if (response != null) {
-                    if(!response.getPatterns().isEmpty()){
-                        StringBuilder startPhrase = new StringBuilder();
-                        startPhrase.append("Pattern:");
-                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
-                        chatHelper.createPatteraChatMessage(startPhrase.toString());
-                    }else{
-                        chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
-                    }
-                }
-                return new IntentDiscoveryState(chatHelper, false);
+//                DesignPatterns response = httpHelper.getAllPattern();
+//                if (response != null) {
+//                    if(!response.getPatterns().isEmpty()){
+//                        StringBuilder startPhrase = new StringBuilder();
+//                        startPhrase.append("Pattern:");
+//                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+//                        chatHelper.createPatteraChatMessage(startPhrase.toString());
+//                    }else{
+//                        chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
+//                    }
+//                }
+                return new ListAllPatternState(chatHelper, true);
+            }
+        });
+        //3. Request for the Nearest Pattern to a Given Pattern
+        this.Rules.put(Pattern.compile("3.*|3\\.|3"
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public State responseAction(String input,ArrayList<String> stateOptions) {
+                return new NearestPatternState(chatHelper, true);
             }
         });
 //        //3. Asking what Pattera can do
@@ -73,8 +79,6 @@ public class IntentDiscoveryState extends State {
 //                return new IntentDiscoveryState(chatHelper, false);
 //            }
 //        });
-        //7. Fallback
-        //old regex (?i)(design\s(pattern|solution)|behavioral\s(pattern|solution)|structural\s(pattern|solution)|creational\s(pattern|solution))
         //TODO redo fallback or make it better if needed
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
@@ -126,6 +130,7 @@ public class IntentDiscoveryState extends State {
     public void setupOptions() {
         this.Options.add("1. Help to find a pattern");
         this.Options.add("2. List all available patterns");
+        this.Options.add("3. Request for the Nearest Pattern to a Given Pattern");
         //this.Options.add("3. Explaining a problem");
         //this.Options.add("3. Asking what Pattera can do");
         //this.Options.add("4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)");
