@@ -34,17 +34,6 @@ public class IntentDiscoveryState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-//                DesignPatterns response = httpHelper.getAllPattern();
-//                if (response != null) {
-//                    if(!response.getPatterns().isEmpty()){
-//                        StringBuilder startPhrase = new StringBuilder();
-//                        startPhrase.append("Pattern:");
-//                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
-//                        chatHelper.createPatteraChatMessage(startPhrase.toString());
-//                    }else{
-//                        chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
-//                    }
-//                }
                 return new ListAllPatternState(chatHelper, true);
             }
         });
@@ -56,30 +45,7 @@ public class IntentDiscoveryState extends State {
                 return new NearestPatternState(chatHelper, true);
             }
         });
-//        //3. Asking what Pattera can do
-//        //old regex (?i)(what\scan\syou\sdo|how\scan\syou\shelp|what\sdo\syou\soffer|what\sservices)
-//        this.Rules.put(Pattern.compile("(?i)\\b(3|what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|(?i)\\b(what)\\b.*\\b(can)\\b.*\\b(pattera)\\b.*\\b(do)\\b|3.*|3\\..*"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, ArrayList<String> stateOptions) {
-//                chatHelper.createPatteraChatMessage("5. Asking what Pattera can do");
-//                //TODO go into correct state
-//                return new IntentDiscoveryState(chatHelper,false);
-//            }
-//        });
-//        //4. Requesting infos about a specific pattern type (e.g., design pattern, behavior pattern)
-//        //old regex "(?i)(design\\s(pattern|solution)|behavioral\\s(pattern|solution)|structural\\s(pattern|solution)|creational\\s(pattern|solution))"
-//        this.Rules.put(Pattern.compile("(?i)\b(4|request|ask|need|info|information|details|about)\b.*\b(design|behavior|creational|structural|behavioral)?\b.*\b(pattern)\b" +
-//                        "|(?i)\\b(request|ask|need|tell me|give me|show)\\b.*\\b(info|information|details|about)\\b.*\\b(design|behavior|creational|structural|behavioral)?\\b.*\\b(pattern)\\b\n|4.*|4\\..*"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, ArrayList<String> stateOptions) {
-//                chatHelper.createPatteraChatMessage("6. Requesting specific pattern type (e.g., design pattern, behavior pattern)");
-//                //TODO go into correct state
-//                return new IntentDiscoveryState(chatHelper, false);
-//            }
-//        });
-        //TODO redo fallback or make it better if needed
+        //Fallback
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override

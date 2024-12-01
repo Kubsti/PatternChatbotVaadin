@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class GuidedSearchState extends State {
 
     public GuidedSearchState(UiHelperUtility chatHelper, boolean showInitMesssge){
-        super(chatHelper,"Search State entered. To stop search write 'Stop Search'", showInitMesssge);
+        super(chatHelper,"Hi, I will help you find your desired pattern.", showInitMesssge);
     }
 //    public SearchResponseDto handleSearch(String searchInput) throws StateException {
 //        //Is one as the first try is accounted for
@@ -66,17 +66,6 @@ public class GuidedSearchState extends State {
     }
     @Override
     public void setupResponses() {
-
-//        //1. Stop search
-//        this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, ArrayList<String> stateOptions) {
-//                httpHelper.intializeChatbot();
-//                return new IntentDiscoveryState(chatHelper,true);
-//            }
-//        });
-
         //1. Restart search
         this.Rules.put(Pattern.compile("1.*|1\\..*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
@@ -97,8 +86,10 @@ public class GuidedSearchState extends State {
                     chatHelper.createPatteraChatMessage("I found no pattern. Maybe the last search for a question did not return anything.");
                 }else{
                     StringBuilder startPhrase = new StringBuilder();
+                    startPhrase.append("Options:\n");
+                    stateOptions.forEach(option -> startPhrase.append(option).append("\n"));
                     startPhrase.append("Pattern:");
-                    designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                    designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\"").append(pattern.name).append("\",")));
                     chatHelper.createPatteraChatMessage(startPhrase.toString());
                 }
                 return new GuidedSearchState(chatHelper, false);
@@ -123,6 +114,10 @@ public class GuidedSearchState extends State {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
                 SearchResponseDto searchResponse = handleSearch(input);
+                //If we have not found any pattern assume that the user might want to retry last response
+                if(searchResponse.getDesignPatterns().getPatterns().size() == 0){
+                    chatHelper.createPatteraChatMessage("Sorry i have not found any pattern ");
+                }
                 VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
                 VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
@@ -133,7 +128,7 @@ public class GuidedSearchState extends State {
                     chatHelper.updatePdfViewer(searchResponse.getDesignPatterns().getPatterns().get(0).url);
                     return new FoundPatternState(chatHelper, true);
                 }else{
-                    chatHelper.createPatteraSearchAnswer("Found " + searchResponse.getDesignPatterns().getPatterns().size() +" Pattern",stateOptions,
+                    chatHelper.createPatteraSearchAnswer("Found " + searchResponse.getDesignPatterns().getPatterns().size() +" Pattern\n",stateOptions,
                             searchResponse.getCurrPossibleAnswersToQuestion());
                 }
                 return null;
@@ -256,9 +251,12 @@ public class GuidedSearchState extends State {
             }else{
                 throw new StateException("NoQuestionResult", "An error occurred when in the getAnotherQuestion rest request");
             }
+        //Problem catches state exception
         }catch(Exception e){
             e.printStackTrace();
-            throw new StateException("GetNewQuestionException", "An error occurred when in the getAnotherQuestion rest request");
+            if(e instanceof StateException == false){
+                logger.error("Error in getNewQuestion in GuidedSearchState. Error: {}", e.getMessage());
+            }
         }
         return true;
     }

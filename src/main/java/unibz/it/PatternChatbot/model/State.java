@@ -1,5 +1,8 @@
 package unibz.it.PatternChatbot.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import unibz.it.PatternChatbot.PatternChatbotController;
 import unibz.it.PatternChatbot.state.GuidedSearchState;
 import unibz.it.PatternChatbot.ui.ErrorDialog;
 import unibz.it.PatternChatbot.utility.HttpHelperUtilityImpl;
@@ -9,6 +12,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 public abstract class State {
+    public static final Logger logger = LoggerFactory.getLogger(State.class);
     //Pattern must be stored in order of which they are supposed to be matched
     public LinkedHashMap<Pattern, Response> Rules;
     public ArrayList<String> Options;
@@ -28,6 +32,7 @@ public abstract class State {
         this.httpHelper = new HttpHelperUtilityImpl();
         if(showInitMessage){
             createInitMessage();
+            logger.info("Entered State: {}", this.getClass().getSimpleName());
         }
     }
     public  State handleError(StateException e, String input){
@@ -51,13 +56,15 @@ public abstract class State {
             //Try to match a Rule
             if(set.getKey().matcher(chatInput).find()) {
                 try{
-                    return Optional.of(set.getValue().responseAction(chatInput,stateOptions));
+                    logger.info("Respond with Rule: {}", set.getKey());
+                    return Optional.ofNullable(set.getValue().responseAction(chatInput,stateOptions));
                 }catch (Exception e){
                     if (e instanceof StateException) {
+                        logger.error("Error in respond with Rule: {} going into StateException handling. Error: {}", set.getKey(), ((StateException) e).getExceptionName());
                         StateException stateException = (StateException) e;
                         return Optional.ofNullable(handleError(stateException, chatInput));
                     } else {
-                        //TODO handle other exceptions
+                        logger.error("Error in respond with Rule: {} entering normal handling. Error: {}", set.getKey(), e.getMessage());
                         e.printStackTrace();
                         System.out.println("Caught a different type of exception: " + e.getClass().getSimpleName());
                     }

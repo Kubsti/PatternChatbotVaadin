@@ -42,7 +42,7 @@ public class IntentDiscoverAskingForHelpState extends State {
                     if(!response.getPatterns().isEmpty()){
                         StringBuilder startPhrase = new StringBuilder();
                         startPhrase.append("Pattern:");
-                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                        response.getPatterns().forEach((pattern -> startPhrase.append("\"").append(pattern.name).append("\",")));
                         chatHelper.createPatteraChatMessage(startPhrase.toString());
                     }else{
                         chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");
@@ -51,18 +51,6 @@ public class IntentDiscoverAskingForHelpState extends State {
                 return new IntentDiscoveryState(chatHelper, false);
             }
         });
-//        //4. Request for Information on a Specific Pattern
-//        //old regex (?i)(info|information|details|describe|tell\\sme).*pattern.*(\\b[A-Za-z]+\\b)
-//        this.Rules.put(Pattern.compile("(?i)\\b(4|request|need|want|ask|show|give)\\b.*\\b(info|information)?\\b.*\\b(on|about)?\\b.*\\b(specific|particular)?\\b.*\\b(pattern)\\b|" +
-//                        "(?i)\\b(request|need|want|ask|show|give)\\b.*\\b(info|information)\\b.*\\b(on|about)\\b.*\\b(specific|particular)\\b.*\\b(pattern)\\b|4.*|4\\..*"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input ,ArrayList<String> stateOptions) {
-//                chatHelper.createPatteraChatMessage("4. Request for Information on a Specific Pattern");
-//                //TODO go into correct state
-//                return new GuidedSearchState(chatHelper, false);
-//            }
-//        });
         //Fallback
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {

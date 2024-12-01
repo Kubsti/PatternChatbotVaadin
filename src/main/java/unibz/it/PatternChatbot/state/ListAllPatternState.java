@@ -36,7 +36,7 @@ public class ListAllPatternState extends State {
                 if (response != null) {
                     if (!response.getPatterns().isEmpty()) {
                         startPhrase.append("Pattern:");
-                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name).append("\",")));
                         setAllAvailablePattern(response.getPatterns());
                         chatHelper.createPatteraChatMessage(startPhrase.toString());
                     } else {
@@ -87,7 +87,7 @@ public class ListAllPatternState extends State {
             getAllAvailablePattern().addAll(response.getPatterns());
             if (!response.getPatterns().isEmpty()) {
                 startPhrase.append("Pattern:");
-                response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                response.getPatterns().forEach((pattern -> startPhrase.append("\"").append(pattern.name).append("\"")));
                 chatHelper.createPatteraChatMessage(startPhrase.toString());
             } else {
                 chatHelper.createPatteraChatMessage("Sorry it seems I have no patterns stored at the moment, but maybe you could give me some ;).");

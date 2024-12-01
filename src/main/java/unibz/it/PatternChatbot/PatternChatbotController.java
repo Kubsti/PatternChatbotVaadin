@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.vaadin.flow.server.VaadinSession;
 import unibz.it.PatternChatbot.model.*;
 import unibz.it.PatternChatbot.service.*;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,7 +19,7 @@ public class PatternChatbotController {
     private DesignPatterns designPatterns;
     private PatternQuestions patternQuestions;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private String currentSearchTag = "Domain";
+    private static final Logger logger = LoggerFactory.getLogger(PatternChatbotController.class);
     @Autowired
     FileReaderService fileReaderService;
     @Autowired
@@ -37,15 +37,16 @@ public class PatternChatbotController {
     //Get Data for initialization.
     @GetMapping("/initialization")
     public ResponseEntity<String> init() throws IOException {
+        logger.info("Started initialization of PatternChatbot");
         try{
             designPatterns = fileReaderService.getDesignPatterns("Pattern/pattern.json");
             patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
             ArrayList<String> excludedTags = new ArrayList<String>();
-            //TODO recheck next search Tag calculation, and nextQuestion calculation
             String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, excludedTags);
             PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
             HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
             SearchResponseDto currResponse = new SearchResponseDto(designPatterns, nextQuestion, excludedTags, nextSearchTag,possibleAnswers);
+            logger.info("Finished initialization of PatternChatbot");
             return ResponseEntity.ok().body(objectMapper.writeValueAsString(currResponse));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
@@ -53,24 +54,30 @@ public class PatternChatbotController {
     }
     @PostMapping(path="searchPattern", consumes="application/json", produces="application/json")
     public SearchResponseDto searchPattern(@RequestBody SearchDto searchDto) {
-        //Caculate next searchtag
-        DesignPatterns filteredDesignPattern = patternSearchService.searchPatterns(searchDto.getCurrSearchTag(), searchDto.getSearchTagValue(), designPatterns.getPatterns());
+        logger.info("Started search of pattern");
+        DesignPatterns filteredDesignPattern = patternSearchService.searchPatterns(searchDto.getCurrSearchTag(), searchDto.getSearchTagValue(), searchDto.getDesignPatterns().getPatterns());
+        logger.info("Finished search of pattern");
         //Check if we found something
         if(filteredDesignPattern.getPatterns().isEmpty()){
+            StringBuilder errorMessage = new StringBuilder("Search of pattern did not return any result. Search Tag Is:" + searchDto.getCurrSearchTag() +" search Tag value is: " + searchDto.getSearchTagValue());
+            errorMessage.append("\nPattern received:");
+            searchDto.getDesignPatterns().getPatterns().forEach(pattern -> {errorMessage.append("\"").append(pattern.name).append("\",");});
+            logger.error(errorMessage.toString());
             return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), searchDto.getCurrSearchTag(), new HashSet<String>());
         }
-        //TODO rework
-        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, searchDto.getExcludedTags());
+        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
+        HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,filteredDesignPattern);
         return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag,possibleAnswers);
     }
 
     @PostMapping(path="/getNewSearchQuestion", consumes="application/json", produces="application/json")
     public NewQuestionResponseDto getNewSearchQuestion(@RequestBody NewQuestionDto newQuestionDto) {
-        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, newQuestionDto.getExcludedTags());
+        logger.info("Started get new Search Question");
+        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(newQuestionDto.getDesignPatterns(), newQuestionDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
+        HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,newQuestionDto.getDesignPatterns());
+        logger.info("Finished get new Search Question");
         return new NewQuestionResponseDto( nextQuestion, newQuestionDto.getExcludedTags(), nextSearchTag, possibleAnswers);
     }
     @GetMapping(path="/getAllPattern")

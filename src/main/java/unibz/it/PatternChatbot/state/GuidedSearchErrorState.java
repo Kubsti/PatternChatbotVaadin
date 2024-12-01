@@ -25,16 +25,6 @@ public class GuidedSearchErrorState extends State {
 
     @Override
     public void setupResponses() {
-//        //1. Stop search
-//        this.Rules.put(Pattern.compile("(?i)\\b(1|stop|cancel|end|terminate)\\b.*\\b(search)\\b|(?i)\\b(stop|cancel|end|terminate)\\b.*\\b(search)\\b|1.*|1\\..*"
-//                , Pattern.CASE_INSENSITIVE), new Response() {
-//            @Override
-//            public State responseAction(String input, ArrayList<String> stateOptions) {
-//                httpHelper.intializeChatbot();
-//                return new IntentDiscoveryState(chatHelper,true);
-//            }
-//        });
-
         //1. Restart search
         //TODO must be tested
         this.Rules.put(Pattern.compile("1.*|1\\..*"
@@ -57,7 +47,7 @@ public class GuidedSearchErrorState extends State {
                 }else{
                     StringBuilder startPhrase = new StringBuilder();
                     startPhrase.append("Pattern:");
-                    designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                    designPatterns.getPatterns().forEach((pattern -> startPhrase.append("\"").append(pattern.name).append("\",")));
                     chatHelper.createPatteraChatMessage(startPhrase.toString());
                 }
                 return new GuidedSearchErrorState(chatHelper, false);

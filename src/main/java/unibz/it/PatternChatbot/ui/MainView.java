@@ -6,6 +6,7 @@ import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import unibz.it.PatternChatbot.model.SearchResponseDto;
 import unibz.it.PatternChatbot.utility.HttpHelperUtilityImpl;
@@ -40,13 +41,25 @@ private PdfViewer pdfViewer;
         ChatView chatView = new ChatView();
         //chatView.webpageIFrame = webpageIFrame;
         chatView.pdfViewer = pdfViewer;
+        try (InputStream pdf = new FileInputStream("Pattern/PatternChatbotInfo.pdf")) {
+            byte[] pdfBytes = pdf.readAllBytes();
+            StreamResource resource = new StreamResource("PatternChatbotInfo.pdf", () -> new ByteArrayInputStream(pdfBytes));
+            resource.setContentType("application/pdf");
+            pdfViewer.setSrc(resource);
+        }catch(Exception e){
+            e.printStackTrace();
+            ErrorDialog.showError("Error in the loading PatternChatbotInfo pdf");
+        }
+
+
+
         MessageList messageList = chatView.chat;
         chatView.setHeight(this.getMaxHeight());
         chatView.setWidth("30%");
         add(chatView);
         UiHelperUtilityImpl chatHelper = new UiHelperUtilityImpl(chatView);
         //chatHelper.updateIFrame("https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography");
-        chatHelper.updatePdfViewer("https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography");
+        //chatHelper.updatePdfViewer("https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography");
     }
 
 }

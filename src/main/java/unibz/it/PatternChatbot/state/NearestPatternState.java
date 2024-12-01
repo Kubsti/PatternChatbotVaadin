@@ -21,6 +21,7 @@ public class NearestPatternState  extends State {
             }
         });
         //2. List all available patterns
+        //We do not switch to ListAllPatternState as we want stay in this state to allow the user to continue nearest pattern searches
         this.Rules.put(java.util.regex.Pattern.compile("2.*|2\\."
                 , java.util.regex.Pattern.CASE_INSENSITIVE), new Response() {
             @Override
@@ -29,8 +30,10 @@ public class NearestPatternState  extends State {
                 DesignPatterns response = httpHelper.getAllPattern();
                 if (response != null) {
                     if (!response.getPatterns().isEmpty()) {
+                        startPhrase.append("Options:\n");
+                        stateOptions.forEach(option -> startPhrase.append(option).append("\n"));
                         startPhrase.append("Pattern:");
-                        response.getPatterns().forEach((pattern -> startPhrase.append("\n").append(pattern.name)));
+                        response.getPatterns().forEach((pattern -> startPhrase.append("\"").append(pattern.name).append("\",")));
                         setAllAvailablePattern(response.getPatterns());
                         chatHelper.createPatteraChatMessage(startPhrase.toString());
                     } else {

@@ -5,6 +5,9 @@ import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import unibz.it.PatternChatbot.PatternChatbotController;
 import unibz.it.PatternChatbot.model.PatternQuestion;
 import unibz.it.PatternChatbot.ui.ChatView;
 
@@ -14,7 +17,7 @@ import java.util.*;
 
 public class UiHelperUtilityImpl implements UiHelperUtility {
     private final ChatView currentChatView;
-
+    private static final Logger logger = LoggerFactory.getLogger(UiHelperUtilityImpl.class);
     public UiHelperUtilityImpl(ChatView currentChatView) {
         this.currentChatView = currentChatView;
     }
@@ -42,7 +45,6 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         }
         PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         finalMessage.append("\n").append(question.getQuestion());
-        finalMessage.append("\n");
         finalMessage.append("\n").append("Possible answers are:\n");
         for(String possibleAnswer : possibleAnswers){
             finalMessage.append("\"").append(possibleAnswer).append("\",");
@@ -63,50 +65,9 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         currentChatView.chat.setItems(messages);
     }
 
-//    @Override
-//    public void updateIFrame(String url) {
-//        ChromeOptions options = new ChromeOptions();
-//        https://stackoverflow.com/questions/79004567/selenium-headless-broke-after-chrome-update
-//        //the new headless mode has of this comment 28.09.24 a bug why it does not work. So there are two options to resolve this. Option 1 is below.
-//        options.addArguments("--headless=new");
-//        options.addArguments("--window-position=-2400,-2400");
-//        //Second option
-//        //options.addArguments("--headless=old");
-//        ChromeDriver driver = new ChromeDriver(options);
-//
-//        driver.get(url);
-//
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("paperWidth", 8.27);  // A4 size width in inches
-//        params.put("paperHeight", 11.69); // A4 size height in inches
-//        params.put("printBackground", true);
-//
-//        String pdfBase64 = (String) driver.executeCdpCommand("Page.printToPDF", params).get("data");
-//
-//        // Decode the base64 string to get the PDF as bytes
-//        byte[] pdfBytes = Base64.getDecoder().decode(pdfBase64);
-//
-//        // Write the byte array to a file
-//        try (FileOutputStream fos = new FileOutputStream("src/main/webapp/assets/output.pdf",false)) {
-//            fos.write(pdfBytes);
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        driver.quit();
-//
-////       this.anchor =  new Anchor(new StreamResource("output.pdf",
-////                () ->  VaadinServlet.getCurrent().getServletContext()
-////                        .getResourceAsStream("assets/output.pdf")),
-////                "A document");
-////        anchor.getElement().setAttribute("router-ignore", true);
-//        this.currentChatView.webpageIFrame.setSrc("assets/output.pdf");
-//        this.currentChatView.webpageIFrame.reload();
-//    }
-
     @Override
     public void updatePdfViewer(String url) {
+        logger.info("Started to update PdfViewer");
         ChromeOptions options = new ChromeOptions();
         https://stackoverflow.com/questions/79004567/selenium-headless-broke-after-chrome-update
         //the new headless mode has of this comment 28.09.24 a bug why it does not work. So there are two options to resolve this. Option 1 is below.
@@ -125,9 +86,9 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         params.put("paperWidth", 8.27);  // A4 size width in inches
         params.put("paperHeight", 11.69); // A4 size height in inches
         params.put("printBackground", true);
-
+        logger.info("Started to get Url as PDF");
         String pdfBase64 = (String) driver.executeCdpCommand("Page.printToPDF", params).get("data");
-
+        logger.info("Finished get Url as PDF");
         // Decode the base64 string to get the PDF as bytes
         byte[] pdfBytes = Base64.getDecoder().decode(pdfBase64);
         StreamResource pdfResource = new StreamResource("example.pdf",
@@ -138,5 +99,6 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
 
         driver.quit();
         this.currentChatView.pdfViewer.setSrc(pdfResource);
+        logger.info("Finished to update PdfViewer");
     }
 }
