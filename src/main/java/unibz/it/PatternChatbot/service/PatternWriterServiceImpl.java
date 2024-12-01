@@ -1,14 +1,15 @@
-package unibz.it.PatternChatbot;
+package unibz.it.PatternChatbot.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import unibz.it.PatternChatbot.model.DesignPatterns;
 
 import java.io.File;
 @Service
-public class PatternWriterServiceImpl implements PatternWriterService{
+public class PatternWriterServiceImpl implements PatternWriterService {
 
     @Override
-    public boolean writePattern(DesingPatterns listOfPattern) {
+    public boolean writePattern(DesignPatterns listOfPattern) {
         try{
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(new File("Pattern/pattern.json"), listOfPattern);
