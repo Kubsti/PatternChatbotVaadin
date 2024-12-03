@@ -187,6 +187,41 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
     }
 
     @Override
+    public SearchResponseDto excludePattern(String tagValue) {
+        logger.info("HttpHelper started to build request to exclude pattern");
+        String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
+        DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+        ArrayList<String> excludedTags;
+        //TODO fix unchecked function error
+        excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
+
+        try{
+            Gson gson = new GsonBuilder().create();
+            HttpClient client = HttpClient.newHttpClient();
+            SearchDto searchRequest = new SearchDto(nextSearchTag,tagValue,designPatterns,excludedTags);
+            String reqBody = gson.toJson(searchRequest);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(this.server + "/excludePattern"))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(reqBody))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == HttpURLConnection.HTTP_OK){
+                logger.info("HttpHelper finished to search for pattern");
+                return  gson.fromJson(response.body(), SearchResponseDto.class);
+            }else{
+                logger.error("HttpHelper search for pattern error in http request. HttpError {}\nErrorMessage: {}", response.statusCode(), response.body());
+                ErrorDialog.showError("Error in the rest request for search pattern");
+            }
+        }catch (Exception e){
+            logger.error("HttpHelper search for pattern error.\nErrorMessage: {}", e.getMessage());
+            ErrorDialog.showError("Error could not get all pattern");
+        }
+        return null;
+    }
+
+    @Override
     public NearestPatternWeightedResponseDto getNearestPatternWeigthed(Pattern searchPattern, double similarityThreshold) {
         logger.info("Started get nearest Pattern weighted search");
         try{

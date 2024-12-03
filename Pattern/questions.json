@@ -159,6 +159,34 @@
     {
       "tagName": "Offline Functionality",
       "question": "Does your solution require offline functionality?"
-    }
+    },
+    {
+      "tagName": "Category",
+      "question": "In what category would you think your pattern is contained?"
+    },
+    {
+      "tagName": "SubCategory",
+      "question": "In what subcategory would you think your pattern is contained?"
+    },
+    {
+      "tagName": "Communication",
+      "question": "What communication style would your pattern use?"
+    },
+    {
+      "tagName": "Event Management",
+      "question": "How would you think the Event Management would work for your searched pattern?"
+    },
+    {
+      "tagName": "Consistency",
+      "question": "What Consistency should your pattern have?"
+    },
+    {
+      "tagName": "Testing",
+      "question": "What type of testing should your pattern do?"
+    },
+    {
+      "tagName": "Behavior",
+      "question": "What Behavior problem should the pattern solve?"
+    }    
   ]
 }

@@ -33,7 +33,7 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
     }
 
     @Override
-    public void createPatteraSearchAnswer(String chatMessage, ArrayList<String> options, HashSet<String> possibleAnswers) {
+    public void createPatteraSearchAnswer(String chatMessage, ArrayList<String> options, ArrayList<String> possibleAnswers) {
         List<MessageListItem> messages = new ArrayList<MessageListItem>();
         messages.addAll(currentChatView.chat.getItems());
 

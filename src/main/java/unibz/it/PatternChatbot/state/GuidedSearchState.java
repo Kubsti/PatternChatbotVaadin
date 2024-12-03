@@ -43,11 +43,15 @@ public class GuidedSearchState extends State {
 //    }
 
     public SearchResponseDto handleSearch(String searchInput) throws StateException {
-
-        HashSet<String> possibleAnswers = (HashSet<String> ) VaadinSession.getCurrent().getAttribute("possibleAnswers");
+        ArrayList<String> possibleAnswers = (ArrayList<String> ) VaadinSession.getCurrent().getAttribute("possibleAnswers");
         boolean isPossibleAnswer = false;
         if(possibleAnswers.isEmpty()){
             throw  new StateException("PossibleSearchAnswersEmpty", "The in the session stored search Answers List is empty.");
+        }
+        //TODO on later development change do parsing option with number
+        if(searchInput.matches("^None$|^none$")){
+            //TODO better Exception handling
+            return this.httpHelper.excludePattern((String) VaadinSession.getCurrent().getAttribute("nextSearchTag"));
         }
 
         for(String possibleAnswer : possibleAnswers){
@@ -155,7 +159,7 @@ public class GuidedSearchState extends State {
         }
         PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         startPhrase.append("\n").append(question.getQuestion());
-        HashSet<String>  possibleAnswers = (HashSet<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
+        ArrayList<String>  possibleAnswers = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
         startPhrase.append("\n").append("Possible answers are:\n");
         for(String possibleAnswer: possibleAnswers){
             startPhrase.append("\"").append(possibleAnswer).append("\",");

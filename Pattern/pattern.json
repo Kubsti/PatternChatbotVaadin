@@ -22,10 +22,6 @@
           "tagValue": "External"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Integration"
-        },
-        {
           "tagName": "Problem",
           "tagValue": "Coupling"
         },
@@ -44,6 +40,14 @@
         {
           "tagName": "Development Paradigm",
           "tagValue": "Domain-Driven Design (DDD)"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Integration Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Service Integration"
         }
       ]
     },
@@ -55,10 +59,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Communication"
         },
         {
           "tagName": "Scope",
@@ -95,6 +95,14 @@
         {
           "tagName": "Development Paradigm",
           "tagValue": "Event-Driven Architecture"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Event-Driven"
         }
       ]
     },
@@ -106,10 +114,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Query"
         },
         {
           "tagName": "Architectural Strategy",
@@ -154,6 +158,14 @@
         {
           "tagName": "Development Paradigm",
           "tagValue": "Event-Driven Architecture"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Data Segregation"
         }
       ]
     },
@@ -165,10 +177,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Decomposition"
         },
         {
           "tagName": "Problem",
@@ -197,6 +205,14 @@
         {
           "tagName": "Data Ownership",
           "tagValue": "Domain-Specific Data Storage"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Domain-Driven Design (DDD)"
         }
       ]
     },
@@ -208,10 +224,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Data Management"
         },
         {
           "tagName": "Scope",
@@ -248,6 +260,14 @@
         {
           "tagName": "Development Paradigm",
           "tagValue": "Event-Driven Architecture"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "State Management"
         }
       ]
     },
@@ -259,10 +279,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Security"
         },
         {
           "tagName": "Governance",
@@ -303,6 +319,14 @@
         {
           "tagName": "Service Composition",
           "tagValue": "Union of Services"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "API Management"
         }
       ]
     },
@@ -314,10 +338,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Query"
         },
         {
           "tagName": "Service Composition",
@@ -362,6 +382,14 @@
         {
           "tagName": "Scaling",
           "tagValue": "Data Partitioning"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "API Management"
         }
       ]
     },
@@ -373,10 +401,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Integration"
         },
         {
           "tagName": "Integration",
@@ -413,6 +437,14 @@
         {
           "tagName": "Service Composition",
           "tagValue": "Union of Services"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Communication Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Asynchronous Communication"
         }
       ]
     },
@@ -424,10 +456,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Communication"
         },
         {
           "tagName": "Development Paradigm",
@@ -456,6 +484,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Coupled communication"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Communication Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Communication Patterns"
         }
       ]
     },
@@ -467,10 +503,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Scalability"
         },
         {
           "tagName": "Scaling",
@@ -499,6 +531,14 @@
         {
           "tagName": "Role",
           "tagValue": "Proxy"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Scalability and Performance Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Load Management"
         }
       ]
     },
@@ -510,10 +550,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Data Management"
         },
         {
           "tagName": "Governance",
@@ -542,6 +578,14 @@
         {
           "tagName": "Development Paradigm",
           "tagValue": "Domain-Driven Design (DDD)"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Data Isolation"
         }
       ]
     },
@@ -553,10 +597,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Integration"
         },
         {
           "tagName": "Integration",
@@ -577,6 +617,14 @@
         {
           "tagName": "Role",
           "tagValue": "Service Locator"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Service Discovery"
         }
       ]
     },
@@ -588,10 +636,6 @@
         {
           "tagName": "Domain",
           "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Deployment"
         },
         {
           "tagName": "Benefit",
@@ -608,6 +652,14 @@
         {
           "tagName": "Architectural Strategy",
           "tagValue": "Service Composition"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Infrastructure Management"
         }
       ]
     },
@@ -621,10 +673,6 @@
           "tagValue": "Resiliency"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Fault Tolerance"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Isolation"
         },
@@ -635,6 +683,14 @@
         {
           "tagName": "Cost",
           "tagValue": "Resource Duplication"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Fault Tolerance and Resilience Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Failure Isolation"
         }
       ]
     },
@@ -648,10 +704,6 @@
           "tagValue": "Fault Tolerance"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Resiliency"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Fault Recovery"
         },
@@ -662,6 +714,14 @@
         {
           "tagName": "Cost",
           "tagValue": "Latency"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Fault Tolerance and Resilience Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Failure Prevention"
         }
       ]
     },
@@ -674,10 +734,7 @@
           "tagName": "Domain",
           "tagValue": "Resiliency"
         },
-        {
-          "tagName": "Category",
-          "tagValue": "Fault Tolerance"
-        },
+
         {
           "tagName": "Benefit",
           "tagValue": "Stability"
@@ -689,6 +746,14 @@
         {
           "tagName": "Cost",
           "tagValue": "Limited Availability During Tripping"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Fault Tolerance and Resilience Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Failure Prevention"
         }
       ]
     },
@@ -702,10 +767,6 @@
           "tagValue": "Coordination"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Distributed Systems"
-        },
-        {
           "tagName": "Problem",
           "tagValue": "Task Coordination"
         },
@@ -716,6 +777,14 @@
         {
           "tagName": "Cost",
           "tagValue": "Leadership Election Overhead"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Coordination"
         }
       ]
     },
@@ -729,10 +798,6 @@
           "tagValue": "Database"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Scalability"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Performance"
         },
@@ -743,6 +808,14 @@
         {
           "tagName": "Problem",
           "tagValue": "High Data Volume"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Data Partitioning"
         }
       ]
     },
@@ -756,10 +829,6 @@
           "tagValue": "Microservice"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Communication"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Centralized Communication Management"
         },
@@ -770,6 +839,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Complex Communication"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Service Communication"
         }
       ]
     },
@@ -783,10 +860,6 @@
           "tagValue": "DDD"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Reuse"
         },
@@ -797,6 +870,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Duplicate Functionality"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Integration Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Shared Domain"
         }
       ]
     },
@@ -810,10 +891,6 @@
           "tagValue": "Distributed Systems"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Data Consistency"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Eventual Consistency"
         },
@@ -824,6 +901,14 @@
         {
           "tagName": "Cost",
           "tagValue": "Increased Implementation Overhead"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Transactional Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Distributed Transactions"
         }
       ]
     },
@@ -837,10 +922,6 @@
           "tagValue": "Messaging"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Communication"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Decoupled Communication"
         },
@@ -851,6 +932,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Scalability in Messaging"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Communication Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Event Notification"
         }
       ]
     },
@@ -864,10 +953,6 @@
           "tagValue": "Data"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Read-Write Optimization"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Scalability"
         },
@@ -878,6 +963,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Conflicting Operational Needs"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Data Segregation"
         }
       ]
     },
@@ -891,10 +984,6 @@
           "tagValue": "Data"
         },
         {
-          "tagName": "Category",
-          "tagValue": "State Management"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Auditability"
         },
@@ -905,6 +994,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Mutable State Complexity"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "State Management"
         }
       ]
     },
@@ -918,10 +1015,6 @@
           "tagValue": "Integration"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Data Consolidation"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Simplified Consumption"
         },
@@ -932,6 +1025,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Data Fragmentation"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Service Design Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Integration"
         }
       ]
     },
@@ -945,10 +1046,6 @@
           "tagValue": "Scalability"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Parallel Processing"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Performance"
         },
@@ -959,6 +1056,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Sequential Bottlenecks"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Communication Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Asynchronous Communication"
         }
       ]
     },
@@ -972,10 +1077,6 @@
           "tagValue": "Behavioral"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Flexibility"
         },
@@ -986,6 +1087,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Rigid Request Management"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Action-Based"
         }
       ]
     },
@@ -999,10 +1108,6 @@
           "tagValue": "Structural"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Dynamic Behavior Extension"
         },
@@ -1013,6 +1118,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Rigid Class Hierarchies"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Structural Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Structure"
         }
       ]
     },
@@ -1026,10 +1139,6 @@
           "tagValue": "Behavioral"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Event Notification"
         },
@@ -1040,6 +1149,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Tight Coupling of State Changes"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Event Notification"
         }
       ]
     },
@@ -1053,10 +1170,6 @@
           "tagValue": "Structural"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Integration"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Interface Compatibility"
         },
@@ -1067,6 +1180,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Incompatible Interfaces"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Structural Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Interface Adaptation"
         }
       ]
     },
@@ -1080,10 +1201,6 @@
           "tagValue": "Data"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Access Layer"
-        },
-        {
           "tagName": "Benefit",
           "tagValue": "Abstraction of Persistence Logic"
         },
@@ -1094,6 +1211,14 @@
         {
           "tagName": "Problem",
           "tagValue": "Tight Coupling of Data Access"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Data Access"
         }
       ]
     },
@@ -1102,10 +1227,26 @@
       "description": "Defines an interface for creating objects but allows subclasses to alter the type of objects that will be created.",
       "url": "https://refactoring.guru/design-patterns/factory-method",
       "tags": [
-        { "tagName": "Category", "tagValue": "Creational" },
-        { "tagName": "Scope", "tagValue": "Object Creation" },
-        { "tagName": "Problem", "tagValue": "Dynamic Object Instantiation" },
-        { "tagName": "Benefit", "tagValue": "Encapsulation of Creation Logic" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Object Creation"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Dynamic Object Instantiation"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Encapsulation of Creation Logic"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Creational Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Creation"
+        }
       ]
     },
     {
@@ -1113,10 +1254,26 @@
       "description": "Ensures a class has only one instance and provides a global point of access to it.",
       "url": "https://refactoring.guru/design-patterns/singleton",
       "tags": [
-        { "tagName": "Category", "tagValue": "Creational" },
-        { "tagName": "Scope", "tagValue": "Global Access" },
-        { "tagName": "Problem", "tagValue": "Multiple Instances" },
-        { "tagName": "Benefit", "tagValue": "Controlled Access to Shared Resources" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Global Access"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Multiple Instances"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Controlled Access to Shared Resources"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Creational Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Creation"
+        }
       ]
     },
     {
@@ -1124,10 +1281,26 @@
       "description": "Defines a family of algorithms, encapsulates each one, and makes them interchangeable.",
       "url": "https://refactoring.guru/design-patterns/strategy",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Dynamic Behavior" },
-        { "tagName": "Problem", "tagValue": "Algorithm Variation" },
-        { "tagName": "Benefit", "tagValue": "Code Reusability" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Dynamic Behavior"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Algorithm Variation"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Code Reusability"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Algorithm Strategy"
+        }
       ]
     },
     {
@@ -1135,10 +1308,26 @@
       "description": "Encapsulates a request as an object, thereby allowing parameterization of clients with queues or operations.",
       "url": "https://refactoring.guru/design-patterns/command",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Encapsulation" },
-        { "tagName": "Problem", "tagValue": "Action Decoupling" },
-        { "tagName": "Benefit", "tagValue": "Undo and Redo Operations" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Encapsulation"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Action Decoupling"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Undo and Redo Operations"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Action-Based"
+        }
       ]
     },
     {
@@ -1146,10 +1335,26 @@
       "description": "Provides a placeholder for another object to control access to it.",
       "url": "https://refactoring.guru/design-patterns/proxy",
       "tags": [
-        { "tagName": "Category", "tagValue": "Structural" },
-        { "tagName": "Scope", "tagValue": "Access Control" },
-        { "tagName": "Problem", "tagValue": "Direct Access Issues" },
-        { "tagName": "Benefit", "tagValue": "Security and Performance" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Access Control"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Direct Access Issues"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Security and Performance"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Structural Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Structural"
+        }
       ]
     },
     {
@@ -1157,10 +1362,26 @@
       "description": "Allows passing requests along a chain of handlers until one of them handles the request.",
       "url": "https://refactoring.guru/design-patterns/chain-of-responsibility",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Request Handling" },
-        { "tagName": "Problem", "tagValue": "Hardcoded Request Handlers" },
-        { "tagName": "Benefit", "tagValue": "Flexible Request Processing" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Request Handling"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Hardcoded Request Handlers"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Flexible Request Processing"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Request Handling"
+        }
       ]
     },
     {
@@ -1168,10 +1389,26 @@
       "description": "Minimizes memory usage by sharing as much data as possible with other similar objects.",
       "url": "https://refactoring.guru/design-patterns/flyweight",
       "tags": [
-        { "tagName": "Category", "tagValue": "Structural" },
-        { "tagName": "Scope", "tagValue": "Memory Optimization" },
-        { "tagName": "Problem", "tagValue": "High Memory Usage" },
-        { "tagName": "Benefit", "tagValue": "Efficient Resource Sharing" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Memory Optimization"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "High Memory Usage"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Efficient Resource Sharing"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Structural Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Memory Optimization"
+        }
       ]
     },
     {
@@ -1179,10 +1416,26 @@
       "description": "Composes objects into tree structures to represent part-whole hierarchies.",
       "url": "https://refactoring.guru/design-patterns/composite",
       "tags": [
-        { "tagName": "Category", "tagValue": "Structural" },
-        { "tagName": "Scope", "tagValue": "Hierarchical Structures" },
-        { "tagName": "Problem", "tagValue": "Unified Interface Issues" },
-        { "tagName": "Benefit", "tagValue": "Recursive Structures" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Hierarchical Structures"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Unified Interface Issues"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Recursive Structures"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Structural Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Structure"
+        }
       ]
     },
     {
@@ -1190,10 +1443,26 @@
       "description": "Defines the skeleton of an algorithm in a method, deferring steps to subclasses.",
       "url": "https://refactoring.guru/design-patterns/template-method",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Algorithm Behavior" },
-        { "tagName": "Problem", "tagValue": "Algorithm Customization" },
-        { "tagName": "Benefit", "tagValue": "Code Reusability" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Algorithm Behavior"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Algorithm Customization"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Code Reusability"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Algorithm Structure"
+        }
       ]
     },
     {
@@ -1201,10 +1470,26 @@
       "description": "Defines a representation for a language's grammar along with an interpreter to evaluate sentences in the language.",
       "url": "https://refactoring.guru/design-patterns/interpreter",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Language Processing" },
-        { "tagName": "Problem", "tagValue": "Custom Language Parsing" },
-        { "tagName": "Benefit", "tagValue": "Grammar Encapsulation" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Language Processing"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Custom Language Parsing"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Grammar Encapsulation"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Language Processing"
+        }
       ]
     },
     {
@@ -1212,10 +1497,26 @@
       "description": "Lets you define a new operation without changing the classes of the elements it operates on.",
       "url": "https://refactoring.guru/design-patterns/visitor",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Operation Addition" },
-        { "tagName": "Problem", "tagValue": "Changing Element Classes" },
-        { "tagName": "Benefit", "tagValue": "Open/Closed Principle" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Operation Addition"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Changing Element Classes"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Open/Closed Principle"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Operations on Objects"
+        }
       ]
     },
     {
@@ -1223,10 +1524,26 @@
       "description": "Provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.",
       "url": "https://refactoring.guru/design-patterns/iterator",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Collection Traversal" },
-        { "tagName": "Problem", "tagValue": "Inefficient Iteration" },
-        { "tagName": "Benefit", "tagValue": "Encapsulated Traversal Logic" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Collection Traversal"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Inefficient Iteration"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Encapsulated Traversal Logic"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Collection Traversal"
+        }
       ]
     },
     {
@@ -1234,10 +1551,26 @@
       "description": "Captures and restores an object's state without violating encapsulation.",
       "url": "https://refactoring.guru/design-patterns/memento",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "State Restoration" },
-        { "tagName": "Problem", "tagValue": "Undo/Redo Implementation" },
-        { "tagName": "Benefit", "tagValue": "State Isolation" }
+        {
+          "tagName": "Scope",
+          "tagValue": "State Restoration"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Undo/Redo Implementation"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "State Isolation"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "State Preservation"
+        }
       ]
     },
     {
@@ -1245,10 +1578,26 @@
       "description": "Provides an interface for creating families of related or dependent objects without specifying their concrete classes.",
       "url": "https://refactoring.guru/design-patterns/abstract-factory",
       "tags": [
-        { "tagName": "Category", "tagValue": "Creational" },
-        { "tagName": "Scope", "tagValue": "Complex Object Families" },
-        { "tagName": "Problem", "tagValue": "Coupled Object Creation" },
-        { "tagName": "Benefit", "tagValue": "Encapsulation of Variants" }
+        {
+          "tagName": "Scope",
+          "tagValue": "Complex Object Families"
+        },
+        {
+          "tagName": "Problem",
+          "tagValue": "Coupled Object Creation"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Encapsulation of Variants"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Creational Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Creation"
+        }
       ]
     },
     {
@@ -1256,9 +1605,22 @@
       "description": "Centralizes event handling to decouple event producers and consumers.",
       "url": "https://martinfowler.com/eaaDev/EventAggregator.html",
       "tags": [
-        {"tagName": "Event Management", "tagValue": "Centralized Coordination"},
-        {"tagName": "Benefit", "tagValue": "Reduced Coupling"},
-        {"tagName": "Category", "tagValue": "Behavioral"}
+        {
+          "tagName": "Event Management",
+          "tagValue": "Centralized Coordination"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Reduced Coupling"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Communication Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Event Management"
+        }
       ]
     },
     {
@@ -1266,9 +1628,22 @@
       "description": "Encapsulates how a set of objects interact, promoting loose coupling.",
       "url": "https://refactoring.guru/design-patterns/mediator",
       "tags": [
-        {"tagName": "Communication", "tagValue": "Centralized Coordination"},
-        {"tagName": "Benefit", "tagValue": "Simplified Dependencies"},
-        {"tagName": "Category", "tagValue": "Behavioral"}
+        {
+          "tagName": "Communication",
+          "tagValue": "Centralized Coordination"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Simplified Dependencies"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Interaction"
+        }
       ]
     },
     {
@@ -1276,9 +1651,18 @@
       "description": "Creates new objects by copying an existing object.",
       "url": "https://refactoring.guru/design-patterns/prototype",
       "tags": [
-        {"tagName": "Object Creation", "tagValue": "Cloning"},
-        {"tagName": "Benefit", "tagValue": "Efficient Object Creation"},
-        {"tagName": "Category", "tagValue": "Creational"}
+        {
+          "tagName": "Benefit",
+          "tagValue": "Efficient Object Creation"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Creational Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "Object Creation"
+        }
       ]
     },
     {
@@ -1286,9 +1670,22 @@
       "description": "Allows an object to alter its behavior when its internal state changes.",
       "url": "https://refactoring.guru/design-patterns/state",
       "tags": [
-        {"tagName": "Behavior", "tagValue": "Dynamic State Handling"},
-        {"tagName": "Benefit", "tagValue": "Improved Readability"},
-        {"tagName": "Category", "tagValue": "Behavioral"}
+        {
+          "tagName": "Behavior",
+          "tagValue": "Dynamic State Handling"
+        },
+        {
+          "tagName": "Benefit",
+          "tagValue": "Improved Readability"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "SubCategory",
+          "tagValue": "State Management"
+        }
       ]
     }
   ]

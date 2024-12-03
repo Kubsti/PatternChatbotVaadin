@@ -13,4 +13,5 @@ public interface HttpHelperUtility {
     public SearchResponseDto searchForPatternWithKeywords(ArrayList<Pair<String,Double>> keywords, int keywordToSearchWith);
     public SearchResponseDto searchForPattern(String tagValue);
     public NearestPatternWeightedResponseDto getNearestPatternWeigthed(Pattern searchPattern,double similarityThreshold);
+    public SearchResponseDto excludePattern(String tagValue);
 }
