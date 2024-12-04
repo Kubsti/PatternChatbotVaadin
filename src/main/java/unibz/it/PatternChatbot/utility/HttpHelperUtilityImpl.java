@@ -58,6 +58,42 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
     }
 
     @Override
+    public void intializeChatbotWithFixedPatternSearchTag() {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(this.server + "/initializationWithFixedPatternSearchTag"))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
+            if (responseCode != 200) {
+                ErrorDialog.showError("Error occurred when trying to contact backend");
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            } else {
+                ObjectMapper mapper = new ObjectMapper();
+                try{
+                    SearchResponseDto initResponse = mapper.readValue(response.body(), SearchResponseDto.class);
+                    VaadinSession.getCurrent().setAttribute("excludedTags", initResponse.getExcludedTags());
+                    VaadinSession.getCurrent().setAttribute("nextSearchTag", initResponse.getNextSearchTag());
+                    VaadinSession.getCurrent().setAttribute("nextQuestion", initResponse.getPatternQuestion());
+                    VaadinSession.getCurrent().setAttribute("designPattern", initResponse.getDesignPatterns());
+                    VaadinSession.getCurrent().setAttribute("possibleAnswers", initResponse.getCurrPossibleAnswersToQuestion());
+                }catch (Exception e) {
+                    ErrorDialog.showError("Error occurred when trying to read response from backend ");
+                    System.out.println(e.getMessage());
+                }
+
+            }
+        } catch (IOException | InterruptedException e) {
+            ErrorDialog.showError("Error could not initialize chatbot.");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public HttpResponse<String> getAnotherQuestion() {
         logger.info("Started to get another Question");
         String nextSearchTag = (String) VaadinSession.getCurrent().getAttribute("nextSearchTag");

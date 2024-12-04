@@ -5,6 +5,8 @@ import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import com.vaadin.flow.server.VaadinSession;
 import unibz.it.PatternChatbot.model.*;
 import unibz.it.PatternChatbot.utility.UiHelperUtility;
+
+import java.lang.reflect.Array;
 import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.regex.Pattern;

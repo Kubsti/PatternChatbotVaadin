@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public interface HttpHelperUtility {
     public void intializeChatbot();
+    public void intializeChatbotWithFixedPatternSearchTag();
     public HttpResponse<String> getAnotherQuestion();
     public DesignPatterns  getAllPattern();
     public SearchResponseDto searchForPatternWithKeywords(ArrayList<Pair<String,Double>> keywords, int keywordToSearchWith);

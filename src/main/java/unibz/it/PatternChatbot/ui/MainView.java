@@ -36,7 +36,8 @@ private PdfViewer pdfViewer;
         pdfViewer.setWidth("70%");
         //add(webpageIFrame);
         add(pdfViewer);
-        httpHelper.intializeChatbot();
+        //httpHelper.intializeChatbot();
+        httpHelper.intializeChatbotWithFixedPatternSearchTag();
 
         ChatView chatView = new ChatView();
         //chatView.webpageIFrame = webpageIFrame;

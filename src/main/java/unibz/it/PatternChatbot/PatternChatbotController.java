@@ -48,7 +48,30 @@ public class PatternChatbotController {
             //String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, excludedTags);
             PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
             ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
-            possibleAnswers.add("None (this will exclude all pattern with the other values");
+            if (this.tagIsNotContainedByAtLeastOnePattern(designPatterns,nextSearchTag)){
+                possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+            }
+            SearchResponseDto currResponse = new SearchResponseDto(designPatterns, nextQuestion, excludedTags, nextSearchTag,possibleAnswers);
+            logger.info("Finished initialization of PatternChatbot");
+            return ResponseEntity.ok().body(objectMapper.writeValueAsString(currResponse));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+    @GetMapping("/initializationWithFixedPatternSearchTag")
+    public ResponseEntity<String> initWithFixedPatternSearchTag() throws IOException {
+        logger.info("Started initialization of PatternChatbot");
+        try{
+            designPatterns = fileReaderService.getDesignPatterns("Pattern/pattern.json");
+            patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
+            ArrayList<String> excludedTags = new ArrayList<String>();
+            excludedTags.add("Extent");
+            String nextSearchTag = "Extent";
+            PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+            ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
+            if (this.tagIsNotContainedByAtLeastOnePattern(designPatterns,nextSearchTag)){
+                possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+            }
             SearchResponseDto currResponse = new SearchResponseDto(designPatterns, nextQuestion, excludedTags, nextSearchTag,possibleAnswers);
             logger.info("Finished initialization of PatternChatbot");
             return ResponseEntity.ok().body(objectMapper.writeValueAsString(currResponse));
@@ -70,10 +93,32 @@ public class PatternChatbotController {
             return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), searchDto.getCurrSearchTag(), new ArrayList<String>());
         }
         //String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
+
+        if(!searchDto.getExcludedTags().contains("Category") || !searchDto.getExcludedTags().contains("Purpose")){
+            if(!searchDto.getExcludedTags().contains("Category")){
+                searchDto.getExcludedTags().add("Category");
+                PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion("Category", patternQuestions);
+                ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers("Category",filteredDesignPattern);
+                if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,"Category")){
+                    possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+                }
+                return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), "Category",possibleAnswers);
+            }else{
+                searchDto.getExcludedTags().add("Purpose");
+                PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion("Purpose", patternQuestions);
+                ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers("Purpose",filteredDesignPattern);
+                if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,"Purpose")){
+                    possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+                }
+                return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), "Purpose",possibleAnswers);
+            }
+        }
         String nextSearchTag = varianceSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
         ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,filteredDesignPattern);
-        possibleAnswers.add("None (this will exclude all pattern with the other values");
+        if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,"Category")){
+            possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+        }
         return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag,possibleAnswers);
     }
 
@@ -94,7 +139,9 @@ public class PatternChatbotController {
         String nextSearchTag = varianceSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
         ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,filteredDesignPattern);
-        possibleAnswers.add("None (this will exclude all pattern with the other values");
+        if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,nextSearchTag)){
+            possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+        }
         return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag,possibleAnswers);
     }
 
@@ -104,7 +151,9 @@ public class PatternChatbotController {
         String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(newQuestionDto.getDesignPatterns(), newQuestionDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
         ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,newQuestionDto.getDesignPatterns());
-        possibleAnswers.add("None (this will exclude all pattern with the other values");
+        if (this.tagIsNotContainedByAtLeastOnePattern(newQuestionDto.getDesignPatterns(),nextSearchTag)){
+            possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+        }
         logger.info("Finished get new Search Question");
         return new NewQuestionResponseDto( nextQuestion, newQuestionDto.getExcludedTags(), nextSearchTag, possibleAnswers);
     }
@@ -218,4 +267,12 @@ public class PatternChatbotController {
 //        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
 //        Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
 //    }
+
+    private boolean tagIsNotContainedByAtLeastOnePattern(DesignPatterns patterns, String nextSearchTag) {
+        return patterns.getPatterns().parallelStream() // Process patterns in parallel
+                .anyMatch(pattern ->
+                        pattern.getTags().stream() // Check tags in each pattern
+                                .noneMatch(tag -> tag.tagName.equalsIgnoreCase(nextSearchTag)) // Ensure no tag matches nextSearchTag
+                );
+    }
 }

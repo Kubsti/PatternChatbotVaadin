@@ -43,11 +43,27 @@
         },
         {
           "tagName": "Category",
-          "tagValue": "Integration Patterns"
+          "tagValue": "Systems Integration"
         },
         {
           "tagName": "SubCategory",
           "tagValue": "Service Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Isolation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Microservices"
         }
       ]
     },
@@ -97,12 +113,24 @@
           "tagValue": "Event-Driven Architecture"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Service Design Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Event-Driven"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Communication"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Asynchronous"
         }
       ]
     },
@@ -160,12 +188,28 @@
           "tagValue": "Event-Driven Architecture"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Data Management Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Data Segregation"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications and Databases"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Microservices"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Query"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Asynchronous"
         }
       ]
     },
@@ -207,12 +251,24 @@
           "tagValue": "Domain-Specific Data Storage"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Service Design Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Domain-Driven Design (DDD)"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Microservices"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Domain Modeling"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Decoupling"
         }
       ]
     },
@@ -262,12 +318,28 @@
           "tagValue": "Event-Driven Architecture"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Data Management Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "State Management"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Decoupling"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Event-Driven"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Event-Driven Architecture"
         }
       ]
     },
@@ -321,12 +393,20 @@
           "tagValue": "Union of Services"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Service Design Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "API Management"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Cross-Cutting Concerns"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Security"
         }
       ]
     },
@@ -384,12 +464,28 @@
           "tagValue": "Data Partitioning"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Service Design Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "API Management"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications and Databases"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Query"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Microservices"
         }
       ]
     },
@@ -439,12 +535,24 @@
           "tagValue": "Union of Services"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Communication Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Asynchronous Communication"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Isolation"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Microservices"
         }
       ]
     },
@@ -486,12 +594,28 @@
           "tagValue": "Coupled communication"
         },
         {
-          "tagName": "Category",
+          "tagName": "SubCategory",
           "tagValue": "Communication Patterns"
         },
         {
-          "tagName": "SubCategory",
-          "tagValue": "Communication Patterns"
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Asynchronous"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Communication"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Distributed"
         }
       ]
     },
@@ -533,12 +657,20 @@
           "tagValue": "Proxy"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Scalability and Performance Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Load Management"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Infrastructure"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Scalability"
         }
       ]
     },
@@ -580,12 +712,28 @@
           "tagValue": "Domain-Driven Design (DDD)"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Data Management Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Data Isolation"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications and Databases"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Microservices"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Isolation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         }
       ]
     },
@@ -619,12 +767,28 @@
           "tagValue": "Service Locator"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Service Design Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Service Discovery"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Flexibility"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Microservices"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         }
       ]
     },
@@ -654,12 +818,28 @@
           "tagValue": "Service Composition"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Service Design Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Infrastructure Management"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Cross-Cutting Concerns"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Don't Repeat Yourself (DRY)"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Distributed"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         }
       ]
     },
@@ -685,12 +865,24 @@
           "tagValue": "Resource Duplication"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Fault Tolerance and Resilience Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Failure Isolation"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Infrastructure"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Resiliency"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         }
       ]
     },
@@ -716,12 +908,24 @@
           "tagValue": "Latency"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Fault Tolerance and Resilience Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Failure Prevention"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Resiliency"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         }
       ]
     },
@@ -734,7 +938,6 @@
           "tagName": "Domain",
           "tagValue": "Resiliency"
         },
-
         {
           "tagName": "Benefit",
           "tagValue": "Stability"
@@ -748,12 +951,24 @@
           "tagValue": "Limited Availability During Tripping"
         },
         {
-          "tagName": "Category",
-          "tagValue": "Fault Tolerance and Resilience Patterns"
-        },
-        {
           "tagName": "SubCategory",
           "tagValue": "Failure Prevention"
+        },
+        {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
+          "tagName": "Category",
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Resiliency"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         }
       ]
     },
@@ -779,8 +994,20 @@
           "tagValue": "Leadership Election Overhead"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Service Design Patterns"
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Resiliency"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         },
         {
           "tagName": "SubCategory",
@@ -810,8 +1037,16 @@
           "tagValue": "High Data Volume"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Data Management Patterns"
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Scalability"
         },
         {
           "tagName": "SubCategory",
@@ -841,8 +1076,24 @@
           "tagValue": "Complex Communication"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Service Design Patterns"
+          "tagValue": "Infrastructure"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Communication"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Distributed"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         },
         {
           "tagName": "SubCategory",
@@ -872,8 +1123,24 @@
           "tagValue": "Duplicate Functionality"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Teams"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Integration Patterns"
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Consistency"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Layered Architecture"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Collaborative"
         },
         {
           "tagName": "SubCategory",
@@ -903,8 +1170,24 @@
           "tagValue": "Increased Implementation Overhead"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications and Databases"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Transactional Patterns"
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Data Consistency"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Asynchronous"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Event-Driven Architecture"
         },
         {
           "tagName": "SubCategory",
@@ -934,8 +1217,20 @@
           "tagValue": "Scalability in Messaging"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Communication Patterns"
+          "tagValue": "Systems Integration"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Communication"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Asynchronous"
         },
         {
           "tagName": "SubCategory",
@@ -965,8 +1260,24 @@
           "tagValue": "Conflicting Operational Needs"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Data Management Patterns"
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Separation of Concerns"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Decoupled"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Event-Driven Architecture"
         },
         {
           "tagName": "SubCategory",
@@ -996,8 +1307,24 @@
           "tagValue": "Mutable State Complexity"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Data Management Patterns"
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Auditability"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Immutable"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Event-Driven Architecture"
         },
         {
           "tagName": "SubCategory",
@@ -1027,8 +1354,20 @@
           "tagValue": "Data Fragmentation"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications and Databases"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Service Design Patterns"
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Query"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Distributed"
         },
         {
           "tagName": "SubCategory",
@@ -1058,8 +1397,24 @@
           "tagValue": "Sequential Bottlenecks"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
           "tagName": "Category",
           "tagValue": "Communication Patterns"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Parallel Processing"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Asynchronous"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Event-Driven Architecture"
         },
         {
           "tagName": "SubCategory",
@@ -1089,8 +1444,20 @@
           "tagValue": "Rigid Request Management"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Encapsulation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1120,8 +1487,20 @@
           "tagValue": "Rigid Class Hierarchies"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Structural Patterns"
+          "tagValue": "Structural"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Encapsulation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1151,8 +1530,20 @@
           "tagValue": "Tight Coupling of State Changes"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Communication"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1182,8 +1573,20 @@
           "tagValue": "Incompatible Interfaces"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Structural Patterns"
+          "tagValue": "Structural"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Isolation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1213,8 +1616,20 @@
           "tagValue": "Tight Coupling of Data Access"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Data Management Patterns"
+          "tagValue": "Data Management"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Decoupling"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1240,8 +1655,20 @@
           "tagValue": "Encapsulation of Creation Logic"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Creational Patterns"
+          "tagValue": "Creational"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Flexibility"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1267,8 +1694,20 @@
           "tagValue": "Controlled Access to Shared Resources"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Creational Patterns"
+          "tagValue": "Creational"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Memory Optimization"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1294,39 +1733,24 @@
           "tagValue": "Code Reusability"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Flexibility"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
           "tagValue": "Algorithm Strategy"
-        }
-      ]
-    },
-    {
-      "name": "Command",
-      "description": "Encapsulates a request as an object, thereby allowing parameterization of clients with queues or operations.",
-      "url": "https://refactoring.guru/design-patterns/command",
-      "tags": [
-        {
-          "tagName": "Scope",
-          "tagValue": "Encapsulation"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Action Decoupling"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Undo and Redo Operations"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
-        },
-        {
-          "tagName": "SubCategory",
-          "tagValue": "Action-Based"
         }
       ]
     },
@@ -1348,8 +1772,20 @@
           "tagValue": "Security and Performance"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Structural Patterns"
+          "tagValue": "Structural"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Encapsulation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1375,8 +1811,20 @@
           "tagValue": "Flexible Request Processing"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Encapsulation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1402,8 +1850,20 @@
           "tagValue": "Efficient Resource Sharing"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Structural Patterns"
+          "tagValue": "Structural"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Memory Optimization"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1429,8 +1889,20 @@
           "tagValue": "Recursive Structures"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Structural Patterns"
+          "tagValue": "Structural"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Standardization"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1456,8 +1928,20 @@
           "tagValue": "Code Reusability"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Code Reuse"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1483,8 +1967,24 @@
           "tagValue": "Grammar Encapsulation"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
           "tagValue": "Behavioral Patterns"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Memory Optimization"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Language Interpretation"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Domain-Specific Language (DSL)"
         },
         {
           "tagName": "SubCategory",
@@ -1510,8 +2010,20 @@
           "tagValue": "Open/Closed Principle"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Decoupling"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1537,8 +2049,20 @@
           "tagValue": "Encapsulated Traversal Logic"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Decoupling"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1564,8 +2088,20 @@
           "tagValue": "State Isolation"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Isolation"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1591,8 +2127,20 @@
           "tagValue": "Encapsulation of Variants"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Creational Patterns"
+          "tagValue": "Creational"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Object Consistency"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1614,8 +2162,24 @@
           "tagValue": "Reduced Coupling"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Multiple Applications"
+        },
+        {
           "tagName": "Category",
           "tagValue": "Communication Patterns"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Event Management"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Centralized"
+        },
+        {
+          "tagName": "Architectural Style",
+          "tagValue": "Event-Driven Architecture"
         },
         {
           "tagName": "SubCategory",
@@ -1637,8 +2201,20 @@
           "tagValue": "Simplified Dependencies"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Decoupling"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1656,8 +2232,20 @@
           "tagValue": "Efficient Object Creation"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Creational Patterns"
+          "tagValue": "Creational"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Code Reuse"
+        },
+        {
+          "tagName": "Nature",
+          "tagValue": "Object-oriented"
         },
         {
           "tagName": "SubCategory",
@@ -1679,8 +2267,16 @@
           "tagValue": "Improved Readability"
         },
         {
+          "tagName": "Extent",
+          "tagValue": "Single Application"
+        },
+        {
           "tagName": "Category",
-          "tagValue": "Behavioral Patterns"
+          "tagValue": "Behavioral"
+        },
+        {
+          "tagName": "Purpose",
+          "tagValue": "Simplify State Change"
         },
         {
           "tagName": "SubCategory",

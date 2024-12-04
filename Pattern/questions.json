@@ -187,6 +187,22 @@
     {
       "tagName": "Behavior",
       "question": "What Behavior problem should the pattern solve?"
+    },    
+    {
+      "tagName": "Extent",
+      "question": "What is the extend of your pattern?"
+    },
+    {
+      "tagName": "Purpose",
+      "question": "What is the purpose of your pattern?"
+    },
+    {
+      "tagName": "Nature",
+      "question": "What is the nature of your pattern?"
+    },
+    {
+      "tagName": "Architectural Style",
+      "question": "What is the Architectural Style of your pattern?"
     }    
   ]
 }
