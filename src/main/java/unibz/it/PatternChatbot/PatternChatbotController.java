@@ -151,7 +151,7 @@ public class PatternChatbotController {
         String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(newQuestionDto.getDesignPatterns(), newQuestionDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
         ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,newQuestionDto.getDesignPatterns());
-        if (this.tagIsNotContainedByAtLeastOnePattern(newQuestionDto.getDesignPatterns(),nextSearchTag)){
+        if (!possibleAnswers.isEmpty() && this.tagIsNotContainedByAtLeastOnePattern(newQuestionDto.getDesignPatterns(),nextSearchTag)){
             possibleAnswers.add("None (this will exclude all pattern with the current search tag");
         }
         logger.info("Finished get new Search Question");

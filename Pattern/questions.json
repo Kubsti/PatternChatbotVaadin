@@ -203,6 +203,18 @@
     {
       "tagName": "Architectural Style",
       "question": "What is the Architectural Style of your pattern?"
+    },
+    {
+      "tagName": "Undoability",
+      "question": "What is the doability of your pattern?"
+    },
+    {
+      "tagName": "Isolation Flow",
+      "question": "What Isolation Flow has your pattern?"
+    },
+    {
+      "tagName": "Strategy on Failure",
+      "question": "What is the Strategy on Failure of your pattern?"
     }    
   ]
 }

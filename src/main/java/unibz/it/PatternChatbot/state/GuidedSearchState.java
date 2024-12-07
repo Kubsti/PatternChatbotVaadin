@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 public class GuidedSearchState extends State {
 
-    public GuidedSearchState(UiHelperUtility chatHelper, boolean showInitMesssge){
-        super(chatHelper,"Hi, I will help you find your desired pattern.", showInitMesssge);
+    public GuidedSearchState(UiHelperUtility chatHelper, boolean showInitMesssge) {
+        super(chatHelper, "Hi, I will help you find your desired pattern.", showInitMesssge);
     }
 //    public SearchResponseDto handleSearch(String searchInput) throws StateException {
 //        //Is one as the first try is accounted for
@@ -45,31 +45,32 @@ public class GuidedSearchState extends State {
 //    }
 
     public SearchResponseDto handleSearch(String searchInput) throws StateException {
-        ArrayList<String> possibleAnswers = (ArrayList<String> ) VaadinSession.getCurrent().getAttribute("possibleAnswers");
+        ArrayList<String> possibleAnswers = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
         boolean isPossibleAnswer = false;
-        if(possibleAnswers.isEmpty()){
-            throw  new StateException("PossibleSearchAnswersEmpty", "The in the session stored search Answers List is empty.");
+        if (possibleAnswers.isEmpty()) {
+            throw new StateException("PossibleSearchAnswersEmpty", "The in the session stored search Answers List is empty.");
         }
         //TODO on later development change do parsing option with number
-        if(searchInput.matches("^None$|^none$")){
+        if (searchInput.matches("^None$|^none$")) {
             //TODO better Exception handling
             return this.httpHelper.excludePattern((String) VaadinSession.getCurrent().getAttribute("nextSearchTag"));
         }
 
-        for(String possibleAnswer : possibleAnswers){
+        for (String possibleAnswer : possibleAnswers) {
             if (possibleAnswer.equalsIgnoreCase(searchInput)) {
                 isPossibleAnswer = true;
                 break;
             }
         }
 
-        if(!isPossibleAnswer){
-            throw  new StateException("InvalidSearchInput", "Given input string did not match one of the available search Options");
+        if (!isPossibleAnswer) {
+            throw new StateException("InvalidSearchInput", "Given input string did not match one of the available search Options");
         }
         SearchResponseDto searchResult = this.httpHelper.searchForPattern(searchInput);
 
         return searchResult;
     }
+
     @Override
     public void setupResponses() {
         //1. Restart search
@@ -87,10 +88,10 @@ public class GuidedSearchState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
-                if(designPatterns.getPatterns().isEmpty()){
+                DesignPatterns designPatterns = (DesignPatterns) VaadinSession.getCurrent().getAttribute("designPattern");
+                if (designPatterns.getPatterns().isEmpty()) {
                     chatHelper.createPatteraChatMessage("I found no pattern. Maybe the last search for a question did not return anything.");
-                }else{
+                } else {
                     StringBuilder startPhrase = new StringBuilder();
                     startPhrase.append("Options:\n");
                     stateOptions.forEach(option -> startPhrase.append(option).append("\n"));
@@ -107,7 +108,7 @@ public class GuidedSearchState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
-                if(getNewQuestion(input)){
+                if (getNewQuestion(input)) {
                     return new GuidedSearchState(chatHelper, false);
                 }
                 return new GuidedSearchErrorState(chatHelper, false);
@@ -121,20 +122,20 @@ public class GuidedSearchState extends State {
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
                 SearchResponseDto searchResponse = handleSearch(input);
                 //If we have not found any pattern assume that the user might want to retry last response
-                if(searchResponse.getDesignPatterns().getPatterns().size() == 0){
+                if (searchResponse.getDesignPatterns().getPatterns().size() == 0) {
                     chatHelper.createPatteraChatMessage("Sorry i have not found any pattern ");
                 }
-                VaadinSession.getCurrent().setAttribute("excludedTags",searchResponse.getExcludedTags());
-                VaadinSession.getCurrent().setAttribute("nextSearchTag",searchResponse.getNextSearchTag());
+                VaadinSession.getCurrent().setAttribute("excludedTags", searchResponse.getExcludedTags());
+                VaadinSession.getCurrent().setAttribute("nextSearchTag", searchResponse.getNextSearchTag());
                 VaadinSession.getCurrent().setAttribute("nextQuestion", searchResponse.getPatternQuestion());
-                VaadinSession.getCurrent().setAttribute("designPattern",searchResponse.getDesignPatterns());
-                VaadinSession.getCurrent().setAttribute("possibleAnswers",searchResponse.getCurrPossibleAnswersToQuestion());
-                if(searchResponse.getDesignPatterns().getPatterns().size() == 1){
-                    chatHelper.createChatMessage("Found the following pattern: " + searchResponse.getDesignPatterns().getPatterns().get(0).name +"\n Website of pattern is: " + searchResponse.getDesignPatterns().getPatterns().get(0).url);
+                VaadinSession.getCurrent().setAttribute("designPattern", searchResponse.getDesignPatterns());
+                VaadinSession.getCurrent().setAttribute("possibleAnswers", searchResponse.getCurrPossibleAnswersToQuestion());
+                if (searchResponse.getDesignPatterns().getPatterns().size() == 1) {
+                    chatHelper.createChatMessage("Found the following pattern: " + searchResponse.getDesignPatterns().getPatterns().get(0).name + "\n Website of pattern is: " + searchResponse.getDesignPatterns().getPatterns().get(0).url);
                     chatHelper.updatePdfViewer(searchResponse.getDesignPatterns().getPatterns().get(0).url);
                     return new FoundPatternState(chatHelper, true);
-                }else{
-                    chatHelper.createPatteraSearchAnswer("Found " + searchResponse.getDesignPatterns().getPatterns().size() +" Pattern\n",stateOptions,
+                } else {
+                    chatHelper.createPatteraSearchAnswer("Found " + searchResponse.getDesignPatterns().getPatterns().size() + " Pattern\n", stateOptions,
                             searchResponse.getCurrPossibleAnswersToQuestion());
                 }
                 return null;
@@ -156,14 +157,14 @@ public class GuidedSearchState extends State {
     public void createInitMessage() {
         StringBuilder startPhrase = new StringBuilder(this.InitializationMessage);
         startPhrase.append("\nOptions:");
-        for(String option : this.Options) {
+        for (String option : this.Options) {
             startPhrase.append("\n").append(option);
         }
         PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         startPhrase.append("\n").append(question.getQuestion());
-        ArrayList<String>  possibleAnswers = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
+        ArrayList<String> possibleAnswers = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
         startPhrase.append("\n").append("Possible answers are:\n");
-        for(String possibleAnswer: possibleAnswers){
+        for (String possibleAnswer : possibleAnswers) {
             startPhrase.append("\"").append(possibleAnswer).append("\",");
         }
         chatHelper.createPatteraChatMessage(startPhrase.toString());
@@ -178,16 +179,18 @@ public class GuidedSearchState extends State {
                 }
         );
         this.Exceptions.put("NoPatternFound",
-                (String input) -> {;
+                (String input) -> {
+                    ;
                     return new GuidedSearchErrorState(chatHelper, true);
                 }
         );
         this.Exceptions.put("NoMoreQuestionsAvailable",
-                (String input) -> {;
+                (String input) -> {
+                    ;
                     StringBuilder startPhrase = new StringBuilder("Sorry there are no more questions available. What would you like to do?");
                     startPhrase.append("\nOptions:");
-                    for(String option : this.Options) {
-                        if(!option.equalsIgnoreCase("4. Get another question")){
+                    for (String option : this.Options) {
+                        if (!option.equalsIgnoreCase("4. Get another question")) {
                             startPhrase.append("\n").append(option);
                         }
                     }
@@ -230,39 +233,31 @@ public class GuidedSearchState extends State {
 
     public boolean getNewQuestion(String chatInput) throws StateException {
         NewQuestionResponseDto questionResult = null;
-        try{
-            HttpResponse<String> response = httpHelper.getAnotherQuestion();
+        HttpResponse<String> response = httpHelper.getAnotherQuestion();
 
-            if (response != null){
-                Gson gson = new GsonBuilder().create();
-                try{
-                    questionResult= gson.fromJson(response.body(), NewQuestionResponseDto.class);
-                }catch (Exception e){
-                    e.printStackTrace();
-                    throw new StateException("QuestionResultDeserializationError", "An error occurred when trying to deserialize the result of getAnotherQuestion rest request");
-                }
-                if(questionResult.getNextSearchTag().equalsIgnoreCase("No more Tags available")){
-                    throw new StateException("NoMoreQuestionsAvailable",chatInput);
-                }
-                VaadinSession.getCurrent().setAttribute("excludedTags",questionResult.getExcludedTags());
-                VaadinSession.getCurrent().setAttribute("nextSearchTag",questionResult.getNextSearchTag());
-                VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
-                VaadinSession.getCurrent().setAttribute("possibleAnswers", questionResult.getPossibleAnswers());
-                StringBuilder startPhrase = new StringBuilder(questionResult.getPatternQuestion().getQuestion());
-                startPhrase.append("\n").append("Possible answers are:\n");
-                for(String possibleAnswer: questionResult.getPossibleAnswers()){
-                    startPhrase.append("\"").append(possibleAnswer).append("\",");
-                }
-                chatHelper.createChatMessage(startPhrase.toString());
-            }else{
-                throw new StateException("NoQuestionResult", "An error occurred when in the getAnotherQuestion rest request");
+        if (response != null) {
+            Gson gson = new GsonBuilder().create();
+            try {
+                questionResult = gson.fromJson(response.body(), NewQuestionResponseDto.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new StateException("QuestionResultDeserializationError", "An error occurred when trying to deserialize the result of getAnotherQuestion rest request");
             }
-        //Problem catches state exception
-        }catch(Exception e){
-            e.printStackTrace();
-            if(e instanceof StateException == false){
-                logger.error("Error in getNewQuestion in GuidedSearchState. Error: {}", e.getMessage());
+            if (questionResult.getNextSearchTag().equalsIgnoreCase("No more Tags available")) {
+                throw new StateException("NoMoreQuestionsAvailable", chatInput);
             }
+            VaadinSession.getCurrent().setAttribute("excludedTags", questionResult.getExcludedTags());
+            VaadinSession.getCurrent().setAttribute("nextSearchTag", questionResult.getNextSearchTag());
+            VaadinSession.getCurrent().setAttribute("nextQuestion", questionResult.getPatternQuestion());
+            VaadinSession.getCurrent().setAttribute("possibleAnswers", questionResult.getPossibleAnswers());
+            StringBuilder startPhrase = new StringBuilder(questionResult.getPatternQuestion().getQuestion());
+            startPhrase.append("\n").append("Possible answers are:\n");
+            for (String possibleAnswer : questionResult.getPossibleAnswers()) {
+                startPhrase.append("\"").append(possibleAnswer).append("\",");
+            }
+            chatHelper.createChatMessage(startPhrase.toString());
+        } else {
+            throw new StateException("NoQuestionResult", "An error occurred when in the getAnotherQuestion rest request");
         }
         return true;
     }
