@@ -1,220 +1,40 @@
 {
   "questions": [
     {
-      "tagName": "Integration",
-      "question": "What kind of integration are you looking for? [a] Of internal services, [b] of external clients, or [c] of external systems (generic)"
-    },
-    {
-      "tagName": "Architectural Strategy",
-      "question": "Between the architectural techniques and strategies [a] isolation, [b] specialization, [c] decomposition, and [d] proxying, which is the most suitable for your needs?"
-    },
-    {
-      "tagName": "Domain",
-      "question": "What is the domain of pattern your are looking for?"
-    },
-    {
-      "tagName": "Domain",
-      "question": "What is the domain of pattern your are looking for?"
-    },
-    {
-      "tagName": "Category",
-      "question": "How would you categorize the primary function or purpose of your solution?"
-    },
-    {
-      "tagName": "Architectural Strategy",
-      "question": "What approach will you take to ensure isolation or specialization within your solution?"
-    },
-    {
-      "tagName": "Scope",
-      "question": "Is your solution primarily focused on internal processes, or does it involve external interactions?"
-    },
-    {
-      "tagName": "Problem",
-      "question": "What specific challenges or problems is your solution designed to address?"
-    },
-    {
-      "tagName": "Cost",
-      "question": "What cost factors are most critical to your solution? For example, latency, complexity, or potential points of failure?"
-    },
-    {
-      "tagName": "Benefit",
-      "question": "What outcomes are you expecting from your solution in terms of improved functionality or performance?"
-    },
-    {
       "tagName": "Role",
-      "question": "What role or function does your solution play in the overall system architecture?"
-    },
-    {
-      "tagName": "Development Paradigm",
-      "question": "What development paradigm or approach aligns with your goals for the solution?"
-    },
-    {
-      "tagName": "Communication Style",
-      "question": "How will communication be handled within your solution? Synchronous or asynchronous?"
-    },
-    {
-      "tagName": "Governance",
-      "question": "How do you plan to manage and control aspects like security or centralization within your solution?"
-    },
-    {
-      "tagName": "Scaling",
-      "question": "Regarding scalability, what strategy will you employ for your solution? Horizontal scaling, data partitioning, or another approach?"
-    },
-    {
-      "tagName": "Data Ownership",
-      "question": "How do you envision managing data ownership within your solution? Domain-specific data storage or a decentralized approach?"
-    },
-    {
-      "tagName": "Service Composition",
-      "question": "If your solution involves the composition of multiple services, how do you plan to handle it? Aggregation or another method?"
-    },
-    {
-      "tagName": "Technology Stack",
-      "question": "What technology stack or stack of tools and frameworks are you considering for implementing your solution?"
-    },
-    {
-      "tagName": "Data Management Approach",
-      "question": "How do you plan to manage and store data within your solution?"
-    },
-    {
-      "tagName": "User Interface",
-      "question": "What are your requirements for the user interface of your solution?"
-    },
-    {
-      "tagName": "Deployment",
-      "question": "How do you intend to deploy and manage your solution?"
-    },
-    {
-      "tagName": "Testing Strategy",
-      "question": "What is your testing strategy for the solution?"
-    },
-    {
-      "tagName": "Security Measures",
-      "question": "What security measures are crucial for your solution?"
-    },
-    {
-      "tagName": "Monitoring and Logging",
-      "question": "How do you plan to monitor and log activities within your solution?"
-    },
-    {
-      "tagName": "Error Handling",
-      "question": "What is your approach to error handling and fault tolerance within your solution?"
-    },
-    {
-      "tagName": "Performance Optimization",
-      "question": "How critical is performance for your solution?"
-    },
-    {
-      "tagName": "Latency Requirements",
-      "question": "What are your latency requirements for the solution?"
-    },
-    {
-      "tagName": "Concurrency Strategy",
-      "question": "How do you plan to handle concurrency within your solution?"
-    },
-    {
-      "tagName": "Dependency Management",
-      "question": "What is your approach to managing dependencies in your solution?"
-    },
-    {
-      "tagName": "Event Handling",
-      "question": "How will your solution handle events? Are you looking for specific patterns for event-driven architecture?"
-    },
-    {
-      "tagName": "Infrastructure Dependency",
-      "question": "What dependencies does your solution have on external infrastructure?"
-    },
-    {
-      "tagName": "Code Reusability",
-      "question": "How do you envision achieving code reusability in your solution?"
-    },
-    {
-      "tagName": "Versioning Strategy",
-      "question": "What is your versioning strategy for the solution?"
-    },
-    {
-      "tagName": "User Authentication",
-      "question": "How will user authentication be handled in your solution?"
-    },
-    {
-      "tagName": "Notification System",
-      "question": "How do you plan to schedule and manage background tasks in your solution?"
-    },
-    {
-      "tagName": "Mobile Integration",
-      "question": "Does your solution require integration with mobile platforms?"
-    },
-    {
-      "tagName": "Cross-Browser Compatibility",
-      "question": "Is cross-browser compatibility important for your solution?"
-    },
-    {
-      "tagName": "User Privacy",
-      "question": "How will you address user privacy concerns in your solution?"
-    },
-    {
-      "tagName": "AI/ML Integration",
-      "question": "Do you plan to integrate artificial intelligence or machine learning components into your solution?"
-    },
-    {
-      "tagName": "Offline Functionality",
-      "question": "Does your solution require offline functionality?"
+      "question": "What role are you willing to promote?"
     },
     {
       "tagName": "Category",
-      "question": "In what category would you think your pattern is contained?"
+      "question": "How would you categorize the context you're working on?"
     },
-    {
-      "tagName": "SubCategory",
-      "question": "In what subcategory would you think your pattern is contained?"
-    },
-    {
-      "tagName": "Communication",
-      "question": "What communication style would your pattern use?"
-    },
-    {
-      "tagName": "Event Management",
-      "question": "How would you think the Event Management would work for your searched pattern?"
-    },
-    {
-      "tagName": "Consistency",
-      "question": "What Consistency should your pattern have?"
-    },
-    {
-      "tagName": "Testing",
-      "question": "What type of testing should your pattern do?"
-    },
-    {
-      "tagName": "Behavior",
-      "question": "What Behavior problem should the pattern solve?"
-    },    
     {
       "tagName": "Extent",
-      "question": "What is the extend of your pattern?"
+      "question": "What is the extent of the problem you are trying to solve?"
     },
     {
       "tagName": "Purpose",
-      "question": "What is the purpose of your pattern?"
+      "question": "What quality are you trying to achieve with the pattern?"
     },
     {
       "tagName": "Nature",
-      "question": "What is the nature of your pattern?"
+      "question": "What is the nature of the solution you're looking for?"
     },
     {
       "tagName": "Architectural Style",
-      "question": "What is the Architectural Style of your pattern?"
+      "question": "Which architectural style would you rather like to follow?"
     },
     {
       "tagName": "Undoability",
-      "question": "What is the doability of your pattern?"
+      "question": "What kind of support to un-doing operations are you looking for?"
     },
     {
       "tagName": "Isolation Flow",
-      "question": "What Isolation Flow has your pattern?"
+      "question": "What is the direction of the isolation intended?"
     },
     {
       "tagName": "Strategy on Failure",
-      "question": "What is the Strategy on Failure of your pattern?"
-    }    
+      "question": "In case of failures in processing, what is the strategy you'd prefer?"
+    }
   ]
 }
