@@ -6,7 +6,7 @@
     },
     {
       "tagName": "Category",
-      "question": "How would you categorize the context you're working on?"
+      "question": "Which category best describe the problem you're working on?"
     },
     {
       "tagName": "Extent",
@@ -14,7 +14,7 @@
     },
     {
       "tagName": "Purpose",
-      "question": "What quality are you trying to achieve with the pattern?"
+      "question": "What are you trying to achieve with the pattern?"
     },
     {
       "tagName": "Nature",
@@ -23,10 +23,6 @@
     {
       "tagName": "Architectural Style",
       "question": "Which architectural style would you rather like to follow?"
-    },
-    {
-      "tagName": "Undoability",
-      "question": "What kind of support to un-doing operations are you looking for?"
     },
     {
       "tagName": "Isolation Flow",
