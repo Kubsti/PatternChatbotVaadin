@@ -20,7 +20,7 @@ public class FoundPatternState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                httpHelper.intializeChatbot();
+                httpHelper.intializeChatbotWithFixedPatternSearchTag();
                 return new IntentDiscoveryState(chatHelper, true);
             }
         });

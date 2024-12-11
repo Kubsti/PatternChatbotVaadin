@@ -78,7 +78,7 @@ public class GuidedSearchState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                httpHelper.intializeChatbot();
+                httpHelper.intializeChatbotWithFixedPatternSearchTag();
                 return new IntentDiscoveryState(chatHelper, true);
             }
         });
@@ -207,7 +207,7 @@ public class GuidedSearchState extends State {
         this.Exceptions.put("PossibleSearchAnswersEmpty",
                 (String input) -> {
                     chatHelper.createPatteraChatMessage("Sorry it seems like i have no possible answers please contact my creator. I will restart the search.");
-                    httpHelper.intializeChatbot();
+                    httpHelper.intializeChatbotWithFixedPatternSearchTag();
                     return new GuidedSearchState(chatHelper, true);
                 }
         );

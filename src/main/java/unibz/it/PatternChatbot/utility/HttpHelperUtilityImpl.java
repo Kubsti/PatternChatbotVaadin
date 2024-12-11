@@ -19,7 +19,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
 public class HttpHelperUtilityImpl implements HttpHelperUtility {
-    private final String server = "http://127.0.0.1:8080" ;
+    private final String server = "" ;
     private static final Logger logger = LoggerFactory.getLogger(HttpHelperUtilityImpl.class);
     @Override
     public void intializeChatbot() {
