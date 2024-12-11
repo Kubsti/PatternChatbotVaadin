@@ -113,6 +113,9 @@ public class PatternChatbotController {
                 return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), "Purpose",possibleAnswers);
             }
         }
+        if(filteredDesignPattern.getPatterns().size() == 1){
+            return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), "",new ArrayList<String>());
+        }
         String nextSearchTag = varianceSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
         ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,filteredDesignPattern);

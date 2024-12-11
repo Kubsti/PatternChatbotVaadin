@@ -31,7 +31,7 @@ public class GuidedSearchErrorState extends State {
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
-                httpHelper.intializeChatbot();
+                httpHelper.intializeChatbotWithFixedPatternSearchTag();
                 return new GuidedSearchState(chatHelper, true);
             }
         });
