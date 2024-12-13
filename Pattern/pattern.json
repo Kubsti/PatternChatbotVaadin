@@ -248,9 +248,9 @@
       "url": "https://refactoring.guru/design-patterns/command",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Encapsulation" },
-        { "tagName": "Role", "tagValue": "Encapsulation of Requests" }
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Separate responsibilities" },
+        { "tagName": "Role", "tagValue": "Represent operations" }
       ]
     },
     {
@@ -259,9 +259,9 @@
       "url": "https://refactoring.guru/design-patterns/decorator",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Structure and Attribution of Responsibility" },
-        { "tagName": "Purpose", "tagValue": "Encapsulation" },
-        { "tagName": "Role", "tagValue": "Feature Enhancer" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Add behavior in existing structures" },
+        { "tagName": "Role", "tagValue": "Add a feature in a class" }
       ]
     },
     {
@@ -270,9 +270,9 @@
       "url": "https://refactoring.guru/design-patterns/observer",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Reduce Strength of Coupling" },
-        { "tagName": "Role", "tagValue": "Data Broadcaster" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        { "tagName": "Role", "tagValue": "Notify changes in an object" }
       ]
     },
     {
@@ -281,8 +281,12 @@
       "url": "https://refactoring.guru/design-patterns/adapter",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Structure and Attribution of Responsibility" },
-        { "tagName": "Purpose", "tagValue": "Integrate Different Interfaces" }
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Separate responsibilities" },
+        {
+          "tagName": "Role",
+          "tagValue": "Handle external API"
+        }
       ]
     },
     {
@@ -301,8 +305,8 @@
       "url": "https://refactoring.guru/design-patterns/factory-method",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Creation of Objects and Instantiation" },
-        { "tagName": "Purpose", "tagValue": "Flexibility" }
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Isolate object creation" }
       ]
     },
     {
@@ -311,8 +315,8 @@
       "url": "https://refactoring.guru/design-patterns/singleton",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Creation of Objects and Instantiation" },
-        { "tagName": "Purpose", "tagValue": "Optimize Memory Usage" }
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Optimize memory usage" }
       ]
     },
     {
@@ -321,8 +325,12 @@
       "url": "https://refactoring.guru/design-patterns/strategy",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Flex Selection of Policies" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        {
+          "tagName": "Role",
+          "tagValue": "Allow change of algorithms"
+        }
       ]
     },
     {
@@ -331,9 +339,9 @@
       "url": "https://refactoring.guru/design-patterns/proxy",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Structure and Attribution of Responsibility" },
-        { "tagName": "Purpose", "tagValue": "Encapsulation" },
-        { "tagName": "Role", "tagValue": "Intermediate" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Add behavior in existing structures" },
+        { "tagName": "Role", "tagValue": "Intermediate object communication" }
       ]
     },
     {
@@ -342,9 +350,9 @@
       "url": "https://refactoring.guru/design-patterns/chain-of-responsibility",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Encapsulation" },
-        { "tagName": "Role", "tagValue": "Multiple Intermediates" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        { "tagName": "Role", "tagValue": "Create a sequence of actions" }
       ]
     },
     {
@@ -353,8 +361,8 @@
       "url": "https://refactoring.guru/design-patterns/flyweight",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Structure and Attribution of Responsibility" },
-        { "tagName": "Purpose", "tagValue": "Optimize Memory Usage" }
+        { "tagName": "Category", "tagValue": "Optimize performance" },
+        { "tagName": "Purpose", "tagValue": "Reuse instances" }
       ]
     },
     {
@@ -363,8 +371,12 @@
       "url": "https://refactoring.guru/design-patterns/composite",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Structure and Attribution of Responsibility" },
-        { "tagName": "Purpose", "tagValue": "Uniformization of Treatment" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Add behavior in existing structures" },
+        {
+          "tagName": "Role",
+          "tagValue": "Treat many as one"
+        }
       ]
     },
     {
@@ -373,8 +385,12 @@
       "url": "https://refactoring.guru/design-patterns/template-method",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Favor Sustainable Code Reuse" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        {
+          "tagName": "Role",
+          "tagValue": "Operation with extensible points"
+        }
       ]
     },
     {
@@ -383,9 +399,9 @@
       "url": "https://refactoring.guru/design-patterns/visitor",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Reduce Strength of Coupling" },
-        { "tagName": "Role", "tagValue": "Addition of Operations" }
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        { "tagName": "Role", "tagValue": "Addition of new operations" }
       ]
     },
     {
@@ -394,9 +410,9 @@
       "url": "https://refactoring.guru/design-patterns/iterator",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Reduce Strength of Coupling" },
-        { "tagName": "Role", "tagValue": "Traversal of Collection" }
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Organize logic" },
+        { "tagName": "Role", "tagValue": "Apply operation in collections" }
       ]
     },
     {
@@ -405,8 +421,8 @@
       "url": "https://refactoring.guru/design-patterns/memento",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Allow Unexposed Snapshots" }
+        { "tagName": "Category", "tagValue": "Optimize performance" },
+        { "tagName": "Purpose", "tagValue": "Persist complex objects" }
       ]
     },
     {
@@ -415,8 +431,8 @@
       "url": "https://refactoring.guru/design-patterns/abstract-factory",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Creation of Objects and Instantiation" },
-        { "tagName": "Purpose", "tagValue": "Favor Consistency of Objects" }
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Create objects consistently" }
       ]
     },
     {
@@ -425,9 +441,9 @@
       "url": "https://refactoring.guru/design-patterns/mediator",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Reduce Strength of Coupling" },
-        { "tagName": "Role", "tagValue": "Coordinator of Interactions" }
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Separate responsibilities" },
+        { "tagName": "Role", "tagValue": "Coordinate the interactions" }
       ]
     },
     {
@@ -436,8 +452,8 @@
       "url": "https://refactoring.guru/design-patterns/prototype",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Creation of Objects and Instantiation" },
-        { "tagName": "Purpose", "tagValue": "Favor Sustainable Code Reuse" }
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Create object based on another one" }
       ]
     },
     {
@@ -446,8 +462,12 @@
       "url": "https://refactoring.guru/design-patterns/state",
       "tags": [
         { "tagName": "Extent", "tagValue": "Single Application" },
-        { "tagName": "Category", "tagValue": "Interacting Objects and Their Behavior" },
-        { "tagName": "Purpose", "tagValue": "Simplify State Transitions" }
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Organize logic" },
+        {
+          "tagName": "Role",
+          "tagValue": "Represent states"
+        }
       ]
     }
   ]
