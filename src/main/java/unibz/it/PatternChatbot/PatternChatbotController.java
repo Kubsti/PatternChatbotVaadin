@@ -36,6 +36,8 @@ public class PatternChatbotController {
     PatternSimilarityCalculationServiceImpl patternSimilarityCalculationService;
     @Autowired
     NextSearchTagCalculationVarianceFilteredServiceImpl varianceSearchTagCalculationService;
+    @Autowired
+    QuestionWriterServiceImpl questionWriterService;
     //Get Data for initialization.
     @GetMapping("/initialization")
     public ResponseEntity<String> init() throws IOException {
@@ -172,6 +174,31 @@ public class PatternChatbotController {
             nearestPattern.add(nearestfoundPattern);
         }
         return new NearestPatternWeightedResponseDto(nearestPattern);
+    }
+
+    @PostMapping(path="/updatePatternAndQuestion", consumes="application/json", produces="application/json")
+    public ResponseEntity<String> updatePatternAndQuestion(@RequestBody UpdatePatternAndQuestionDto updatePatternAndQuestionDto) {
+        boolean patternStored;
+        boolean questionsStored;
+        try{
+            DesignPatterns newPattern = new DesignPatterns();
+            newPattern.setPatterns(updatePatternAndQuestionDto.getPatterns());
+            patternStored = patternWriterService.writePattern(newPattern);
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not store pattern");
+        }
+        try{
+            PatternQuestions newQuestions = new PatternQuestions();
+            newQuestions.setQuestions(updatePatternAndQuestionDto.getQuestions());
+            questionsStored = questionWriterService.writeQuestions(newQuestions);
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not store questions");
+        }
+
+        if(!patternStored || !questionsStored){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not store questions and/or pattern.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Pattern and Question where updated");
     }
     //if user inserts pattern frontend should check if we have new tags,for start disallow multiple question for one tag
     @PostMapping(
