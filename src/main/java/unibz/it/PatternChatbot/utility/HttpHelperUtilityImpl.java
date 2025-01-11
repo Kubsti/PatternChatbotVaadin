@@ -19,13 +19,49 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
 public class HttpHelperUtilityImpl implements HttpHelperUtility {
-    private final String server = "http://127.0.0.1:8080" ;
+    private final String server = "" ;
     private static final Logger logger = LoggerFactory.getLogger(HttpHelperUtilityImpl.class);
     @Override
     public void intializeChatbot() {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(this.server + "/initialization"))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
+            if (responseCode != 200) {
+                ErrorDialog.showError("Error occurred when trying to contact backend");
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            } else {
+                ObjectMapper mapper = new ObjectMapper();
+                try{
+                    SearchResponseDto initResponse = mapper.readValue(response.body(), SearchResponseDto.class);
+                    VaadinSession.getCurrent().setAttribute("excludedTags", initResponse.getExcludedTags());
+                    VaadinSession.getCurrent().setAttribute("nextSearchTag", initResponse.getNextSearchTag());
+                    VaadinSession.getCurrent().setAttribute("nextQuestion", initResponse.getPatternQuestion());
+                    VaadinSession.getCurrent().setAttribute("designPattern", initResponse.getDesignPatterns());
+                    VaadinSession.getCurrent().setAttribute("possibleAnswers", initResponse.getCurrPossibleAnswersToQuestion());
+                }catch (Exception e) {
+                    ErrorDialog.showError("Error occurred when trying to read response from backend ");
+                    System.out.println(e.getMessage());
+                }
+
+            }
+        } catch (IOException | InterruptedException e) {
+            ErrorDialog.showError("Error could not initialize chatbot.");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void intializeChatbotWithFixedPatternSearchTag() {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(this.server + "/initializationWithFixedPatternSearchTag"))
                 .GET()
                 .build();
         try {
@@ -167,6 +203,41 @@ public class HttpHelperUtilityImpl implements HttpHelperUtility {
             String reqBody = gson.toJson(searchRequest);
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(this.server + "/searchPattern"))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(reqBody))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == HttpURLConnection.HTTP_OK){
+                logger.info("HttpHelper finished to search for pattern");
+                return  gson.fromJson(response.body(), SearchResponseDto.class);
+            }else{
+                logger.error("HttpHelper search for pattern error in http request. HttpError {}\nErrorMessage: {}", response.statusCode(), response.body());
+                ErrorDialog.showError("Error in the rest request for search pattern");
+            }
+        }catch (Exception e){
+            logger.error("HttpHelper search for pattern error.\nErrorMessage: {}", e.getMessage());
+            ErrorDialog.showError("Error could not get all pattern");
+        }
+        return null;
+    }
+
+    @Override
+    public SearchResponseDto excludePattern(String tagValue) {
+        logger.info("HttpHelper started to build request to exclude pattern");
+        String nextSearchTag = (String ) VaadinSession.getCurrent().getAttribute("nextSearchTag");
+        DesignPatterns designPatterns = (DesignPatterns)VaadinSession.getCurrent().getAttribute("designPattern");
+        ArrayList<String> excludedTags;
+        //TODO fix unchecked function error
+        excludedTags = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("excludedTags");
+
+        try{
+            Gson gson = new GsonBuilder().create();
+            HttpClient client = HttpClient.newHttpClient();
+            SearchDto searchRequest = new SearchDto(nextSearchTag,tagValue,designPatterns,excludedTags);
+            String reqBody = gson.toJson(searchRequest);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(this.server + "/excludePattern"))
                     .header("Content-Type", "application/json")
                     .header("Accept", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(reqBody))

@@ -4,11 +4,12 @@ import org.springframework.stereotype.Service;
 import unibz.it.PatternChatbot.model.DesignPatterns;
 import unibz.it.PatternChatbot.model.Pattern;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 @Service
 public class QuestionAnswerCalculationServiceImpl implements QuestionAnswerClaculationService{
     @Override
-    public HashSet<String> calculatePossibleAnswers(String tagName, DesignPatterns designPatterns) {
+    public ArrayList<String> calculatePossibleAnswers(String tagName, DesignPatterns designPatterns) {
         HashSet<String> possibleAnswers = new HashSet<String>();
         designPatterns.getPatterns().stream().forEach(pattern -> {
             pattern.getTags().stream().forEach(tag -> {
@@ -17,6 +18,6 @@ public class QuestionAnswerCalculationServiceImpl implements QuestionAnswerClacu
                 }
             });
         });
-        return possibleAnswers;
+        return new ArrayList<String>(possibleAnswers);
     }
 }

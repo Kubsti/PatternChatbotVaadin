@@ -5,46 +5,12 @@
       "description": "Implement a façade or adapter layer between different subsystems that don't share the same semantics. This layer translates requests that one subsystem makes to the other subsystem. Use this pattern to ensure that an application's design is not limited by dependencies on outside subsystems.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Integration",
-          "tagValue": "External Systems"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Isolation"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Integration"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Coupling"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Latency"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Decoupling"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Adaptor"
-        },
-        {
-          "tagName": "Development Paradigm",
-          "tagValue": "Domain-Driven Design (DDD)"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Architectural Style", "tagValue": "Microservices" },
+        { "tagName": "Category", "tagValue": "Systems Integration" },
+        { "tagName": "Purpose", "tagValue": "Isolation" },
+        { "tagName": "Nature", "tagValue": "Distributed" },
+        { "tagName": "Isolation Flow", "tagValue": "Outbound" }
       ]
     },
     {
@@ -52,50 +18,10 @@
       "description": "Have each component of the system participate in the decision-making process about the workflow of a business transaction, instead of relying on a central point of control.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Communication"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Coupling"
-        },
-        {
-          "tagName": "Communication Style",
-          "tagValue": "Asynchronous"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Chattiness"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Throughput"
-        },
-        {
-          "tagName": "Governance",
-          "tagValue": "Decentralized"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Scalable Communication"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Complex Communication"
-        },
-        {
-          "tagName": "Development Paradigm",
-          "tagValue": "Event-Driven Architecture"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Systems Integration" },
+        { "tagName": "Purpose", "tagValue": "Communication" },
+        { "tagName": "Nature", "tagValue": "Asynchronous" }
       ]
     },
     {
@@ -103,58 +29,11 @@
       "description": "separates read and update operations for a data store. Implementing CQRS in your application can maximize its performance, scalability, and security. The flexibility created by migrating to CQRS allows a system to better evolve over time and prevents update commands from causing merge conflicts at the domain level.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Query"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Specialization"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Distributed query"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Eventual consistency"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Performance"
-        },
-        {
-          "tagName": "Communication Style",
-          "tagValue": "Asynchronous"
-        },
-        {
-          "tagName": "Testing",
-          "tagValue": "Command and Query Testing"
-        },
-        {
-          "tagName": "Scaling",
-          "tagValue": "Horizontal and Data Partitioning Scaling"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Aggregator"
-        },
-        {
-          "tagName": "Data Ownership",
-          "tagValue": "Service-Specific Data Storage"
-        },
-        {
-          "tagName": "Development Paradigm",
-          "tagValue": "Event-Driven Architecture"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications and Databases" },
+        { "tagName": "Architectural Style", "tagValue": "Microservices" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Query" },
+        { "tagName": "Nature", "tagValue": "Asynchronous" }
       ]
     },
     {
@@ -162,42 +41,10 @@
       "description": "Each microservice must have its own responsibilities, and a poorly-defined decomposition can cause unnecessary coupling. So, define the boundaries of your microservices using DDD's subdomain concept.",
       "url": "https://microservices.io/patterns/decomposition/decompose-by-subdomain.html",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Decomposition"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Defining Boundaries"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Decomposition"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Development Paradigm",
-          "tagValue": "Domain-Driven Design (DDD)"
-        },
-        {
-          "tagName": "Testing",
-          "tagValue": "Contract Testing"
-        },
-        {
-          "tagName": "Scaling",
-          "tagValue": "Horizontal Scaling"
-        },
-        {
-          "tagName": "Data Ownership",
-          "tagValue": "Domain-Specific Data Storage"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Architectural Style", "tagValue": "Microservices" },
+        { "tagName": "Category", "tagValue": "Domain Modeling" },
+        { "tagName": "Purpose", "tagValue": "Decoupling" }
       ]
     },
     {
@@ -205,50 +52,11 @@
       "description": "Instead of storing just the current state of the data in a domain, use an append-only store to record the full series of actions taken on that data. The store acts as the system of record and can be used to materialize the domain objects.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Data Management"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External and Internal"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Temporal Inconsistency"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Performance"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Consistency"
-        },
-        {
-          "tagName": "Scaling",
-          "tagValue": "Horizontal Scaling"
-        },
-        {
-          "tagName": "Testing",
-          "tagValue": "Event Replay Testing"
-        },
-        {
-          "tagName": "Consistency",
-          "tagValue": "Eventual Consistency"
-        },
-        {
-          "tagName": "Communication Style",
-          "tagValue": "Asynchronous"
-        },
-        {
-          "tagName": "Development Paradigm",
-          "tagValue": "Event-Driven Architecture"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Decoupling" },
+        { "tagName": "Nature", "tagValue": "Event-Driven" },
+        { "tagName": "Architectural Style", "tagValue": "Event-Driven Architecture" }
       ]
     },
     {
@@ -256,54 +64,9 @@
       "description": "The Gatekeeper pattern involves using an intermediary service or component to control and manage access to resources or functionality in a distributed system, enhancing security and enforcing policies.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gatekeeper",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Security"
-        },
-        {
-          "tagName": "Governance",
-          "tagValue": "Centralized"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Scaling",
-          "tagValue": "Horizontal Scaling"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Centralized security"
-        },
-        {
-          "tagName": "Testing",
-          "tagValue": "Security Testing"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Centralized Security Management"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Potential Single Point of Failure"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Proxy"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Proxying"
-        },
-        {
-          "tagName": "Service Composition",
-          "tagValue": "Union of Services"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Cross-Cutting Concerns" },
+        { "tagName": "Purpose", "tagValue": "Security" }
       ]
     },
     {
@@ -311,58 +74,11 @@
       "description": "The Gateway Aggregation pattern involves consolidating multiple requests from clients into a single request to reduce network overhead and improve efficiency in a microservices architecture.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-aggregation",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Query"
-        },
-        {
-          "tagName": "Service Composition",
-          "tagValue": "Aggregated Services"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Testing",
-          "tagValue": "End-to-End Testing"
-        },
-        {
-          "tagName": "Communication Style",
-          "tagValue": "Synchronous"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Simplified Integration and Composition"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Increased Complexity in Gateway Logic"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Distributed Query"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Aggregator"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Proxying"
-        },
-        {
-          "tagName": "Consistency",
-          "tagValue": "Strong consistency"
-        },
-        {
-          "tagName": "Scaling",
-          "tagValue": "Data Partitioning"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications and Databases" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Query" },
+        { "tagName": "Nature", "tagValue": "Distributed" },
+        { "tagName": "Architectural Style", "tagValue": "Microservices" }
       ]
     },
     {
@@ -370,50 +86,11 @@
       "description": "The Gateway Routing pattern is a design approach where a centralized gateway service directs client requests to appropriate microservices based on predefined routing rules, facilitating dynamic and efficient traffic management in a distributed system.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-routing",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Integration"
-        },
-        {
-          "tagName": "Integration",
-          "tagValue": "External Clients"
-        },
-        {
-          "tagName": "Governance",
-          "tagValue": "Centralized"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Centralized Routing Control"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Dependency on Gateway for Routing"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Distributed Services"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Proxy"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Proxying"
-        },
-        {
-          "tagName": "Service Composition",
-          "tagValue": "Union of Services"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Systems Integration" },
+        { "tagName": "Purpose", "tagValue": "Isolation" },
+        { "tagName": "Architectural Style", "tagValue": "Microservices" },
+        { "tagName": "Isolation Flow", "tagValue": "Inbound"}
       ]
     },
     {
@@ -421,42 +98,11 @@
       "description": "The Messaging pattern involves communication between software components through messages, enhancing decoupling, scalability, and flexibility in distributed systems.",
       "url": "https://microservices.io/patterns/communication-style/messaging.html",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Communication"
-        },
-        {
-          "tagName": "Development Paradigm",
-          "tagValue": "Event-Driven Architecture"
-        },
-        {
-          "tagName": "Communication Style",
-          "tagValue": "Asynchronous"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External and Internal"
-        },
-        {
-          "tagName": "Testing",
-          "tagValue": "Message Processing Testing"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Responsiveness"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Complex Error Handling"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Coupled communication"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Nature", "tagValue": "Asynchronous" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Communication" },
+        { "tagName": "Architectural Style", "tagValue": "Distributed" }
       ]
     },
     {
@@ -464,42 +110,9 @@
       "description": "The Queue-based Load Levelling pattern involves using queues to distribute processing tasks evenly across multiple consumers, optimizing resource utilization and improving system stability in a distributed environment",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Scalability"
-        },
-        {
-          "tagName": "Scaling",
-          "tagValue": "Horizontal Scaling"
-        },
-        {
-          "tagName": "Scope",
-          "tagValue": "External"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Scalable Distribution"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Latency"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Workload Distribution"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Proxying"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Proxy"
-        }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Infrastructure" },
+        { "tagName": "Purpose", "tagValue": "Scalability" }
       ]
     },
     {
@@ -507,42 +120,11 @@
       "description": "",
       "url": "https://microservices.io/patterns/data/database-per-service.html",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Data Management"
-        },
-        {
-          "tagName": "Governance",
-          "tagValue": "Decentralized"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Isolated Data Management"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Increased Complexity in Data Consistency"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Shared Data Access"
-        },
-        {
-          "tagName": "Data Ownership",
-          "tagValue": "Service-Specific Data Storage"
-        },
-        {
-          "tagName": "Scaling",
-          "tagValue": "Data Partitioning"
-        },
-        {
-          "tagName": "Development Paradigm",
-          "tagValue": "Domain-Driven Design (DDD)"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications and Databases" },
+        { "tagName": "Architectural Style", "tagValue": "Microservices" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Isolation" },
+        { "tagName": "Nature", "tagValue": "Distributed" }
       ]
     },
     {
@@ -550,34 +132,11 @@
       "description": "The Server-Side Discovery pattern involves a central service registry where servers register their availability, facilitating dynamic and efficient client-server communication in a distributed system.",
       "url": "https://microservices.io/patterns/server-side-discovery.html",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Integration"
-        },
-        {
-          "tagName": "Integration",
-          "tagValue": "Internal Services"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Dynamic Service Configuration"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Dependency on Discovery Mechanism"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Dynamic Service Location"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Service Locator"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Systems Integration" },
+        { "tagName": "Purpose", "tagValue": "Flexibility" },
+        { "tagName": "Architectural Style", "tagValue": "Microservices" },
+        { "tagName": "Nature", "tagValue": "Distributed" }
       ]
     },
     {
@@ -585,30 +144,11 @@
       "description": "The Sidecar pattern involves deploying a helper service alongside a microservice to provide features such as monitoring, logging, or security. The sidecar abstracts functionality that would otherwise be duplicated across services.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sidecar",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Deployment"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Modularity"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Increased Complexity"
-        },
-        {
-          "tagName": "Role",
-          "tagValue": "Proxy"
-        },
-        {
-          "tagName": "Architectural Strategy",
-          "tagValue": "Service Composition"
-        }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Cross-Cutting Concerns" },
+        { "tagName": "Purpose", "tagValue": "Don't Repeat Yourself (DRY)" },
+        { "tagName": "Architectural Style", "tagValue": "Distributed" },
+        { "tagName": "Nature", "tagValue": "Distributed" }
       ]
     },
     {
@@ -616,26 +156,10 @@
       "description": "Isolate critical resources to prevent a cascading failure. This pattern allows you to partition services or operations into smaller groups, ensuring that a failure in one partition does not affect others.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/bulkhead",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Resiliency"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Fault Tolerance"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Isolation"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Cascading Failure"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Resource Duplication"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Infrastructure" },
+        { "tagName": "Purpose", "tagValue": "Resiliency" },
+        { "tagName": "Nature", "tagValue": "Distributed" }
       ]
     },
     {
@@ -643,26 +167,11 @@
       "description": "The Retry pattern implements automatic retries for transient failures in distributed systems, improving reliability and reducing downtime.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/retry",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Fault Tolerance"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Resiliency"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Fault Recovery"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Transient Failures"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Latency"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Systems Integration" },
+        { "tagName": "Purpose", "tagValue": "Resiliency" },
+        { "tagName": "Nature", "tagValue": "Distributed" },
+        { "tagName": "Strategy on Failure", "tagValue": "Reattempt" }
       ]
     },
     {
@@ -670,53 +179,11 @@
       "description": "The Circuit Breaker pattern prevents a system from repeatedly trying to execute a failing operation. It acts as a safeguard, improving stability and resiliency.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Resiliency"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Fault Tolerance"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Stability"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Repeated Failures"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Limited Availability During Tripping"
-        }
-      ]
-    },
-    {
-      "name": "Leader Election",
-      "description": "This pattern elects one node in a distributed system to act as the leader for a set of tasks, ensuring coordination and avoiding conflicts.",
-      "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/leader-election",
-      "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Coordination"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Distributed Systems"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Task Coordination"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Conflict Resolution"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Leadership Election Overhead"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Systems Integration" },
+        { "tagName": "Purpose", "tagValue": "Resiliency" },
+        { "tagName": "Nature", "tagValue": "Distributed" },
+        { "tagName": "Strategy on Failure", "tagValue": "Protect" }
       ]
     },
     {
@@ -724,26 +191,9 @@
       "description": "The Sharding pattern splits a database into smaller, faster, and more easily managed parts called shards to enhance scalability.",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Database"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Scalability"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Performance"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Complex Query Coordination"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "High Data Volume"
-        }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Scalability" }
       ]
     },
     {
@@ -751,53 +201,11 @@
       "description": "A Service Mesh pattern manages service-to-service communication, adding features like service discovery, load balancing, and observability.",
       "url": "https://microservices.io/patterns/deployment/service-mesh.html",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Microservice"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Communication"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Centralized Communication Management"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Operational Overhead"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Complex Communication"
-        }
-      ]
-    },
-    {
-      "name": "Shared Kernel",
-      "description": "A Shared Kernel involves sharing a core set of functionality between multiple domains while maintaining their independence.",
-      "url": "https://domainlanguage.com/ddd/reference/",
-      "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "DDD"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Reuse"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Coupling"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Duplicate Functionality"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Infrastructure" },
+        { "tagName": "Purpose", "tagValue": "Communication" },
+        { "tagName": "Architectural Style", "tagValue": "Distributed" },
+        { "tagName": "Nature", "tagValue": "Distributed" }
       ]
     },
     {
@@ -805,26 +213,11 @@
       "description": "The Saga pattern ensures consistency in distributed transactions by breaking them into smaller, independent steps with compensation logic.",
       "url": "https://microservices.io/patterns/data/saga.html",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Distributed Systems"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Data Consistency"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Eventual Consistency"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Transactional Complexity"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Increased Implementation Overhead"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications and Databases" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Data Consistency" },
+        { "tagName": "Nature", "tagValue": "Asynchronous" },
+        { "tagName": "Architectural Style", "tagValue": "Event-Driven Architecture" }
       ]
     },
     {
@@ -832,80 +225,10 @@
       "description": "In the Publish-Subscribe pattern, messages are sent to a topic and distributed to all subscribers, decoupling publishers and subscribers.",
       "url": "https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Messaging"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Communication"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Decoupled Communication"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Complex Subscription Management"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Scalability in Messaging"
-        }
-      ]
-    },
-    {
-      "name": "Command and Query Responsibility Segregation (CQRS)",
-      "description": "Separates read and write operations into different models to optimize performance and scalability.",
-      "url": "https://martinfowler.com/bliki/CQRS.html",
-      "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Data"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Read-Write Optimization"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Scalability"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Increased Complexity"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Conflicting Operational Needs"
-        }
-      ]
-    },
-    {
-      "name": "Event Sourcing",
-      "description": "Stores the state of an entity as a sequence of state-changing events rather than the current state.",
-      "url": "https://martinfowler.com/eaaDev/EventSourcing.html",
-      "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Data"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "State Management"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Auditability"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Storage Overhead"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Mutable State Complexity"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications" },
+        { "tagName": "Category", "tagValue": "Systems Integration" },
+        { "tagName": "Purpose", "tagValue": "Communication" },
+        { "tagName": "Nature", "tagValue": "Asynchronous" }
       ]
     },
     {
@@ -913,80 +236,21 @@
       "description": "Gathers data from multiple services or sources into a single interface or API.",
       "url": "https://akfpartners.com/growth-blog/microservice-aggregator-pattern",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Integration"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Data Consolidation"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Simplified Consumption"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Latency Due to Aggregation"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Data Fragmentation"
-        }
+        { "tagName": "Extent", "tagValue": "Multiple Applications and Databases" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Query" },
+        { "tagName": "Nature", "tagValue": "Distributed" }
       ]
     },
     {
-      "name": "Fan-out/Fan-in",
-      "description": "Distributes work across multiple components (fan-out) and aggregates the results (fan-in) to handle parallel processing.",
-      "url": "https://java-design-patterns.com/patterns/fanout-fanin/#programmatic-example-of-fan-out-fan-in-pattern-in-java",
-      "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Scalability"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Parallel Processing"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Performance"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Synchronization Complexity"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Sequential Bottlenecks"
-        }
-      ]
-    },
-    {
-      "name": "Command Pattern",
+      "name": "Command",
       "description": "Encapsulates a request as an object, allowing for parameterization and queuing of requests.",
       "url": "https://refactoring.guru/design-patterns/command",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Behavioral"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Flexibility"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Increased Abstraction"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Rigid Request Management"
-        }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Separate responsibilities" },
+        { "tagName": "Role", "tagValue": "Represent operations" }
       ]
     },
     {
@@ -994,26 +258,10 @@
       "description": "Adds behavior to an object dynamically by wrapping it with another object of the same interface.",
       "url": "https://refactoring.guru/design-patterns/decorator",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Structural"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Dynamic Behavior Extension"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Increased Object Count"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Rigid Class Hierarchies"
-        }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Add behavior in existing structures" },
+        { "tagName": "Role", "tagValue": "Add a feature in a class" }
       ]
     },
     {
@@ -1021,26 +269,10 @@
       "description": "Defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified.",
       "url": "https://refactoring.guru/design-patterns/observer",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Behavioral"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Design"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Event Notification"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Potential Performance Overhead"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Tight Coupling of State Changes"
-        }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        { "tagName": "Role", "tagValue": "Notify changes in an object" }
       ]
     },
     {
@@ -1048,25 +280,12 @@
       "description": "Acts as a bridge between incompatible interfaces, enabling their interaction.",
       "url": "https://refactoring.guru/design-patterns/adapter",
       "tags": [
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Separate responsibilities" },
         {
-          "tagName": "Domain",
-          "tagValue": "Structural"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Integration"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Interface Compatibility"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Additional Layer of Abstraction"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Incompatible Interfaces"
+          "tagName": "Role",
+          "tagValue": "Handle external API"
         }
       ]
     },
@@ -1075,26 +294,9 @@
       "description": "A pattern for accessing data that decouples the domain layer from the data source.",
       "url": "https://martinfowler.com/eaaCatalog/repository.html",
       "tags": [
-        {
-          "tagName": "Domain",
-          "tagValue": "Data"
-        },
-        {
-          "tagName": "Category",
-          "tagValue": "Access Layer"
-        },
-        {
-          "tagName": "Benefit",
-          "tagValue": "Abstraction of Persistence Logic"
-        },
-        {
-          "tagName": "Cost",
-          "tagValue": "Potentially Complex API"
-        },
-        {
-          "tagName": "Problem",
-          "tagValue": "Tight Coupling of Data Access"
-        }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Data Management" },
+        { "tagName": "Purpose", "tagValue": "Decoupling Technology" }
       ]
     },
     {
@@ -1102,10 +304,9 @@
       "description": "Defines an interface for creating objects but allows subclasses to alter the type of objects that will be created.",
       "url": "https://refactoring.guru/design-patterns/factory-method",
       "tags": [
-        { "tagName": "Category", "tagValue": "Creational" },
-        { "tagName": "Scope", "tagValue": "Object Creation" },
-        { "tagName": "Problem", "tagValue": "Dynamic Object Instantiation" },
-        { "tagName": "Benefit", "tagValue": "Encapsulation of Creation Logic" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Isolate object creation" }
       ]
     },
     {
@@ -1113,10 +314,9 @@
       "description": "Ensures a class has only one instance and provides a global point of access to it.",
       "url": "https://refactoring.guru/design-patterns/singleton",
       "tags": [
-        { "tagName": "Category", "tagValue": "Creational" },
-        { "tagName": "Scope", "tagValue": "Global Access" },
-        { "tagName": "Problem", "tagValue": "Multiple Instances" },
-        { "tagName": "Benefit", "tagValue": "Controlled Access to Shared Resources" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Optimize memory usage" }
       ]
     },
     {
@@ -1124,21 +324,13 @@
       "description": "Defines a family of algorithms, encapsulates each one, and makes them interchangeable.",
       "url": "https://refactoring.guru/design-patterns/strategy",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Dynamic Behavior" },
-        { "tagName": "Problem", "tagValue": "Algorithm Variation" },
-        { "tagName": "Benefit", "tagValue": "Code Reusability" }
-      ]
-    },
-    {
-      "name": "Command",
-      "description": "Encapsulates a request as an object, thereby allowing parameterization of clients with queues or operations.",
-      "url": "https://refactoring.guru/design-patterns/command",
-      "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Encapsulation" },
-        { "tagName": "Problem", "tagValue": "Action Decoupling" },
-        { "tagName": "Benefit", "tagValue": "Undo and Redo Operations" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        {
+          "tagName": "Role",
+          "tagValue": "Allow change of algorithms"
+        }
       ]
     },
     {
@@ -1146,10 +338,10 @@
       "description": "Provides a placeholder for another object to control access to it.",
       "url": "https://refactoring.guru/design-patterns/proxy",
       "tags": [
-        { "tagName": "Category", "tagValue": "Structural" },
-        { "tagName": "Scope", "tagValue": "Access Control" },
-        { "tagName": "Problem", "tagValue": "Direct Access Issues" },
-        { "tagName": "Benefit", "tagValue": "Security and Performance" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Add behavior in existing structures" },
+        { "tagName": "Role", "tagValue": "Intermediate object communication" }
       ]
     },
     {
@@ -1157,10 +349,10 @@
       "description": "Allows passing requests along a chain of handlers until one of them handles the request.",
       "url": "https://refactoring.guru/design-patterns/chain-of-responsibility",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Request Handling" },
-        { "tagName": "Problem", "tagValue": "Hardcoded Request Handlers" },
-        { "tagName": "Benefit", "tagValue": "Flexible Request Processing" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        { "tagName": "Role", "tagValue": "Create a sequence of actions" }
       ]
     },
     {
@@ -1168,10 +360,9 @@
       "description": "Minimizes memory usage by sharing as much data as possible with other similar objects.",
       "url": "https://refactoring.guru/design-patterns/flyweight",
       "tags": [
-        { "tagName": "Category", "tagValue": "Structural" },
-        { "tagName": "Scope", "tagValue": "Memory Optimization" },
-        { "tagName": "Problem", "tagValue": "High Memory Usage" },
-        { "tagName": "Benefit", "tagValue": "Efficient Resource Sharing" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Optimize performance" },
+        { "tagName": "Purpose", "tagValue": "Reuse instances" }
       ]
     },
     {
@@ -1179,10 +370,13 @@
       "description": "Composes objects into tree structures to represent part-whole hierarchies.",
       "url": "https://refactoring.guru/design-patterns/composite",
       "tags": [
-        { "tagName": "Category", "tagValue": "Structural" },
-        { "tagName": "Scope", "tagValue": "Hierarchical Structures" },
-        { "tagName": "Problem", "tagValue": "Unified Interface Issues" },
-        { "tagName": "Benefit", "tagValue": "Recursive Structures" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Add behavior in existing structures" },
+        {
+          "tagName": "Role",
+          "tagValue": "Treat many as one"
+        }
       ]
     },
     {
@@ -1190,21 +384,13 @@
       "description": "Defines the skeleton of an algorithm in a method, deferring steps to subclasses.",
       "url": "https://refactoring.guru/design-patterns/template-method",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Algorithm Behavior" },
-        { "tagName": "Problem", "tagValue": "Algorithm Customization" },
-        { "tagName": "Benefit", "tagValue": "Code Reusability" }
-      ]
-    },
-    {
-      "name": "Interpreter",
-      "description": "Defines a representation for a language's grammar along with an interpreter to evaluate sentences in the language.",
-      "url": "https://refactoring.guru/design-patterns/interpreter",
-      "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Language Processing" },
-        { "tagName": "Problem", "tagValue": "Custom Language Parsing" },
-        { "tagName": "Benefit", "tagValue": "Grammar Encapsulation" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        {
+          "tagName": "Role",
+          "tagValue": "Operation with extensible points"
+        }
       ]
     },
     {
@@ -1212,10 +398,10 @@
       "description": "Lets you define a new operation without changing the classes of the elements it operates on.",
       "url": "https://refactoring.guru/design-patterns/visitor",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Operation Addition" },
-        { "tagName": "Problem", "tagValue": "Changing Element Classes" },
-        { "tagName": "Benefit", "tagValue": "Open/Closed Principle" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Allow behavior extension" },
+        { "tagName": "Purpose", "tagValue": "Create a flexible structure" },
+        { "tagName": "Role", "tagValue": "Addition of new operations" }
       ]
     },
     {
@@ -1223,10 +409,10 @@
       "description": "Provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.",
       "url": "https://refactoring.guru/design-patterns/iterator",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "Collection Traversal" },
-        { "tagName": "Problem", "tagValue": "Inefficient Iteration" },
-        { "tagName": "Benefit", "tagValue": "Encapsulated Traversal Logic" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Organize logic" },
+        { "tagName": "Role", "tagValue": "Apply operation in collections" }
       ]
     },
     {
@@ -1234,10 +420,9 @@
       "description": "Captures and restores an object's state without violating encapsulation.",
       "url": "https://refactoring.guru/design-patterns/memento",
       "tags": [
-        { "tagName": "Category", "tagValue": "Behavioral" },
-        { "tagName": "Scope", "tagValue": "State Restoration" },
-        { "tagName": "Problem", "tagValue": "Undo/Redo Implementation" },
-        { "tagName": "Benefit", "tagValue": "State Isolation" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Optimize performance" },
+        { "tagName": "Purpose", "tagValue": "Persist complex objects" }
       ]
     },
     {
@@ -1245,50 +430,44 @@
       "description": "Provides an interface for creating families of related or dependent objects without specifying their concrete classes.",
       "url": "https://refactoring.guru/design-patterns/abstract-factory",
       "tags": [
-        { "tagName": "Category", "tagValue": "Creational" },
-        { "tagName": "Scope", "tagValue": "Complex Object Families" },
-        { "tagName": "Problem", "tagValue": "Coupled Object Creation" },
-        { "tagName": "Benefit", "tagValue": "Encapsulation of Variants" }
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Create objects consistently" }
       ]
     },
     {
-      "name": "Event Aggregator",
-      "description": "Centralizes event handling to decouple event producers and consumers.",
-      "url": "https://martinfowler.com/eaaDev/EventAggregator.html",
-      "tags": [
-        {"tagName": "Event Management", "tagValue": "Centralized Coordination"},
-        {"tagName": "Benefit", "tagValue": "Reduced Coupling"},
-        {"tagName": "Category", "tagValue": "Behavioral"}
-      ]
-    },
-    {
-      "name": "Mediator Pattern",
+      "name": "Mediator",
       "description": "Encapsulates how a set of objects interact, promoting loose coupling.",
       "url": "https://refactoring.guru/design-patterns/mediator",
       "tags": [
-        {"tagName": "Communication", "tagValue": "Centralized Coordination"},
-        {"tagName": "Benefit", "tagValue": "Simplified Dependencies"},
-        {"tagName": "Category", "tagValue": "Behavioral"}
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Separate responsibilities" },
+        { "tagName": "Role", "tagValue": "Coordinate the interactions" }
       ]
     },
     {
-      "name": "Prototype Pattern",
+      "name": "Prototype",
       "description": "Creates new objects by copying an existing object.",
       "url": "https://refactoring.guru/design-patterns/prototype",
       "tags": [
-        {"tagName": "Object Creation", "tagValue": "Cloning"},
-        {"tagName": "Benefit", "tagValue": "Efficient Object Creation"},
-        {"tagName": "Category", "tagValue": "Creational"}
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Create objects" },
+        { "tagName": "Purpose", "tagValue": "Create object based on another one" }
       ]
     },
     {
-      "name": "State Pattern",
+      "name": "State",
       "description": "Allows an object to alter its behavior when its internal state changes.",
       "url": "https://refactoring.guru/design-patterns/state",
       "tags": [
-        {"tagName": "Behavior", "tagValue": "Dynamic State Handling"},
-        {"tagName": "Benefit", "tagValue": "Improved Readability"},
-        {"tagName": "Category", "tagValue": "Behavioral"}
+        { "tagName": "Extent", "tagValue": "Single Application" },
+        { "tagName": "Category", "tagValue": "Improve modularity" },
+        { "tagName": "Purpose", "tagValue": "Organize logic" },
+        {
+          "tagName": "Role",
+          "tagValue": "Represent states"
+        }
       ]
     }
   ]

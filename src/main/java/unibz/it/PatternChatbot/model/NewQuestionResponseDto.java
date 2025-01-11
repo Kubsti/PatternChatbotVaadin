@@ -10,10 +10,10 @@ public class NewQuestionResponseDto {
     private PatternQuestion patternQuestion;
     private ArrayList<String> excludedTags;
     private String nextSearchTag;
-    private HashSet<String> possibleAnswers;
+    private ArrayList<String> possibleAnswers;
     @JsonCreator
     public NewQuestionResponseDto(@JsonProperty("patternQuestion") PatternQuestion patternQuestion, @JsonProperty("excludedTags")  ArrayList<String> excludedTags,
-                                  @JsonProperty("nextSearchTag") String nextSearchTag, @JsonProperty("possibleAnswers") HashSet<String> possibleAnswers) {
+                                  @JsonProperty("nextSearchTag") String nextSearchTag, @JsonProperty("possibleAnswers") ArrayList<String> possibleAnswers) {
         this.patternQuestion = patternQuestion;
         this.excludedTags = excludedTags;
         this.nextSearchTag = nextSearchTag;
@@ -43,11 +43,11 @@ public class NewQuestionResponseDto {
         this.nextSearchTag = nextSearchTag;
     }
 
-    public HashSet<String> getPossibleAnswers() {
+    public ArrayList<String> getPossibleAnswers() {
         return possibleAnswers;
     }
 
-    public void setPossibleAnswers(HashSet<String> possibleAnswers) {
+    public void setPossibleAnswers(ArrayList<String> possibleAnswers) {
         this.possibleAnswers = possibleAnswers;
     }
 }

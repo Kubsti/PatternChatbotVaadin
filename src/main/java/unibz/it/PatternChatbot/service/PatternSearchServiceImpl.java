@@ -23,4 +23,23 @@ public class PatternSearchServiceImpl implements PatternSearchService {
         designPatterns.setPatterns(foundPatterns);
         return designPatterns;
     }
+
+    @Override
+    public DesignPatterns excludePatternWithTag(String exclusionTag, ArrayList<Pattern> listOfPattern) {
+        DesignPatterns designPatterns = new DesignPatterns();
+        ArrayList<Pattern> foundPatterns = new ArrayList<Pattern>();
+        for(Pattern currPattern : listOfPattern){
+            boolean toExclude = false;
+            for(Tag currTag : currPattern.getTags()){
+                if(currTag.tagName.equalsIgnoreCase(exclusionTag) ){
+                    toExclude = true;
+                }
+            }
+            if(!toExclude){
+                foundPatterns.add(currPattern);
+            }
+        }
+        designPatterns.setPatterns(foundPatterns);
+        return designPatterns;
+    }
 }

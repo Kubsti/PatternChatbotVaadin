@@ -34,6 +34,10 @@ public class PatternChatbotController {
     QuestionAnswerCalculationServiceImpl questionAnswerCalculationService;
     @Autowired
     PatternSimilarityCalculationServiceImpl patternSimilarityCalculationService;
+    @Autowired
+    NextSearchTagCalculationVarianceFilteredServiceImpl varianceSearchTagCalculationService;
+    @Autowired
+    QuestionWriterServiceImpl questionWriterService;
     //Get Data for initialization.
     @GetMapping("/initialization")
     public ResponseEntity<String> init() throws IOException {
@@ -42,9 +46,34 @@ public class PatternChatbotController {
             designPatterns = fileReaderService.getDesignPatterns("Pattern/pattern.json");
             patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
             ArrayList<String> excludedTags = new ArrayList<String>();
-            String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, excludedTags);
+            String nextSearchTag = varianceSearchTagCalculationService.calculateNextSearchTag(designPatterns, excludedTags);
+            //String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(designPatterns, excludedTags);
             PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-            HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
+            ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
+            if (this.tagIsNotContainedByAtLeastOnePattern(designPatterns,nextSearchTag)){
+                possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+            }
+            SearchResponseDto currResponse = new SearchResponseDto(designPatterns, nextQuestion, excludedTags, nextSearchTag,possibleAnswers);
+            logger.info("Finished initialization of PatternChatbot");
+            return ResponseEntity.ok().body(objectMapper.writeValueAsString(currResponse));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+    @GetMapping("/initializationWithFixedPatternSearchTag")
+    public ResponseEntity<String> initWithFixedPatternSearchTag() throws IOException {
+        logger.info("Started initialization of PatternChatbot");
+        try{
+            designPatterns = fileReaderService.getDesignPatterns("Pattern/pattern.json");
+            patternQuestions = fileReaderService.getPatternQuestions("Pattern/questions.json");
+            ArrayList<String> excludedTags = new ArrayList<String>();
+            excludedTags.add("Extent");
+            String nextSearchTag = "Extent";
+            PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+            ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,designPatterns);
+            if (this.tagIsNotContainedByAtLeastOnePattern(designPatterns,nextSearchTag)){
+                possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+            }
             SearchResponseDto currResponse = new SearchResponseDto(designPatterns, nextQuestion, excludedTags, nextSearchTag,possibleAnswers);
             logger.info("Finished initialization of PatternChatbot");
             return ResponseEntity.ok().body(objectMapper.writeValueAsString(currResponse));
@@ -63,11 +92,61 @@ public class PatternChatbotController {
             errorMessage.append("\nPattern received:");
             searchDto.getDesignPatterns().getPatterns().forEach(pattern -> {errorMessage.append("\"").append(pattern.name).append("\",");});
             logger.error(errorMessage.toString());
-            return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), searchDto.getCurrSearchTag(), new HashSet<String>());
+            return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), searchDto.getCurrSearchTag(), new ArrayList<String>());
         }
-        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
+        //String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
+
+        if(!searchDto.getExcludedTags().contains("Category") || !searchDto.getExcludedTags().contains("Purpose")){
+            if(!searchDto.getExcludedTags().contains("Category")){
+                searchDto.getExcludedTags().add("Category");
+                PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion("Category", patternQuestions);
+                ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers("Category",filteredDesignPattern);
+                if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,"Category")){
+                    possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+                }
+                return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), "Category",possibleAnswers);
+            }else{
+                searchDto.getExcludedTags().add("Purpose");
+                PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion("Purpose", patternQuestions);
+                ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers("Purpose",filteredDesignPattern);
+                if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,"Purpose")){
+                    possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+                }
+                return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), "Purpose",possibleAnswers);
+            }
+        }
+        if(filteredDesignPattern.getPatterns().size() == 1){
+            return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), "",new ArrayList<String>());
+        }
+        String nextSearchTag = varianceSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,filteredDesignPattern);
+        ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,filteredDesignPattern);
+        if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,"Category")){
+            possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+        }
+        return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag,possibleAnswers);
+    }
+
+    @PostMapping(path="excludePattern", consumes="application/json", produces="application/json")
+    public SearchResponseDto excludePattern(@RequestBody SearchDto searchDto) {
+        logger.info("Started to exclude pattern with tag: " + searchDto.getCurrSearchTag());
+        DesignPatterns filteredDesignPattern = patternSearchService.excludePatternWithTag(searchDto.getCurrSearchTag(), searchDto.getDesignPatterns().getPatterns());
+        logger.info("Finished to exclude pattern with tag: \" + searchDto.getCurrSearchTag()");
+        //Check if we found something
+        if(filteredDesignPattern.getPatterns().isEmpty()){
+            StringBuilder errorMessage = new StringBuilder("Exclusion of pattern with input Tag lead to an empty result. Search Tag Is:" + searchDto.getCurrSearchTag() +" search Tag value is: " + searchDto.getSearchTagValue());
+            errorMessage.append("\nPattern received:");
+            searchDto.getDesignPatterns().getPatterns().forEach(pattern -> {errorMessage.append("\"").append(pattern.name).append("\",");});
+            logger.error(errorMessage.toString());
+            return new SearchResponseDto(filteredDesignPattern, new PatternQuestion("",""), searchDto.getExcludedTags(), searchDto.getCurrSearchTag(), new ArrayList<String>());
+        }
+        //String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
+        String nextSearchTag = varianceSearchTagCalculationService.calculateNextSearchTag(filteredDesignPattern, searchDto.getExcludedTags());
+        PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
+        ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,filteredDesignPattern);
+        if (this.tagIsNotContainedByAtLeastOnePattern(filteredDesignPattern,nextSearchTag)){
+            possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+        }
         return new SearchResponseDto(filteredDesignPattern, nextQuestion, searchDto.getExcludedTags(), nextSearchTag,possibleAnswers);
     }
 
@@ -76,7 +155,10 @@ public class PatternChatbotController {
         logger.info("Started get new Search Question");
         String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(newQuestionDto.getDesignPatterns(), newQuestionDto.getExcludedTags());
         PatternQuestion nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
-        HashSet<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,newQuestionDto.getDesignPatterns());
+        ArrayList<String> possibleAnswers = questionAnswerCalculationService.calculatePossibleAnswers(nextSearchTag,newQuestionDto.getDesignPatterns());
+        if (!possibleAnswers.isEmpty() && this.tagIsNotContainedByAtLeastOnePattern(newQuestionDto.getDesignPatterns(),nextSearchTag)){
+            possibleAnswers.add("None (this will exclude all pattern with the current search tag");
+        }
         logger.info("Finished get new Search Question");
         return new NewQuestionResponseDto( nextQuestion, newQuestionDto.getExcludedTags(), nextSearchTag, possibleAnswers);
     }
@@ -92,6 +174,31 @@ public class PatternChatbotController {
             nearestPattern.add(nearestfoundPattern);
         }
         return new NearestPatternWeightedResponseDto(nearestPattern);
+    }
+
+    @PostMapping(path="/updatePatternAndQuestion", consumes="application/json", produces="application/json")
+    public ResponseEntity<String> updatePatternAndQuestion(@RequestBody UpdatePatternAndQuestionDto updatePatternAndQuestionDto) {
+        boolean patternStored;
+        boolean questionsStored;
+        try{
+            DesignPatterns newPattern = new DesignPatterns();
+            newPattern.setPatterns(updatePatternAndQuestionDto.getPatterns());
+            patternStored = patternWriterService.writePattern(newPattern);
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not store pattern");
+        }
+        try{
+            PatternQuestions newQuestions = new PatternQuestions();
+            newQuestions.setQuestions(updatePatternAndQuestionDto.getQuestions());
+            questionsStored = questionWriterService.writeQuestions(newQuestions);
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not store questions");
+        }
+
+        if(!patternStored || !questionsStored){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not store questions and/or pattern.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Pattern and Question where updated");
     }
     //if user inserts pattern frontend should check if we have new tags,for start disallow multiple question for one tag
     @PostMapping(
@@ -190,4 +297,12 @@ public class PatternChatbotController {
 //        String nextSearchTag = nextSearchTagCalculationService.calculateNextSearchTag(desingPatterns, excludedTags);
 //        Question nextQuestion = nextSearchQuestionCalculationService.calculateNextSearchQuestion(nextSearchTag, patternQuestions);
 //    }
+
+    private boolean tagIsNotContainedByAtLeastOnePattern(DesignPatterns patterns, String nextSearchTag) {
+        return patterns.getPatterns().parallelStream() // Process patterns in parallel
+                .anyMatch(pattern ->
+                        pattern.getTags().stream() // Check tags in each pattern
+                                .noneMatch(tag -> tag.tagName.equalsIgnoreCase(nextSearchTag)) // Ensure no tag matches nextSearchTag
+                );
+    }
 }
