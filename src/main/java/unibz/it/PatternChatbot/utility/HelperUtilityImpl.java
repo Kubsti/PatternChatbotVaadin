@@ -2,6 +2,7 @@ package unibz.it.PatternChatbot.utility;
 
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
+import org.apache.commons.text.similarity.FuzzyScore;
 import oshi.util.tuples.Pair;
 
 import java.io.BufferedReader;
@@ -10,6 +11,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TreeMap;
 
 public class HelperUtilityImpl implements HelperUtility{
 
@@ -56,5 +59,20 @@ public class HelperUtilityImpl implements HelperUtility{
             //TODO handle keyword search exception
         }
         return tupleList;
+    }
+
+    public TreeMap<Double, String> calculateFuzzyScoreMatches(ArrayList<String> possibleAnswers, Double threshold, String userInput){
+        TreeMap<Double, String> matches = new TreeMap<Double,String>();
+        FuzzyScore fuzzyScore = new FuzzyScore(Locale.ENGLISH);
+        for(String answer: possibleAnswers){
+            int score = fuzzyScore.fuzzyScore(userInput, answer);
+            // Calculate the match percentage
+            int maxPossibleScore = Math.max(userInput.length(), answer.length());
+            double matchPercentage = (double) score / maxPossibleScore;
+            if(matchPercentage >= threshold){
+                matches.put(matchPercentage, answer);
+            }
+        }
+        return matches;
     }
 }

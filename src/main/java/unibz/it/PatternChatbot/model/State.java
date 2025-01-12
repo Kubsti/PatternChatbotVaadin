@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import unibz.it.PatternChatbot.PatternChatbotController;
 import unibz.it.PatternChatbot.state.GuidedSearchState;
 import unibz.it.PatternChatbot.ui.ErrorDialog;
+import unibz.it.PatternChatbot.utility.HelperUtilityImpl;
 import unibz.it.PatternChatbot.utility.HttpHelperUtilityImpl;
 import unibz.it.PatternChatbot.utility.UiHelperUtility;
 
@@ -20,6 +21,7 @@ public abstract class State {
     public UiHelperUtility chatHelper;
     public HashMap<String, Function<String, State>> Exceptions ;
     public HttpHelperUtilityImpl httpHelper;
+    public HelperUtilityImpl helperUtility;
     public State(UiHelperUtility chatHelper, String initMessage, boolean showInitMessage){
         this.Rules = new LinkedHashMap<Pattern, Response>();
         this.Options = new ArrayList<String>();
@@ -30,6 +32,7 @@ public abstract class State {
         this.chatHelper = chatHelper;
         this.InitializationMessage = initMessage;
         this.httpHelper = new HttpHelperUtilityImpl();
+        this.helperUtility = new HelperUtilityImpl();
         if(showInitMessage){
             createInitMessage();
             logger.info("Entered State: {}", this.getClass().getSimpleName());

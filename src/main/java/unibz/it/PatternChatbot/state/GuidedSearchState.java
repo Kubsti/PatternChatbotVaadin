@@ -50,6 +50,14 @@ public class GuidedSearchState extends State {
         if (possibleAnswers.isEmpty()) {
             throw new StateException("PossibleSearchAnswersEmpty", "The in the session stored search Answers List is empty.");
         }
+        //Calculate with fuzzyScore answers which meet a certain threshold of matching
+        TreeMap<Double, String> matches = helperUtility.calculateFuzzyScoreMatches(possibleAnswers,0.8,searchInput);
+        //Handle no match was found
+        if(matches.isEmpty()){
+            throw new StateException("NoMatchesWithFuzzyScoreFound", searchInput);
+        }
+        //TODO handle case where we have multiple matches
+        
         //TODO on later development change do parsing option with number
         if (searchInput.matches("^None$|^none$")) {
             //TODO better Exception handling
@@ -227,6 +235,12 @@ public class GuidedSearchState extends State {
                 (String input) -> {
                     chatHelper.createPatteraChatMessage("Sorry it seems seems like an error occurred when in the getAnotherQuestion rest request");
                     return new GuidedSearchErrorState(chatHelper, true);
+                }
+        );
+        this.Exceptions.put("NoMatchesWithFuzzyScoreFound",
+                (String input) -> {
+                    chatHelper.createPatteraChatMessage("Sorry it could not find a match for you input. Could you please answer the last question again?");
+                    return new GuidedSearchState(chatHelper, false);
                 }
         );
     }
