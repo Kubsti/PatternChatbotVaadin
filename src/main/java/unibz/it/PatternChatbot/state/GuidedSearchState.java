@@ -16,33 +16,6 @@ public class GuidedSearchState extends State {
     public GuidedSearchState(UiHelperUtility chatHelper, boolean showInitMesssge) {
         super(chatHelper, "Hi, I will help you find your desired pattern.", showInitMesssge);
     }
-//    public SearchResponseDto handleSearch(String searchInput) throws StateException {
-//        //Is one as the first try is accounted for
-//        int retries = 1;
-//        ArrayList<Pair<String,Double>> extractedKeywords = extractKeywords(searchInput);
-//        if(extractedKeywords.isEmpty()){
-//            //TODO handle error
-//            throw new StateException("NoKeywordsFound", searchInput);
-//            //chatHelper.createPatteraChatMessage("Sorry i have difficulties extracting keywords from your input, please contact my creator.");
-//            //VaadinSession.getCurrent().setAttribute("state","errorstate");
-//        }
-//        SearchResponseDto searchResult = this.httpHelper.searchForPattern(extractedKeywords, 0);
-//        //print message for user
-//        //TODO rework does not work correctly, prob not needed if user can only input given answers
-//        while(searchResult.getDesignPatterns().getPatterns().isEmpty() && retries < 3){
-//            if(extractedKeywords.size() > retries){
-//                retries++;
-//                searchResult = this.httpHelper.searchForPattern(extractedKeywords, retries);
-//            }else{
-//                retries = 3;
-//                if(searchResult.getDesignPatterns().getPatterns().isEmpty()){
-//                    throw  new StateException("NoPatternFound", searchInput);
-//                }
-//            }
-//
-//        }
-//        return searchResult;
-//    }
 
     public SearchResponseDto handleSearch(String searchInput) throws StateException {
         ArrayList<String> possibleAnswers = (ArrayList<String>) VaadinSession.getCurrent().getAttribute("possibleAnswers");
@@ -50,31 +23,35 @@ public class GuidedSearchState extends State {
         if (possibleAnswers.isEmpty()) {
             throw new StateException("PossibleSearchAnswersEmpty", "The in the session stored search Answers List is empty.");
         }
-        //Calculate with fuzzyScore answers which meet a certain threshold of matching
-        TreeMap<Double, String> matches = helperUtility.calculateFuzzyScoreMatches(possibleAnswers,0.8,searchInput);
-        //Handle no match was found
-        if(matches.isEmpty()){
-            throw new StateException("NoMatchesWithFuzzyScoreFound", searchInput);
-        }
-        //TODO handle case where we have multiple matches
-        
         //TODO on later development change do parsing option with number
         if (searchInput.matches("^None$|^none$")) {
             //TODO better Exception handling
             return this.httpHelper.excludePattern((String) VaadinSession.getCurrent().getAttribute("nextSearchTag"));
         }
 
-        for (String possibleAnswer : possibleAnswers) {
-            if (possibleAnswer.equalsIgnoreCase(searchInput)) {
-                isPossibleAnswer = true;
-                break;
-            }
+        //Calculate with fuzzyScore answers which meet a certain threshold of matching
+        TreeMap<Double, String> matches = helperUtility.calculateFuzzyScoreMatches(possibleAnswers,0.8,searchInput);
+        //Handle no match was found
+        if(matches.isEmpty()){
+            throw new StateException("NoMatchesWithFuzzyScoreFound", searchInput);
+        }
+        //Go into
+        if(matches.size() > 1){
+            VaadinSession.getCurrent().setAttribute("fuzzyScoreMatches", matches);
+            throw new StateException("MultipleFuzzyScoreMatches", searchInput);
         }
 
-        if (!isPossibleAnswer) {
-            throw new StateException("InvalidSearchInput", "Given input string did not match one of the available search Options");
-        }
-        SearchResponseDto searchResult = this.httpHelper.searchForPattern(searchInput);
+//        for (String possibleAnswer : possibleAnswers) {
+//            if (possibleAnswer.equalsIgnoreCase(searchInput)) {
+//                isPossibleAnswer = true;
+//                break;
+//            }
+//        }
+//
+//        if (!isPossibleAnswer) {
+//            throw new StateException("InvalidSearchInput", "Given input string did not match one of the available search Options");
+//        }
+        SearchResponseDto searchResult = this.httpHelper.searchForPattern(matches.firstEntry().getValue());
 
         return searchResult;
     }
@@ -113,6 +90,18 @@ public class GuidedSearchState extends State {
 
         //3. Get another question
         this.Rules.put(Pattern.compile("3.*|3\\..*"
+                , Pattern.CASE_INSENSITIVE), new Response() {
+            @Override
+            public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
+                if (getNewQuestion(input)) {
+                    return new GuidedSearchState(chatHelper, false);
+                }
+                return new GuidedSearchErrorState(chatHelper, false);
+            }
+        });
+
+        //Handle yes for multiple fuzzy score matching
+        this.Rules.put(Pattern.compile("Yes*|yes.*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
@@ -243,6 +232,11 @@ public class GuidedSearchState extends State {
                     return new GuidedSearchState(chatHelper, false);
                 }
         );
+        this.Exceptions.put("MultipleFuzzyScoreMatches",
+                (String input) -> {
+                    return new MultipeFuzzyScoreMatchesState(chatHelper, true);
+                }
+        );
     }
 
     public boolean getNewQuestion(String chatInput) throws StateException {
@@ -275,4 +269,9 @@ public class GuidedSearchState extends State {
         }
         return true;
     }
+
+//    public void handleMultipleFuzzyScoreMatches(TreeMap<Double, String> matches){
+//        this.resolvingMultipleFuzzyScoreMatches = true;
+//        chatHelper.createPatteraChatMessage("Did you mean " + matches.firstEntry().getValue() +" ?");
+//    }
 }
