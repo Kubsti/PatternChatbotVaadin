@@ -1,5 +1,6 @@
 package unibz.it.PatternChatbot.utility;
 
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
@@ -39,16 +40,23 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
 
         StringBuilder finalMessage = new StringBuilder();
         finalMessage.append(chatMessage);
-        finalMessage.append("Options:");
-        for(String option : options) {
-            finalMessage.append("\n").append(option);
+
+        if(!options.isEmpty()){
+            finalMessage.append("Options:");
+            for(String option : options) {
+                finalMessage.append("\n").append(option);
+            }
+        }else{
+            finalMessage.append("\n");
         }
+
         PatternQuestion question = (PatternQuestion) VaadinSession.getCurrent().getAttribute("nextQuestion");
         finalMessage.append("\n").append(question.getQuestion());
         finalMessage.append("\n").append("Possible answers are:\n");
         for(String possibleAnswer : possibleAnswers){
             finalMessage.append("\"").append(possibleAnswer).append("\",");
         }
+
         messages.add(new MessageListItem(
                 finalMessage.toString(),
                 Instant.now(), "Pattera"));
@@ -62,6 +70,16 @@ public class UiHelperUtilityImpl implements UiHelperUtility {
         messages.add(new MessageListItem(
                 chatMessage,
                 Instant.now(), ""));
+        currentChatView.chat.setItems(messages);
+    }
+
+    @Override
+    public void createUserChatMessage(String chatMessage) {
+        List<MessageListItem> messages = new ArrayList<MessageListItem>();
+        messages.addAll(currentChatView.chat.getItems());
+        messages.add(new MessageListItem(
+                chatMessage,
+                Instant.now(), "User"));
         currentChatView.chat.setItems(messages);
     }
 

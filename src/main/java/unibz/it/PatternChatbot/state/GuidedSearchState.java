@@ -100,18 +100,6 @@ public class GuidedSearchState extends State {
             }
         });
 
-        //Handle yes for multiple fuzzy score matching
-        this.Rules.put(Pattern.compile("Yes*|yes.*"
-                , Pattern.CASE_INSENSITIVE), new Response() {
-            @Override
-            public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
-                if (getNewQuestion(input)) {
-                    return new GuidedSearchState(chatHelper, false);
-                }
-                return new GuidedSearchErrorState(chatHelper, false);
-            }
-        });
-
         //4. Fallback (Assume Search Input for Keywords)
         this.Rules.put(Pattern.compile(".*"
                 , Pattern.CASE_INSENSITIVE), new Response() {

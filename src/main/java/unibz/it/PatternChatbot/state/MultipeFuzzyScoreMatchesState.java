@@ -10,17 +10,18 @@ import java.util.regex.Pattern;
 
 public class MultipeFuzzyScoreMatchesState extends State {
     private TreeMap<Double, String> matches;
+    private String currentAmswer;
     public MultipeFuzzyScoreMatchesState(UiHelperUtility chatHelper, boolean showInitMesssge) {
         super(chatHelper, "", showInitMesssge);
     }
     @Override
     public void setupResponses() {
         //Yes to fuzzy score match
-        this.Rules.put(Pattern.compile("Yes*|yes.*"
+        this.Rules.put(Pattern.compile("Yes.*|yes.*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
-                SearchResponseDto searchResponse = handleSearch(input);
+                SearchResponseDto searchResponse = handleSearch(currentAmswer);
                 //If we have not found any pattern assume that the user might want to retry last response
                 if (searchResponse.getDesignPatterns().getPatterns().size() == 0) {
                     chatHelper.createPatteraChatMessage("Sorry i have not found any pattern ");
@@ -42,17 +43,19 @@ public class MultipeFuzzyScoreMatchesState extends State {
             }
         });
         //No to fuzzy score match
-        this.Rules.put(Pattern.compile("No*|no.*"
+        this.Rules.put(Pattern.compile("No.*|no.*"
                 , Pattern.CASE_INSENSITIVE), new Response() {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) throws StateException {
                 TreeMap<Double, String> matches = (TreeMap<Double, String>) VaadinSession.getCurrent().getAttribute("fuzzyScoreMatches");
                 if(matches.isEmpty()){
+                    currentAmswer="";
                     chatHelper.createPatteraChatMessage("Sorry it seems there are no more matches left.");
                     return new GuidedSearchErrorState(chatHelper, true);
                 }else{
                     StringBuilder startPhrase = new StringBuilder();
                     startPhrase.append("Did you mean ").append(matches.firstEntry().getValue()).append("\n");
+                    currentAmswer=matches.firstEntry().getValue();
                     matches.remove(matches.firstEntry().getKey());
                     VaadinSession.getCurrent().setAttribute("fuzzyScoreMatches", matches);
                     startPhrase.append("\n").append("Possible answers are:\n").append("Yes,\nNo");
@@ -66,7 +69,7 @@ public class MultipeFuzzyScoreMatchesState extends State {
             @Override
             public State responseAction(String input, ArrayList<String> stateOptions) {
                 chatHelper.createPatteraChatMessage("Sorry i could not understand what your intent is could you please try again.");
-                return new GuidedSearchErrorState(chatHelper, false);
+                return new MultipeFuzzyScoreMatchesState(chatHelper, false);
             }
         });
     }
@@ -97,6 +100,6 @@ public class MultipeFuzzyScoreMatchesState extends State {
     }
 
     public SearchResponseDto handleSearch(String searchInput) throws StateException {
-        return this.httpHelper.searchForPattern(matches.firstEntry().getValue());
+        return this.httpHelper.searchForPattern(searchInput);
     }
 }
